@@ -1,0 +1,278 @@
+/* STUDENT STYLE - COMPLETE FIX */
+
+/* Force everything left */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
+
+body {
+    background: #f0f4fa !important;
+    display: block !important;
+    text-align: left !important;
+}
+
+.container {
+    max-width: 1280px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 20px !important;
+    text-align: left !important;
+}
+
+/* All child elements left aligned */
+.container * {
+    text-align: left !important;
+}
+
+/* Header - keep flex */
+header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    background: linear-gradient(135deg, #6C63FF, #5A52D5) !important;
+    padding: 20px 30px !important;
+    border-radius: 16px !important;
+    margin-bottom: 30px !important;
+}
+
+.logo h1 {
+    background: linear-gradient(135deg, #6C63FF, #FF6584) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
+}
+
+/* Cards */
+.stat-card, .topic-card, .question-card, .question-item {
+    text-align: left !important;
+}
+
+/* Center for specific elements */
+.empty-state, .footer-note, .login-header {
+    text-align: center !important;
+}
+
+/* Stats grid */
+.stats-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+    gap: 20px !important;
+    margin-bottom: 30px !important;
+}
+
+/* Topic grid */
+.topic-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+    gap: 16px !important;
+}
+
+/* Question list */
+.question-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+}
+
+.question-card {
+    background: white !important;
+    padding: 22px 25px !important;
+    border-radius: 16px !important;
+    border: 1px solid #DFE6E9 !important;
+    transition: all 0.3s ease !important;
+    margin-bottom: 15px !important;
+}
+
+.question-item {
+    background: #f8faff !important;
+    padding: 18px 22px !important;
+    border-radius: 12px !important;
+    border: 1px solid #DFE6E9 !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Filter bar */
+.filter-bar {
+    background: white !important;
+    padding: 22px 25px !important;
+    border-radius: 16px !important;
+    margin-bottom: 25px !important;
+}
+
+.filter-group {
+    display: flex !important;
+    gap: 15px !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+}
+
+.filter-group select {
+    padding: 10px 18px !important;
+    border: 2px solid #DFE6E9 !important;
+    border-radius: 10px !important;
+    font-size: 0.9rem !important;
+    background: white !important;
+    min-width: 180px !important;
+    flex: 1 !important;
+}
+
+/* Question detail */
+.question-detail {
+    background: white !important;
+    padding: 35px 40px !important;
+    border-radius: 16px !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Sections */
+.section {
+    background: white !important;
+    padding: 28px 30px !important;
+    border-radius: 16px !important;
+    margin-bottom: 25px !important;
+    border: 1px solid rgba(108, 99, 255, 0.05) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Links */
+.question-link {
+    text-decoration: none !important;
+    display: block !important;
+}
+
+.topic-card-link {
+    text-decoration: none !important;
+    display: block !important;
+}
+
+/* Hover effects */
+.question-link:hover .question-card {
+    border-color: #6C63FF !important;
+    transform: translateX(6px) !important;
+    box-shadow: 0 15px 50px rgba(108, 99, 255, 0.25) !important;
+}
+
+.topic-card-link:hover .topic-card {
+    border-color: #6C63FF !important;
+    transform: translateY(-6px) !important;
+    box-shadow: 0 15px 50px rgba(108, 99, 255, 0.25) !important;
+}
+
+/* Footer */
+.footer-note {
+    text-align: center !important;
+    padding: 20px !important;
+    color: #636E72 !important;
+    font-size: 0.9rem !important;
+    border-top: 1px solid #DFE6E9 !important;
+    margin-top: 30px !important;
+}
+
+/* MathJax */
+.math-content {
+    font-size: 1.05rem !important;
+    line-height: 1.8 !important;
+    padding: 5px 0 !important;
+}
+
+.math-content mjx-container {
+    display: inline-block !important;
+}
+
+.math-content mjx-container[jax="SVG"][display="true"] {
+    display: block !important;
+    margin: 10px 0 !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px !important;
+    }
+    
+    header {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 15px 20px !important;
+    }
+    
+    nav {
+        justify-content: center !important;
+    }
+    
+    .filter-group {
+        flex-direction: column !important;
+    }
+    
+    .filter-group select {
+        width: 100% !important;
+        min-width: unset !important;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 15px !important;
+    }
+    
+    .topic-grid {
+        grid-template-columns: 1fr 1fr !important;
+    }
+    
+    .question-card {
+        padding: 15px 18px !important;
+    }
+    
+    .question-detail {
+        padding: 20px !important;
+    }
+    
+    .section {
+        padding: 20px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 8px !important;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .topic-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .q-options {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .q-full-options {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .q-actions-full {
+        flex-direction: column !important;
+    }
+    
+    .q-actions-full a {
+        justify-content: center !important;
+    }
+}
+
+/* Animation */
+.question-card {
+    animation: fadeIn 0.5s ease !important;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

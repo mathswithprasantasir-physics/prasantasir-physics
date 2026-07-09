@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block title %}Practice - NEET Physics{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='student_style.css') }}">
+<style>
+    /* Force left alignment for practice page */
+    .container {
+        max-width: 1280px !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+        padding: 20px !important;
+        text-align: left !important;
+    }
+    
+    .question-list {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .question-card {
+        background: white !important;
+        padding: 22px 25px !important;
+        border-radius: 16px !important;
+        border: 1px solid #DFE6E9 !important;
+        transition: all 0.3s ease !important;
+        width: 100% !important;
+        text-align: left !important;
+    }
+    
+    .question-link {
+        text-decoration: none !important;
+        display: block !important;
+        width: 100% !important;
+    }
+    
+    .q-meta {
+        display: flex !important;
+        gap: 12px !important;
+        flex-wrap: wrap !important;
+        margin-bottom: 10px !important;
+        justify-content: flex-start !important;
+    }
+    
+    .q-text {
+        text-align: left !important;
+        margin: 8px 0 !important;
+    }
+    
+    .q-options {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        margin: 12px 0 !important;
+        text-align: left !important;
+    }
+    
+    .q-options div {
+        padding: 8px 14px !important;
+        background: #f8faff !important;
+        border-radius: 8px !important;
+        text-align: left !important;
+    }
+    
+    .q-view-hint {
+        text-align: left !important;
+        color: #6C63FF !important;
+        font-size: 0.85rem !important;
+        margin-top: 8px !important;
+    }
+    
+    .filter-bar {
+        background: white !important;
+        padding: 22px 25px !important;
+        border-radius: 16px !important;
+        margin-bottom: 25px !important;
+        width: 100% !important;
+    }
+    
+    .filter-group {
+        display: flex !important;
+        gap: 15px !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+    }
+    
+    .filter-group select {
+        padding: 10px 18px !important;
+        border: 2px solid #DFE6E9 !important;
+        border-radius: 10px !important;
+        font-size: 0.9rem !important;
+        background: white !important;
+        min-width: 180px !important;
+    }
+    
+    .page-title {
+        text-align: left !important;
+        margin-bottom: 25px !important;
+    }
+    
+    /* Fix header alignment */
+    header {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        width: 100% !important;
+    }
+    
+    nav {
+        display: flex !important;
+        gap: 10px !important;
+        flex-wrap: wrap !important;
+        justify-content: flex-end !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header>
+        <div class="logo">
+            <h1><i class="fas fa-atom"></i> NEET Physics Practice</h1>
+            <span>2026</span>
+        </div>
+        <nav>
+            <a href="{{ url_for('student_home') }}"><i class="fas fa-home"></i> Home</a>
+            <a href="{{ url_for('student_practice') }}" class="active"><i class="fas fa-book-open"></i> Practice</a>
+        </nav>
+    </header>
+
+    <h2 class="page-title"><i class="fas fa-book-open"></i> Practice Questions</h2>
+
+    <div class="filter-bar">
+        <form method="GET" action="{{ url_for('student_practice') }}">
+            <div class="filter-group">
+                <select name="topic">
+                    <option value="">All Topics</option>
+                    {% for topic in topics %}
+                    <option value="{{ topic }}" {% if topic == current_topic %}selected{% endif %}>{{ topic }}</option>
+                    {% endfor %}
+                </select>
+                <select name="difficulty">
+                    <option value="">All Difficulty</option>
+                    <option value="Easy" {% if current_difficulty == 'Easy' %}selected{% endif %}>Easy</option>
+                    <option value="Medium" {% if current_difficulty == 'Medium' %}selected{% endif %}>Medium</option>
+                    <option value="Hard" {% if current_difficulty == 'Hard' %}selected{% endif %}>Hard</option>
+                </select>
+                <button type="submit" class="btn-filter"><i class="fas fa-filter"></i> Filter</button>
+                <a href="{{ url_for('student_practice') }}" class="btn-clear"><i class="fas fa-times"></i> Clear</a>
+            </div>
+        </form>
+    </div>
+
+    {% if questions %}
+    <div class="question-list">
+        {% for q in questions %}
+        <a href="{{ url_for('student_question_detail', id=q.id) }}" class="question-link">
+            <div class="question-card">
+                <div class="q-meta">
+                    <span class="q-topic">{{ q.topic }}</span>
+                    <span class="q-year">{{ q.year }}</span>
+                    <span class="q-exam">{{ q.exam_type }}</span>
+                    <span class="q-difficulty {{ q.difficulty.lower() }}">{{ q.difficulty }}</span>
+                    <span class="q-marks"><i class="fas fa-star"></i> +{{ q.marks }}/-{{ q.negative_marks }}</span>
+                </div>
+                <div class="q-text math-content">
+                    {{ q.question_text|safe }}
+                </div>
+                {% if q.option_a or q.option_b or q.option_c or q.option_d %}
+                <div class="q-options">
+                    {% if q.option_a %}<div><strong>A.</strong> <span class="math-content">{{ q.option_a|safe }}</span></div>{% endif %}
+                    {% if q.option_b %}<div><strong>B.</strong> <span class="math-content">{{ q.option_b|safe }}</span></div>{% endif %}
+                    {% if q.option_c %}<div><strong>C.</strong> <span class="math-content">{{ q.option_c|safe }}</span></div>{% endif %}
+                    {% if q.option_d %}<div><strong>D.</strong> <span class="math-content">{{ q.option_d|safe }}</span></div>{% endif %}
+                </div>
+                {% endif %}
+                <div class="q-view-hint">
+                    <i class="fas fa-chevron-right"></i> Click to view solution
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="fas fa-inbox"></i>
+        <h3>No questions found</h3>
+        <p>Try changing the filter or come back later</p>
+        <a href="{{ url_for('student_practice') }}" class="btn-primary"><i class="fas fa-sync"></i> Reset Filters</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

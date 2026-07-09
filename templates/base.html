@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NEET Physics{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <!-- MathJax v3 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: {
+                fontCache: 'global'
+            },
+            options: {
+                enableMenu: false
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    
+    <!-- CRITICAL FIX: Force left alignment -->
+    <style>
+        /* Force everything to left */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: hidden !important;
+        }
+        
+        body {
+            background: #f0f4fa !important;
+            display: block !important;
+            text-align: left !important;
+        }
+        
+        .container {
+            max-width: 1280px !important;
+            width: 100% !important;
+            margin: 0 auto !important;
+            padding: 20px !important;
+            text-align: left !important;
+        }
+        
+        /* All child elements left aligned */
+        .container * {
+            text-align: left !important;
+        }
+        
+        /* But keep center alignment for some elements */
+        .stat-card, .topic-card, .question-card {
+            text-align: left !important;
+        }
+        
+        .empty-state, .footer-note {
+            text-align: center !important;
+        }
+        
+        /* Fix header */
+        header {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            flex-wrap: wrap !important;
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% block content %}{% endblock %}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.MathJax && MathJax.typesetPromise) {
+                MathJax.typesetPromise().then(function() {
+                    console.log('✅ MathJax rendered');
+                }).catch(function(err) {
+                    console.log('MathJax error:', err);
+                });
+            }
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

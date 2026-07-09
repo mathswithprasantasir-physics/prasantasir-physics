@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}NEET Physics Practice{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='student_style.css') }}">
+<style>
+    .container {
+        max-width: 1280px !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+        padding: 20px !important;
+        text-align: left !important;
+    }
+    
+    .stats-grid {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+        gap: 20px !important;
+        margin-bottom: 30px !important;
+        text-align: left !important;
+    }
+    
+    .topic-grid {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+        gap: 16px !important;
+        text-align: left !important;
+    }
+    
+    .question-list {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px !important;
+        text-align: left !important;
+    }
+    
+    .question-item {
+        background: #f8faff !important;
+        padding: 18px 22px !important;
+        border-radius: 12px !important;
+        border: 1px solid #DFE6E9 !important;
+        transition: all 0.3s ease !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 12px !important;
+        text-align: left !important;
+    }
+    
+    .question-link {
+        text-decoration: none !important;
+        display: block !important;
+        width: 100% !important;
+    }
+    
+    .q-header {
+        display: flex !important;
+        gap: 12px !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        justify-content: flex-start !important;
+    }
+    
+    .q-text {
+        text-align: left !important;
+        flex: 1 !important;
+        min-width: 200px !important;
+    }
+    
+    .section {
+        text-align: left !important;
+    }
+    
+    .section h2 {
+        text-align: left !important;
+    }
+    
+    .footer-note {
+        text-align: center !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header>
+        <div class="logo">
+            <h1><i class="fas fa-atom"></i> NEET Physics Practice</h1>
+            <span>2026</span>
+        </div>
+        <nav>
+            <a href="{{ url_for('student_home') }}" class="active"><i class="fas fa-home"></i> Home</a>
+            <a href="{{ url_for('student_practice') }}"><i class="fas fa-book-open"></i> Practice</a>
+        </nav>
+    </header>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon blue"><i class="fas fa-book"></i></div>
+            <div class="stat-info">
+                <span class="stat-label">Total Questions</span>
+                <span class="stat-value">{{ total_questions }}</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon green"><i class="fas fa-tags"></i></div>
+            <div class="stat-info">
+                <span class="stat-label">Topics</span>
+                <span class="stat-value">{{ topic_stats|length }}</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon orange"><i class="fas fa-calendar"></i></div>
+            <div class="stat-info">
+                <span class="stat-label">Year</span>
+                <span class="stat-value">2026</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2><i class="fas fa-chart-bar"></i> Topics Available</h2>
+        <div class="topic-grid">
+            {% for topic in topic_stats %}
+            <a href="{{ url_for('student_practice', topic=topic.name) }}" class="topic-card-link">
+                <div class="topic-card">
+                    <div class="topic-name">{{ topic.name }}</div>
+                    <div class="topic-stats">
+                        <span><i class="fas fa-question-circle"></i> {{ topic.count }} questions</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="section">
+        <h2><i class="fas fa-random"></i> Practice Random Questions</h2>
+        <div class="question-list">
+            {% for q in random_questions %}
+            <a href="{{ url_for('student_question_detail', id=q.id) }}" class="question-link">
+                <div class="question-item">
+                    <div class="q-header">
+                        <span class="q-topic">{{ q.topic }}</span>
+                        <span class="q-difficulty {{ q.difficulty.lower() }}">{{ q.difficulty }}</span>
+                    </div>
+                    <p class="q-text math-content">{{ q.question_text|safe }}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{{ url_for('student_practice') }}" class="btn-primary"><i class="fas fa-random"></i> Practice More</a>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        <p><i class="fas fa-info-circle"></i> This is a practice platform. All questions are from NEET Physics 2026.</p>
+        <p style="font-size: 0.8rem; color: #6a7f99; margin-top: 5px;">
+            <i class="fas fa-lock"></i> Admin access: <a href="{{ url_for('admin_login') }}" style="color: #2a5c8a;">Login</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

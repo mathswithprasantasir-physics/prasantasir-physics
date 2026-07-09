@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Question - Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1><i class="fas fa-atom"></i> NEET Physics PYQ</h1>
+                <span class="admin-badge">Admin</span>
+            </div>
+            <nav>
+                <a href="{{ url_for('admin_dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="{{ url_for('admin_questions') }}"><i class="fas fa-list"></i> All Questions</a>
+                <a href="{{ url_for('admin_add_question') }}" class="btn-primary active"><i class="fas fa-plus"></i> Add Question</a>
+                <a href="{{ url_for('admin_logout') }}" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </nav>
+        </header>
+
+        <h2 class="page-title"><i class="fas fa-plus-circle"></i> Add New Question</h2>
+
+        <form method="POST" class="question-form">
+            <!-- Basic Info -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-tag"></i> Topic <span class="required">*</span></label>
+                    <select name="topic" required>
+                        <option value="">Select Topic</option>
+                        {% for topic in topics %}
+                        <option value="{{ topic }}">{{ topic }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-layer-group"></i> Subtopic</label>
+                    <input type="text" name="subtopic" placeholder="e.g., Kinematics">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-calendar"></i> Year</label>
+                    <input type="text" name="year" value="2026">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-building-columns"></i> Exam Type</label>
+                    <select name="exam_type">
+                        <option value="NEET">NEET</option>
+                        <option value="RE-NEET">RE-NEET</option>
+                        <option value="JEE Main">JEE Main</option>
+                        <option value="JEE Advanced">JEE Advanced</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-signal"></i> Difficulty</label>
+                    <select name="difficulty">
+                        <option value="Easy">Easy</option>
+                        <option value="Medium" selected>Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Question -->
+            <div class="form-group">
+                <label><i class="fas fa-question"></i> Question <span class="required">*</span></label>
+                <textarea name="question_text" rows="5" placeholder="Enter the question. Use $...$ for inline math, $$...$$ for display math" required></textarea>
+                <small class="hint">💡 Use $E=mc^2$ for inline math, $$E=mc^2$$ for display math</small>
+            </div>
+
+            <!-- Question Image -->
+            <div class="form-group">
+                <label><i class="fas fa-image"></i> Question Image URL</label>
+                <input type="text" name="question_image" placeholder="https://example.com/question-image.png">
+                <small class="hint">Paste image URL for the question (optional)</small>
+            </div>
+
+            <!-- Options -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-circle"></i> Option A</label>
+                    <input type="text" name="option_a" placeholder="Option A text (use $...$ for math)">
+                    <input type="text" name="option_a_image" placeholder="Option A image URL" style="margin-top:5px;">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-circle"></i> Option B</label>
+                    <input type="text" name="option_b" placeholder="Option B text (use $...$ for math)">
+                    <input type="text" name="option_b_image" placeholder="Option B image URL" style="margin-top:5px;">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-circle"></i> Option C</label>
+                    <input type="text" name="option_c" placeholder="Option C text (use $...$ for math)">
+                    <input type="text" name="option_c_image" placeholder="Option C image URL" style="margin-top:5px;">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-circle"></i> Option D</label>
+                    <input type="text" name="option_d" placeholder="Option D text (use $...$ for math)">
+                    <input type="text" name="option_d_image" placeholder="Option D image URL" style="margin-top:5px;">
+                </div>
+            </div>
+
+            <!-- Correct Answer & Marks -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-check-circle"></i> Correct Answer</label>
+                    <select name="correct_answer">
+                        <option value="">Select</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-star"></i> Marks</label>
+                    <input type="number" name="marks" value="4">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-minus-circle"></i> Negative Marks</label>
+                    <input type="number" name="negative_marks" value="1">
+                </div>
+            </div>
+
+            <!-- Solution -->
+            <div class="form-group">
+                <label><i class="fas fa-lightbulb"></i> Solution</label>
+                <textarea name="solution" rows="4" placeholder="Write the solution step by step. Use $...$ for math"></textarea>
+                <small class="hint">💡 Write complete solution with all steps</small>
+            </div>
+
+            <!-- Solution Image -->
+            <div class="form-group">
+                <label><i class="fas fa-image"></i> Solution Image URL</label>
+                <input type="text" name="solution_image" placeholder="https://example.com/solution-image.png">
+                <small class="hint">Paste image URL for the solution (optional)</small>
+            </div>
+
+            <!-- Explanation -->
+            <div class="form-group">
+                <label><i class="fas fa-info-circle"></i> Explanation</label>
+                <textarea name="explanation" rows="3" placeholder="Brief explanation of the concept used"></textarea>
+                <small class="hint">Brief explanation of the concept used</small>
+            </div>
+
+            <button type="submit" class="btn-submit"><i class="fas fa-save"></i> Save Question</button>
+        </form>
+    </div>
+</body>
+</html>

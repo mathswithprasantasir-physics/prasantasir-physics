@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Question Detail - NEET Physics{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='student_style.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header>
+        <div class="logo">
+            <h1><i class="fas fa-atom"></i> NEET Physics Practice</h1>
+            <span>2026</span>
+        </div>
+        <nav>
+            <a href="{{ url_for('student_home') }}"><i class="fas fa-home"></i> Home</a>
+            <a href="{{ url_for('student_practice') }}"><i class="fas fa-book-open"></i> Practice</a>
+        </nav>
+    </header>
+
+    <div class="question-detail">
+        <div class="q-meta">
+            <span class="q-topic">{{ question.topic }}</span>
+            <span class="q-year">{{ question.year }}</span>
+            <span class="q-exam">{{ question.exam_type }}</span>
+            <span class="q-difficulty {{ question.difficulty.lower() }}">{{ question.difficulty }}</span>
+            <span class="q-marks"><i class="fas fa-star"></i> +{{ question.marks }}/-{{ question.negative_marks }}</span>
+        </div>
+        
+        <div class="q-full-text">
+            <h3>Question:</h3>
+            <div class="math-content">
+                {{ question.question_text|safe }}
+            </div>
+            {% if question.question_image %}
+            <div class="question-image">
+                <img src="{{ question.question_image }}" alt="Question Image" style="max-width:100%; border-radius:10px; margin-top:10px;">
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="q-full-options">
+            <h3>Options:</h3>
+            {% if question.option_a %}
+            <div>
+                <strong>A.</strong> 
+                <span class="math-content">{{ question.option_a|safe }}</span>
+                {% if question.option_a_image %}
+                <br><img src="{{ question.option_a_image }}" alt="Option A" style="max-width:200px; border-radius:8px; margin-top:5px;">
+                {% endif %}
+            </div>
+            {% endif %}
+            {% if question.option_b %}
+            <div>
+                <strong>B.</strong> 
+                <span class="math-content">{{ question.option_b|safe }}</span>
+                {% if question.option_b_image %}
+                <br><img src="{{ question.option_b_image }}" alt="Option B" style="max-width:200px; border-radius:8px; margin-top:5px;">
+                {% endif %}
+            </div>
+            {% endif %}
+            {% if question.option_c %}
+            <div>
+                <strong>C.</strong> 
+                <span class="math-content">{{ question.option_c|safe }}</span>
+                {% if question.option_c_image %}
+                <br><img src="{{ question.option_c_image }}" alt="Option C" style="max-width:200px; border-radius:8px; margin-top:5px;">
+                {% endif %}
+            </div>
+            {% endif %}
+            {% if question.option_d %}
+            <div>
+                <strong>D.</strong> 
+                <span class="math-content">{{ question.option_d|safe }}</span>
+                {% if question.option_d_image %}
+                <br><img src="{{ question.option_d_image }}" alt="Option D" style="max-width:200px; border-radius:8px; margin-top:5px;">
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="q-answer-box">
+            <div class="q-correct-answer">
+                <i class="fas fa-check-circle"></i> Correct Answer: <strong>{{ question.correct_answer }}</strong>
+            </div>
+        </div>
+
+        {% if question.solution %}
+        <div class="q-solution-box">
+            <h3><i class="fas fa-lightbulb"></i> Solution:</h3>
+            <div class="math-content solution-content">
+                {{ question.solution|safe }}
+            </div>
+            {% if question.solution_image %}
+            <div class="solution-image">
+                <img src="{{ question.solution_image }}" alt="Solution Image" style="max-width:100%; border-radius:10px; margin-top:10px;">
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if question.explanation %}
+        <div class="q-explanation-box">
+            <h3><i class="fas fa-info-circle"></i> Explanation:</h3>
+            <div class="math-content explanation-content">
+                {{ question.explanation|safe }}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="q-actions-full">
+            <a href="{{ url_for('student_practice') }}" class="btn-view"><i class="fas fa-arrow-left"></i> Back to Practice</a>
+            <a href="{{ url_for('student_practice') }}?topic={{ question.topic }}" class="btn-primary"><i class="fas fa-filter"></i> More from {{ question.topic }}</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
