@@ -9,18 +9,18 @@ class Question(db.Model):
     subtopic = db.Column(db.String(100))
     year = db.Column(db.String(10), default='2026')
     question_text = db.Column(db.Text, nullable=False)
-    question_image = db.Column(db.String(500))  # NEW: Question image URL
+    question_image = db.Column(db.String(500))
     option_a = db.Column(db.String(500))
     option_b = db.Column(db.String(500))
     option_c = db.Column(db.String(500))
     option_d = db.Column(db.String(500))
-    option_a_image = db.Column(db.String(500))  # NEW: Option A image
-    option_b_image = db.Column(db.String(500))  # NEW: Option B image
-    option_c_image = db.Column(db.String(500))  # NEW: Option C image
-    option_d_image = db.Column(db.String(500))  # NEW: Option D image
+    option_a_image = db.Column(db.String(500))
+    option_b_image = db.Column(db.String(500))
+    option_c_image = db.Column(db.String(500))
+    option_d_image = db.Column(db.String(500))
     correct_answer = db.Column(db.String(10))
     solution = db.Column(db.Text)
-    solution_image = db.Column(db.String(500))  # NEW: Solution image
+    solution_image = db.Column(db.String(500))
     explanation = db.Column(db.Text)
     marks = db.Column(db.Integer, default=4)
     negative_marks = db.Column(db.Integer, default=1)
