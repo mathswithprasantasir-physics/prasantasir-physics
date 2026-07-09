@@ -3,26 +3,29 @@ from database import db, Question
 from datetime import datetime
 import os
 
-# Delete old database if exists (for fresh start)
-if os.path.exists('neet_physics.db'):
-    os.remove('neet_physics.db')
-    print("✅ Old database deleted!")
-
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your-super-secret-key-change-this-in-production'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///neet_physics.db'
+
+# ===== Configuration =====
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
+
+# Database configuration (SQLite for local, PostgreSQL for Render)
+if os.environ.get('DATABASE_URL'):
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace('postgres://', 'postgresql://')
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///neet_physics.db'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
+# Create tables if they don't exist
 with app.app_context():
     db.create_all()
-    print("✅ Database created with all columns!")
 
-# Admin password
-ADMIN_PASSWORD = 'admin123'
+# ===== Admin Password =====
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin123')
 
-# All topics list
+# ===== Topics =====
 TOPICS = [
     'Units & Measurement', 'Motion in a Straight Line', 'Motion in a Plane',
     'Laws of Motion', 'Work, Energy and Power', 'Center of Mass and Collision',
@@ -253,6 +256,18 @@ def student_question_detail(id):
 def api_questions():
     questions = Question.query.all()
     return jsonify([q.to_dict() for q in questions])
+
+# ==================== ERROR HANDLERS ====================
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
+
+# ==================== RUN APP ====================
 
 if __name__ == '__main__':
     app.run(debug=True)
