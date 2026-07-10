@@ -97,6 +97,7 @@
         font-size: 0.9rem !important;
         background: white !important;
         min-width: 180px !important;
+        flex: 1 !important;
     }
     
     .page-title {
@@ -119,6 +120,36 @@
         flex-wrap: wrap !important;
         justify-content: flex-end !important;
     }
+    
+    .btn-filter {
+        background: #6C63FF !important;
+        color: white !important;
+        border: none !important;
+        padding: 10px 24px !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .btn-filter:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px rgba(108, 99, 255, 0.3) !important;
+    }
+    
+    .btn-clear {
+        background: #e8eef6 !important;
+        color: #3d5a78 !important;
+        padding: 10px 20px !important;
+        border-radius: 10px !important;
+        text-decoration: none !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .btn-clear:hover {
+        background: #d0d0d0 !important;
+    }
 </style>
 {% endblock %}
 
@@ -140,6 +171,12 @@
     <div class="filter-bar">
         <form method="GET" action="{{ url_for('student_practice') }}">
             <div class="filter-group">
+                <select name="chapter">
+                    <option value="">All Chapters</option>
+                    {% for chapter in chapters %}
+                    <option value="{{ chapter }}" {% if chapter == current_chapter %}selected{% endif %}>{{ chapter }}</option>
+                    {% endfor %}
+                </select>
                 <select name="topic">
                     <option value="">All Topics</option>
                     {% for topic in topics %}
