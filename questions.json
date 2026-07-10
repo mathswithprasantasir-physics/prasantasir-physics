@@ -620,7 +620,7 @@
       "option_d_image": "",
       "correct_answer": "D",
       "solution": "For a freely falling body, $h = \\frac{1}{2}gt^2$.<br><br>Distance covered in first 5 seconds ($t = 5$ s):<br>$h_1 = \\frac{1}{2}g(5)^2 = \\frac{25}{2}g$<br><br>Distance covered in first 10 seconds ($t = 10$ s):<br>$h_1 + h_2 = \\frac{1}{2}g(10)^2 = \\frac{100}{2}g$<br><br>So, $h_2 = \\frac{100}{2}g - \\frac{25}{2}g = \\frac{75}{2}g = 3h_1$<br><br>Distance covered in first 15 seconds ($t = 15$ s):<br>$h_1 + h_2 + h_3 = \\frac{1}{2}g(15)^2 = \\frac{225}{2}g$<br><br>So, $h_3 = \\frac{225}{2}g - \\frac{100}{2}g = \\frac{125}{2}g = 5h_1$<br><br>Therefore, $h_1 = \\frac{h_2}{3} = \\frac{h_3}{5}$.",
-      "solution_image": "/static/images/neet/solution_neet_q25_motion_in_a_straight_line.jpg",
+      "solution_image": "/static/images/neet/solution_neet_q25_motion_in_a_straight_line.jpeg",
       "explanation": "For a freely falling body from rest, distances in successive equal time intervals are in the ratio $1:3:5:7:...$",
       "marks": 4,
       "negative_marks": 1
@@ -845,7 +845,7 @@
       "option_d_image": "",
       "correct_answer": "B",
       "solution": "During the last $t$ seconds of ascent, the ball is moving upward but slowing down.<br><br>Total time of ascent: $T = \\frac{u}{g}$.<br><br>Distance covered in last $t$ seconds = distance in first $T$ seconds - distance in first $(T - t)$ seconds.<br><br>Using $s = ut - \\frac{1}{2}gt^2$:<br><br>$S_T = uT - \\frac{1}{2}gT^2$<br><br>$S_{T-t} = u(T-t) - \\frac{1}{2}g(T-t)^2$<br><br>Distance in last $t$ seconds:<br>$S = S_T - S_{T-t}$<br><br>$S = \\frac{1}{2}gt^2$<br><br>So, the distance covered during the last $t$ seconds of ascent is $\\frac{1}{2}gt^2$, which is independent of the initial speed $u$.",
-      "solution_image": "/static/images/neet/solution_neet_q34_motion_in_a_straight_line.jpg",
+      "solution_image": "/static/images/neet/solution_neet_q34_motion_in_a_straight_line.jpeg",
       "explanation": "The last $t$ seconds of ascent is equivalent to the first $t$ seconds of free fall from the maximum height.",
       "marks": 4,
       "negative_marks": 1
@@ -870,7 +870,7 @@
       "option_d_image": "",
       "correct_answer": "C",
       "solution": "Let maximum height be h.<br><br>At half the height, velocity v = 10 m/s, and displacement = h/2.<br><br>Using v² = u² - 2g(h/2):<br>10² = u² - gh ...(i)<br><br>At maximum height, velocity is zero:<br>0 = u² - 2gh<br>u² = 2gh ...(ii)<br><br>From (i) and (ii):<br>100 = 2gh - gh = gh<br>gh = 100<br>h = 100/10 = 10 m.<br><br>So, the maximum height attained is 10 m.",
-      "solution_image": "/static/images/neet/solution_neet_q35_motion_in_a_straight_line.jpg",
+      "solution_image": "/static/images/neet/solution_neet_q35_motion_in_a_straight_line.jpeg",
       "explanation": "Use equations of motion for upward motion. At maximum height, final velocity is zero.",
       "marks": 4,
       "negative_marks": 1
@@ -1120,7 +1120,7 @@
       "option_d_image": "",
       "correct_answer": "C",
       "solution": "Let distance PQ = s, and midway velocity be v.<br><br>Using v² = u² + 2as from P to Q:<br>40² - 30² = 2as<br>1600 - 900 = 2as<br>700 = 2as<br>a = 350/s ...(i)<br><br>Now from P to midway (distance = s/2):<br>v² - 30² = 2a(s/2) = as<br><br>v² = 900 + as = 900 + 350 = 1250<br>v = √1250 = 25√2 km/h.<br><br>So, the velocity at midway is 25√2 km/h.",
-      "solution_image": "/static/images/neet/solution_neet_q45_motion_in_a_straight_line.jpg",
+      "solution_image": "/static/images/neet/solution_neet_q45_motion_in_a_straight_line.jpeg",
       "explanation": "Use v² = u² + 2as for both segments. Find acceleration first, then use it for the midway point.",
       "marks": 4,
       "negative_marks": 1
@@ -1320,7 +1320,7 @@
       "option_d_image": "",
       "correct_answer": "B",
       "solution": "Initial velocity: $\\vec{u} = -v\\hat{j}$ (south direction).<br><br>Final velocity: $\\vec{v} = v\\hat{i}$ (east direction).<br><br>Change in velocity: $\\Delta\\vec{v} = \\vec{v} - \\vec{u} = v\\hat{i} - (-v\\hat{j}) = v\\hat{i} + v\\hat{j}$<br><br>This change is along north-east direction.<br><br>Force acts along the direction of change in velocity (Newton's second law).<br><br>$\\boxed{\\text{Force acts along north-east direction}}$",
-      "solution_image": "/static/images/neet/solution_neet_q53_motion_in_a_straight_line.jpg",
+      "solution_image": "/static/images/neet/solution_neet_q53_motion_in_a_straight_line.jpeg",
       "explanation": "Force is along the direction of change in velocity. When direction changes, force acts along the resultant of initial and final velocities.",
       "marks": 4,
       "negative_marks": 1
@@ -1345,7 +1345,7 @@
       "option_d_image": "",
       "correct_answer": "B",
       "solution": "Let total distance be $2x$.<br><br>Time for first half: $t_1 = \\frac{x}{v}$<br><br>Time for second half: $t_2 = \\frac{x}{2v}$<br><br>Total time: $t = t_1 + t_2 = \\frac{x}{v} + \\frac{x}{2v} = \\frac{2x + x}{2v} = \\frac{3x}{2v}$<br><br>Average speed: $v_{\\text{avg}} = \\frac{\\text{Total distance}}{\\text{Total time}} = \\frac{2x}{3x/2v} = \\frac{4v}{3}$<br><br>$\\boxed{v_{\\text{avg}} = \\frac{4v}{3}}$",
-      "solution_image": "/static/images/neet/solution_neet_q54_motion_in_a_straight_line.jpg",
+      "solution_image": "/static/images/neet/solution_neet_q54_motion_in_a_straight_line.jpeg",
       "explanation": "Average speed = total distance / total time. When distances are equal, use harmonic mean.",
       "marks": 4,
       "negative_marks": 1
@@ -1370,7 +1370,7 @@
       "option_d_image": "/static/images/neet/neet_2024_q55_option_d.png",
       "correct_answer": "A",
       "solution": "Acceleration is the slope of velocity-time graph.<br><br>When the graph has positive slope, acceleration is positive (above zero).<br><br>When the graph has zero slope, acceleration is zero.<br><br>When the graph has negative slope, acceleration is negative (below zero).<br><br>The acceleration-time graph must show these regions clearly.<br><br>$\\boxed{\\text{Option (a) correctly represents the acceleration-time graph}}$",
-      "solution_image": "/static/images/neet/solution_neet_q55_motion_in_a_straight_line.jpg",
+      "solution_image": "/static/images/neet/solution_neet_q55_motion_in_a_straight_line.jpeg",
       "explanation": "Acceleration is the slope of v-t graph. Positive slope = positive acceleration, negative slope = negative acceleration, zero slope = zero acceleration.",
       "marks": 4,
       "negative_marks": 1
