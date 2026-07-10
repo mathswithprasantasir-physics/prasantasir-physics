@@ -5,7 +5,6 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='student_style.css') }}">
 <style>
-    /* Force left alignment for practice page */
     .container {
         max-width: 1280px !important;
         width: 100% !important;
@@ -31,6 +30,11 @@
         transition: all 0.3s ease !important;
         width: 100% !important;
         text-align: left !important;
+    }
+    
+    .question-card:hover {
+        border-color: #6C63FF !important;
+        box-shadow: 0 4px 20px rgba(108, 99, 255, 0.08) !important;
     }
     
     .question-link {
@@ -100,12 +104,24 @@
         flex: 1 !important;
     }
     
+    .filter-group select:focus {
+        outline: none !important;
+        border-color: #6C63FF !important;
+        box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1) !important;
+    }
+    
     .page-title {
         text-align: left !important;
         margin-bottom: 25px !important;
+        font-size: 1.5rem !important;
+        color: #1a3a55 !important;
     }
     
-    /* Fix header alignment */
+    .page-title i {
+        color: #6C63FF !important;
+        margin-right: 10px !important;
+    }
+    
     header {
         display: flex !important;
         justify-content: space-between !important;
@@ -150,6 +166,51 @@
     .btn-clear:hover {
         background: #d0d0d0 !important;
     }
+    
+    .empty-state {
+        text-align: center !important;
+        padding: 60px 20px !important;
+    }
+    
+    .empty-state i {
+        font-size: 4rem !important;
+        color: #DFE6E9 !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .empty-state h3 {
+        color: #1a3a55 !important;
+        margin-bottom: 10px !important;
+    }
+    
+    .empty-state p {
+        color: #5f7892 !important;
+        margin-bottom: 20px !important;
+    }
+    
+    @media (max-width: 768px) {
+        .filter-group {
+            flex-direction: column !important;
+        }
+        
+        .filter-group select {
+            width: 100% !important;
+            min-width: unset !important;
+        }
+        
+        .q-options {
+            grid-template-columns: 1fr !important;
+        }
+        
+        header {
+            flex-direction: column !important;
+            align-items: stretch !important;
+        }
+        
+        nav {
+            justify-content: center !important;
+        }
+    }
 </style>
 {% endblock %}
 
@@ -166,7 +227,7 @@
         </nav>
     </header>
 
-    <h2 class="page-title"><i class="fas fa-book-open"></i> Practice Questions</h2>
+    <h2 class="page-title"><i class="fas fa-search"></i> Practice Questions</h2>
 
     <div class="filter-bar">
         <form method="GET" action="{{ url_for('student_practice') }}">
