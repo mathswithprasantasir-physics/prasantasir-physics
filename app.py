@@ -37,6 +37,15 @@ def admin_dashboard():
     questions = load_questions()
     total_questions = len(questions)
     
+    # Chapter-wise statistics
+    chapter_stats = {}
+    for q in questions:
+        chapter = q.get('chapter', 'Uncategorized')
+        chapter_stats[chapter] = chapter_stats.get(chapter, 0) + 1
+    
+    chapter_list = [{'name': k, 'count': v, 'weightage': round((v/total_questions*100) if total_questions > 0 else 0, 2)} 
+                    for k, v in chapter_stats.items()]
+    
     # Topic-wise statistics
     topic_stats = {}
     for q in questions:
@@ -53,6 +62,7 @@ def admin_dashboard():
     
     return render_template('admin/dashboard.html',
                          total_questions=total_questions,
+                         chapter_stats=chapter_list,
                          topic_stats=topic_list,
                          recent_questions=questions[:10],
                          easy=easy, medium=medium, hard=hard)
@@ -64,12 +74,16 @@ def admin_questions():
     
     questions = load_questions()
     topics = get_topics()
+    chapters = sorted(list(set([q.get('chapter', 'Uncategorized') for q in questions])))
     
     # Filter
+    chapter_filter = request.args.get('chapter', '')
     topic_filter = request.args.get('topic', '')
     difficulty_filter = request.args.get('difficulty', '')
     
     filtered = questions
+    if chapter_filter:
+        filtered = [q for q in filtered if q.get('chapter') == chapter_filter]
     if topic_filter:
         filtered = [q for q in filtered if q.get('topic') == topic_filter]
     if difficulty_filter:
@@ -77,7 +91,11 @@ def admin_questions():
     
     return render_template('admin/questions_list.html',
                          questions=filtered,
-                         topics=topics)
+                         topics=topics,
+                         chapters=chapters,
+                         current_chapter=chapter_filter,
+                         current_topic=topic_filter,
+                         current_difficulty=difficulty_filter)
 
 @app.route('/admin/add-question', methods=['GET', 'POST'])
 def admin_add_question():
@@ -85,6 +103,7 @@ def admin_add_question():
         return redirect(url_for('admin_login'))
     
     topics = get_topics()
+    chapters = sorted(list(set([q.get('chapter', 'Uncategorized') for q in load_questions()])))
     
     if request.method == 'POST':
         try:
@@ -95,6 +114,7 @@ def admin_add_question():
             
             new_question = {
                 'id': new_id,
+                'chapter': request.form.get('chapter', 'Uncategorized'),
                 'topic': request.form['topic'],
                 'subtopic': request.form.get('subtopic', ''),
                 'year': request.form.get('year', '2026'),
@@ -126,7 +146,7 @@ def admin_add_question():
         except Exception as e:
             flash(f'❌ Error: {str(e)}', 'error')
     
-    return render_template('admin/add_question.html', topics=topics)
+    return render_template('admin/add_question.html', topics=topics, chapters=chapters)
 
 @app.route('/admin/edit-question/<int:id>', methods=['GET', 'POST'])
 def admin_edit_question(id):
@@ -141,10 +161,12 @@ def admin_edit_question(id):
         return redirect(url_for('admin_questions'))
     
     topics = get_topics()
+    chapters = sorted(list(set([q.get('chapter', 'Uncategorized') for q in load_questions()])))
     
     if request.method == 'POST':
         try:
             # Update question
+            question['chapter'] = request.form.get('chapter', 'Uncategorized')
             question['topic'] = request.form['topic']
             question['subtopic'] = request.form.get('subtopic', '')
             question['year'] = request.form.get('year', '2026')
@@ -173,7 +195,7 @@ def admin_edit_question(id):
         except Exception as e:
             flash(f'❌ Error: {str(e)}', 'error')
     
-    return render_template('admin/edit_question.html', question=question, topics=topics)
+    return render_template('admin/edit_question.html', question=question, topics=topics, chapters=chapters)
 
 @app.route('/admin/delete-question/<int:id>')
 def admin_delete_question(id):
@@ -194,6 +216,14 @@ def student_home():
     questions = load_questions()
     total_questions = len(questions)
     
+    # Chapter-wise statistics
+    chapter_stats = {}
+    for q in questions:
+        chapter = q.get('chapter', 'Uncategorized')
+        chapter_stats[chapter] = chapter_stats.get(chapter, 0) + 1
+    
+    chapter_list = [{'name': k, 'count': v} for k, v in chapter_stats.items()]
+    
     # Topic-wise statistics
     topic_stats = {}
     for q in questions:
@@ -207,6 +237,7 @@ def student_home():
     
     return render_template('student/index.html',
                          total_questions=total_questions,
+                         chapter_stats=chapter_list,
                          topic_stats=topic_list,
                          random_questions=random_questions)
 
@@ -214,11 +245,15 @@ def student_home():
 def student_practice():
     questions = load_questions()
     topics = get_topics()
+    chapters = sorted(list(set([q.get('chapter', 'Uncategorized') for q in questions])))
     
+    chapter_filter = request.args.get('chapter', '')
     topic_filter = request.args.get('topic', '')
     difficulty_filter = request.args.get('difficulty', '')
     
     filtered = questions
+    if chapter_filter:
+        filtered = [q for q in filtered if q.get('chapter') == chapter_filter]
     if topic_filter:
         filtered = [q for q in filtered if q.get('topic') == topic_filter]
     if difficulty_filter:
@@ -226,7 +261,9 @@ def student_practice():
     
     return render_template('student/practice.html',
                          questions=filtered,
+                         chapters=chapters,
                          topics=topics,
+                         current_chapter=chapter_filter,
                          current_topic=topic_filter,
                          current_difficulty=difficulty_filter)
 
