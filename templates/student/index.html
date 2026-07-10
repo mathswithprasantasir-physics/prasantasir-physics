@@ -5,86 +5,267 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='student_style.css') }}">
 <style>
-    .container {
-        max-width: 1280px !important;
-        width: 100% !important;
-        margin: 0 auto !important;
-        padding: 20px !important;
-        text-align: left !important;
+    /* ===== Hero Section ===== */
+    .hero-section {
+        background: linear-gradient(135deg, #6C63FF, #5A52D5);
+        padding: 40px 35px;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
     }
     
-    .stats-grid {
-        display: grid !important;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
-        gap: 20px !important;
-        margin-bottom: 30px !important;
-        text-align: left !important;
+    .hero-section h1 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 8px;
     }
     
-    .topic-grid {
-        display: grid !important;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
-        gap: 16px !important;
-        text-align: left !important;
+    .hero-section h1 i {
+        margin-right: 12px;
+        opacity: 0.9;
     }
     
-    .question-list {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 15px !important;
-        text-align: left !important;
+    .hero-section p {
+        font-size: 1.1rem;
+        opacity: 0.85;
+        margin-bottom: 0;
     }
     
+    .hero-stats {
+        display: flex;
+        gap: 30px;
+        background: rgba(255,255,255,0.15);
+        padding: 15px 25px;
+        border-radius: 14px;
+        backdrop-filter: blur(10px);
+    }
+    
+    .hero-stats div {
+        text-align: center;
+    }
+    
+    .hero-stats .number {
+        font-size: 1.8rem;
+        font-weight: 700;
+        display: block;
+    }
+    
+    .hero-stats .label {
+        font-size: 0.75rem;
+        opacity: 0.8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    /* ===== Chapter Cards ===== */
+    .chapter-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 16px;
+    }
+    
+    .chapter-card {
+        background: linear-gradient(135deg, #F8F9FF, #EEF0FF);
+        padding: 18px 20px;
+        border-radius: 14px;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: block;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .chapter-card:hover {
+        border-color: #6C63FF;
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(108, 99, 255, 0.15);
+    }
+    
+    .chapter-card .chapter-number {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #6C63FF;
+        background: rgba(108, 99, 255, 0.1);
+        padding: 2px 12px;
+        border-radius: 30px;
+        display: inline-block;
+        margin-bottom: 6px;
+    }
+    
+    .chapter-card .chapter-name {
+        font-weight: 600;
+        color: #1a3a55;
+        font-size: 1rem;
+    }
+    
+    .chapter-card .chapter-count {
+        font-size: 0.85rem;
+        color: #5f7892;
+        margin-top: 6px;
+    }
+    
+    .chapter-card .chapter-count i {
+        color: #6C63FF;
+        margin-right: 4px;
+    }
+    
+    /* ===== Questions List ===== */
     .question-item {
-        background: #f8faff !important;
-        padding: 18px 22px !important;
-        border-radius: 12px !important;
-        border: 1px solid #DFE6E9 !important;
-        transition: all 0.3s ease !important;
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        flex-wrap: wrap !important;
-        gap: 12px !important;
-        text-align: left !important;
+        background: #f8faff;
+        padding: 18px 22px;
+        border-radius: 12px;
+        border: 1px solid #DFE6E9;
+        transition: all 0.3s ease;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
     }
     
-    .question-link {
-        text-decoration: none !important;
-        display: block !important;
-        width: 100% !important;
+    .question-item:hover {
+        border-color: #6C63FF;
+        transform: translateX(4px);
+        box-shadow: 0 4px 15px rgba(108, 99, 255, 0.08);
     }
     
     .q-header {
-        display: flex !important;
-        gap: 12px !important;
-        align-items: center !important;
-        flex-wrap: wrap !important;
-        justify-content: flex-start !important;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
     }
+    
+    .q-topic {
+        background: linear-gradient(135deg, #6C63FF, #5A52D5);
+        color: white;
+        padding: 3px 14px;
+        border-radius: 30px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    .q-difficulty {
+        padding: 3px 12px;
+        border-radius: 30px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    .q-difficulty.easy { background: #d4edda; color: #155724; }
+    .q-difficulty.medium { background: #fff3cd; color: #856404; }
+    .q-difficulty.hard { background: #f8d7da; color: #721c24; }
     
     .q-text {
-        text-align: left !important;
-        flex: 1 !important;
-        min-width: 200px !important;
+        flex: 1;
+        min-width: 200px;
+        color: #1e3448;
     }
     
-    .section {
-        text-align: left !important;
+    .question-link {
+        text-decoration: none;
+        display: block;
+        width: 100%;
     }
     
-    .section h2 {
-        text-align: left !important;
+    .btn-primary {
+        background: #6C63FF !important;
+        color: white !important;
+        padding: 10px 28px;
+        border-radius: 30px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(108, 99, 255, 0.3);
+    }
+    
+    .section-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .section-title h2 {
+        font-size: 1.2rem;
+        color: #1a3a55;
+        margin: 0;
+    }
+    
+    .section-title h2 i {
+        color: #6C63FF;
+        margin-right: 10px;
+    }
+    
+    .section-title .view-all {
+        color: #6C63FF;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
     }
     
     .footer-note {
-        text-align: center !important;
+        text-align: center;
+        padding: 20px;
+        color: #636E72;
+        font-size: 0.9rem;
+        border-top: 1px solid #DFE6E9;
+        margin-top: 30px;
+    }
+    
+    @media (max-width: 768px) {
+        .hero-section {
+            flex-direction: column;
+            text-align: center;
+            padding: 25px 20px;
+        }
+        
+        .hero-stats {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .hero-section h1 {
+            font-size: 1.6rem;
+        }
+        
+        .chapter-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .chapter-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .hero-stats {
+            flex-wrap: wrap;
+            gap: 15px;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="container">
+    <!-- ===== HEADER ===== -->
     <header>
         <div class="logo">
             <h1><i class="fas fa-atom"></i> NEET Physics Practice</h1>
@@ -96,48 +277,53 @@
         </nav>
     </header>
 
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-icon blue"><i class="fas fa-book"></i></div>
-            <div class="stat-info">
-                <span class="stat-label">Total Questions</span>
-                <span class="stat-value">{{ total_questions }}</span>
-            </div>
+    <!-- ===== HERO SECTION ===== -->
+    <div class="hero-section">
+        <div>
+            <h1><i class="fas fa-graduation-cap"></i> NEET Physics Practice</h1>
+            <p>Master Physics with Chapter-wise PYQs</p>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon green"><i class="fas fa-tags"></i></div>
-            <div class="stat-info">
-                <span class="stat-label">Topics</span>
-                <span class="stat-value">{{ topic_stats|length }}</span>
+        <div class="hero-stats">
+            <div>
+                <span class="number">{{ total_questions }}</span>
+                <span class="label">Total Questions</span>
             </div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon orange"><i class="fas fa-calendar"></i></div>
-            <div class="stat-info">
-                <span class="stat-label">Year</span>
-                <span class="stat-value">2026</span>
+            <div>
+                <span class="number">{{ chapter_stats|length }}</span>
+                <span class="label">Chapters</span>
+            </div>
+            <div>
+                <span class="number">{{ topic_stats|length }}</span>
+                <span class="label">Topics</span>
             </div>
         </div>
     </div>
 
+    <!-- ===== CHAPTERS SECTION ===== -->
     <div class="section">
-        <h2><i class="fas fa-chart-bar"></i> Topics Available</h2>
-        <div class="topic-grid">
-            {% for topic in topic_stats %}
-            <a href="{{ url_for('student_practice', topic=topic.name) }}" class="topic-card-link">
-                <div class="topic-card">
-                    <div class="topic-name">{{ topic.name }}</div>
-                    <div class="topic-stats">
-                        <span><i class="fas fa-question-circle"></i> {{ topic.count }} questions</span>
-                    </div>
+        <div class="section-title">
+            <h2><i class="fas fa-book"></i> Chapters Available</h2>
+            <a href="{{ url_for('student_practice') }}" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="chapter-grid">
+            {% for chapter in chapter_stats %}
+            <a href="{{ url_for('student_practice', chapter=chapter.name) }}" class="chapter-card">
+                <span class="chapter-number">Chapter {{ loop.index }}</span>
+                <div class="chapter-name">{{ chapter.name }}</div>
+                <div class="chapter-count">
+                    <i class="fas fa-question-circle"></i> {{ chapter.count }} questions
                 </div>
             </a>
             {% endfor %}
         </div>
     </div>
 
+    <!-- ===== RANDOM QUESTIONS ===== -->
     <div class="section">
-        <h2><i class="fas fa-random"></i> Practice Random Questions</h2>
+        <div class="section-title">
+            <h2><i class="fas fa-random"></i> Practice Random Questions</h2>
+            <a href="{{ url_for('student_practice') }}" class="view-all">More <i class="fas fa-arrow-right"></i></a>
+        </div>
         <div class="question-list">
             {% for q in random_questions %}
             <a href="{{ url_for('student_question_detail', id=q.id) }}" class="question-link">
@@ -145,6 +331,7 @@
                     <div class="q-header">
                         <span class="q-topic">{{ q.topic }}</span>
                         <span class="q-difficulty {{ q.difficulty.lower() }}">{{ q.difficulty }}</span>
+                        <span style="font-size:0.75rem; color:#5f7892;">{{ q.chapter }}</span>
                     </div>
                     <p class="q-text math-content">{{ q.question_text|safe }}</p>
                 </div>
@@ -152,10 +339,13 @@
             {% endfor %}
         </div>
         <div style="text-align: center; margin-top: 20px;">
-            <a href="{{ url_for('student_practice') }}" class="btn-primary"><i class="fas fa-random"></i> Practice More</a>
+            <a href="{{ url_for('student_practice') }}" class="btn-primary">
+                <i class="fas fa-random"></i> Practice More
+            </a>
         </div>
     </div>
 
+    <!-- ===== FOOTER ===== -->
     <div class="footer-note">
         <p><i class="fas fa-info-circle"></i> This is a practice platform. All questions are from NEET Physics 2026.</p>
         <p style="font-size: 0.8rem; color: #6a7f99; margin-top: 5px;">
