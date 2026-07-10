@@ -1,42 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session
-from database import db, Question
-from datetime import datetime
+from data_loader import load_questions, save_questions, get_topics
 import os
+import random
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your-super-secret-key-change-in-production'
 
-# ===== Configuration =====
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
-
-# Database configuration (SQLite for local, PostgreSQL for Render)
-if os.environ.get('DATABASE_URL'):
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace('postgres://', 'postgresql://')
-else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///neet_physics.db'
-
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db.init_app(app)
-
-# Create tables if they don't exist
-with app.app_context():
-    db.create_all()
-
-# ===== Admin Password =====
-ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin123')
-
-# ===== Topics =====
-TOPICS = [
-    'Units & Measurement', 'Motion in a Straight Line', 'Motion in a Plane',
-    'Laws of Motion', 'Work, Energy and Power', 'Center of Mass and Collision',
-    'Rotational Motion', 'Gravitation', 'Properties of Matter',
-    'Heat and Thermodynamics', 'Oscillations', 'Waves',
-    'Electricity', 'Current Electricity', 'Capacitor',
-    'Moving Charges and Magnetism', 'Magnetism and Matter',
-    'Electromagnetic Induction', 'Alternating Current', 'Electromagnetic Waves',
-    'Optics', 'Wave Optics', 'Geometrical Optics',
-    'Atoms and Nuclei', 'Dual Nature of Radiation and Matter', 'Semiconductor Electronics'
-]
+# Admin password
+ADMIN_PASSWORD = 'admin123'
 
 # ==================== ADMIN ROUTES ====================
 
@@ -63,28 +34,27 @@ def admin_dashboard():
     if not session.get('admin_logged_in'):
         return redirect(url_for('admin_login'))
     
-    total_questions = Question.query.count()
+    questions = load_questions()
+    total_questions = len(questions)
     
-    topic_stats = []
-    for topic in TOPICS:
-        count = Question.query.filter_by(topic=topic).count()
-        if count > 0:
-            topic_stats.append({
-                'name': topic,
-                'count': count,
-                'weightage': round((count / total_questions * 100) if total_questions > 0 else 0, 2)
-            })
+    # Topic-wise statistics
+    topic_stats = {}
+    for q in questions:
+        topic = q.get('topic', 'Unknown')
+        topic_stats[topic] = topic_stats.get(topic, 0) + 1
     
-    recent_questions = Question.query.order_by(Question.created_at.desc()).limit(10).all()
+    topic_list = [{'name': k, 'count': v, 'weightage': round((v/total_questions*100) if total_questions > 0 else 0, 2)} 
+                  for k, v in topic_stats.items()]
     
-    easy = Question.query.filter_by(difficulty='Easy').count()
-    medium = Question.query.filter_by(difficulty='Medium').count()
-    hard = Question.query.filter_by(difficulty='Hard').count()
+    # Difficulty distribution
+    easy = len([q for q in questions if q.get('difficulty') == 'Easy'])
+    medium = len([q for q in questions if q.get('difficulty') == 'Medium'])
+    hard = len([q for q in questions if q.get('difficulty') == 'Hard'])
     
     return render_template('admin/dashboard.html',
                          total_questions=total_questions,
-                         topic_stats=topic_stats,
-                         recent_questions=recent_questions,
+                         topic_stats=topic_list,
+                         recent_questions=questions[:10],
                          easy=easy, medium=medium, hard=hard)
 
 @app.route('/admin/questions')
@@ -92,170 +62,185 @@ def admin_questions():
     if not session.get('admin_logged_in'):
         return redirect(url_for('admin_login'))
     
+    questions = load_questions()
+    topics = get_topics()
+    
+    # Filter
     topic_filter = request.args.get('topic', '')
-    year_filter = request.args.get('year', '')
     difficulty_filter = request.args.get('difficulty', '')
     
-    query = Question.query
+    filtered = questions
     if topic_filter:
-        query = query.filter_by(topic=topic_filter)
-    if year_filter:
-        query = query.filter_by(year=year_filter)
+        filtered = [q for q in filtered if q.get('topic') == topic_filter]
     if difficulty_filter:
-        query = query.filter_by(difficulty=difficulty_filter)
-    
-    questions = query.order_by(Question.created_at.desc()).all()
+        filtered = [q for q in filtered if q.get('difficulty') == difficulty_filter]
     
     return render_template('admin/questions_list.html',
-                         questions=questions,
-                         topics=TOPICS,
-                         current_topic=topic_filter,
-                         current_year=year_filter,
-                         current_difficulty=difficulty_filter)
+                         questions=filtered,
+                         topics=topics)
 
 @app.route('/admin/add-question', methods=['GET', 'POST'])
 def admin_add_question():
     if not session.get('admin_logged_in'):
         return redirect(url_for('admin_login'))
     
+    topics = get_topics()
+    
     if request.method == 'POST':
         try:
-            question = Question(
-                topic=request.form['topic'],
-                subtopic=request.form.get('subtopic', ''),
-                year=request.form.get('year', '2026'),
-                question_text=request.form['question_text'],
-                question_image=request.form.get('question_image', ''),
-                option_a=request.form.get('option_a', ''),
-                option_b=request.form.get('option_b', ''),
-                option_c=request.form.get('option_c', ''),
-                option_d=request.form.get('option_d', ''),
-                option_a_image=request.form.get('option_a_image', ''),
-                option_b_image=request.form.get('option_b_image', ''),
-                option_c_image=request.form.get('option_c_image', ''),
-                option_d_image=request.form.get('option_d_image', ''),
-                correct_answer=request.form.get('correct_answer', ''),
-                solution=request.form.get('solution', ''),
-                solution_image=request.form.get('solution_image', ''),
-                explanation=request.form.get('explanation', ''),
-                marks=int(request.form.get('marks', 4)),
-                negative_marks=int(request.form.get('negative_marks', 1)),
-                exam_type=request.form.get('exam_type', 'NEET'),
-                difficulty=request.form.get('difficulty', 'Medium')
-            )
-            db.session.add(question)
-            db.session.commit()
+            questions = load_questions()
+            
+            # Generate new ID
+            new_id = max([q.get('id', 0) for q in questions]) + 1 if questions else 1
+            
+            new_question = {
+                'id': new_id,
+                'topic': request.form['topic'],
+                'subtopic': request.form.get('subtopic', ''),
+                'year': request.form.get('year', '2026'),
+                'question_text': request.form['question_text'],
+                'question_image': request.form.get('question_image', ''),
+                'option_a': request.form.get('option_a', ''),
+                'option_b': request.form.get('option_b', ''),
+                'option_c': request.form.get('option_c', ''),
+                'option_d': request.form.get('option_d', ''),
+                'option_a_image': request.form.get('option_a_image', ''),
+                'option_b_image': request.form.get('option_b_image', ''),
+                'option_c_image': request.form.get('option_c_image', ''),
+                'option_d_image': request.form.get('option_d_image', ''),
+                'correct_answer': request.form.get('correct_answer', ''),
+                'solution': request.form.get('solution', ''),
+                'solution_image': request.form.get('solution_image', ''),
+                'explanation': request.form.get('explanation', ''),
+                'marks': int(request.form.get('marks', 4)),
+                'negative_marks': int(request.form.get('negative_marks', 1)),
+                'exam_type': request.form.get('exam_type', 'NEET'),
+                'difficulty': request.form.get('difficulty', 'Medium')
+            }
+            
+            questions.append(new_question)
+            save_questions(questions)
+            
             flash('✅ Question added successfully!', 'success')
             return redirect(url_for('admin_questions'))
         except Exception as e:
             flash(f'❌ Error: {str(e)}', 'error')
     
-    return render_template('admin/add_question.html', topics=TOPICS)
+    return render_template('admin/add_question.html', topics=topics)
 
 @app.route('/admin/edit-question/<int:id>', methods=['GET', 'POST'])
 def admin_edit_question(id):
     if not session.get('admin_logged_in'):
         return redirect(url_for('admin_login'))
     
-    question = Question.query.get_or_404(id)
+    questions = load_questions()
+    question = next((q for q in questions if q.get('id') == id), None)
+    
+    if not question:
+        flash('❌ Question not found!', 'error')
+        return redirect(url_for('admin_questions'))
+    
+    topics = get_topics()
     
     if request.method == 'POST':
         try:
-            question.topic = request.form['topic']
-            question.subtopic = request.form.get('subtopic', '')
-            question.year = request.form.get('year', '2026')
-            question.question_text = request.form['question_text']
-            question.question_image = request.form.get('question_image', '')
-            question.option_a = request.form.get('option_a', '')
-            question.option_b = request.form.get('option_b', '')
-            question.option_c = request.form.get('option_c', '')
-            question.option_d = request.form.get('option_d', '')
-            question.option_a_image = request.form.get('option_a_image', '')
-            question.option_b_image = request.form.get('option_b_image', '')
-            question.option_c_image = request.form.get('option_c_image', '')
-            question.option_d_image = request.form.get('option_d_image', '')
-            question.correct_answer = request.form.get('correct_answer', '')
-            question.solution = request.form.get('solution', '')
-            question.solution_image = request.form.get('solution_image', '')
-            question.explanation = request.form.get('explanation', '')
-            question.marks = int(request.form.get('marks', 4))
-            question.negative_marks = int(request.form.get('negative_marks', 1))
-            question.exam_type = request.form.get('exam_type', 'NEET')
-            question.difficulty = request.form.get('difficulty', 'Medium')
-            question.updated_at = datetime.utcnow()
+            # Update question
+            question['topic'] = request.form['topic']
+            question['subtopic'] = request.form.get('subtopic', '')
+            question['year'] = request.form.get('year', '2026')
+            question['question_text'] = request.form['question_text']
+            question['question_image'] = request.form.get('question_image', '')
+            question['option_a'] = request.form.get('option_a', '')
+            question['option_b'] = request.form.get('option_b', '')
+            question['option_c'] = request.form.get('option_c', '')
+            question['option_d'] = request.form.get('option_d', '')
+            question['option_a_image'] = request.form.get('option_a_image', '')
+            question['option_b_image'] = request.form.get('option_b_image', '')
+            question['option_c_image'] = request.form.get('option_c_image', '')
+            question['option_d_image'] = request.form.get('option_d_image', '')
+            question['correct_answer'] = request.form.get('correct_answer', '')
+            question['solution'] = request.form.get('solution', '')
+            question['solution_image'] = request.form.get('solution_image', '')
+            question['explanation'] = request.form.get('explanation', '')
+            question['marks'] = int(request.form.get('marks', 4))
+            question['negative_marks'] = int(request.form.get('negative_marks', 1))
+            question['exam_type'] = request.form.get('exam_type', 'NEET')
+            question['difficulty'] = request.form.get('difficulty', 'Medium')
             
-            db.session.commit()
+            save_questions(questions)
             flash('✅ Question updated successfully!', 'success')
             return redirect(url_for('admin_questions'))
         except Exception as e:
             flash(f'❌ Error: {str(e)}', 'error')
     
-    return render_template('admin/edit_question.html', question=question, topics=TOPICS)
+    return render_template('admin/edit_question.html', question=question, topics=topics)
 
 @app.route('/admin/delete-question/<int:id>')
 def admin_delete_question(id):
     if not session.get('admin_logged_in'):
         return redirect(url_for('admin_login'))
     
-    question = Question.query.get_or_404(id)
-    try:
-        db.session.delete(question)
-        db.session.commit()
-        flash('✅ Question deleted successfully!', 'success')
-    except Exception as e:
-        flash(f'❌ Error: {str(e)}', 'error')
+    questions = load_questions()
+    questions = [q for q in questions if q.get('id') != id]
+    save_questions(questions)
+    
+    flash('✅ Question deleted successfully!', 'success')
     return redirect(url_for('admin_questions'))
 
 # ==================== STUDENT ROUTES ====================
 
 @app.route('/')
 def student_home():
-    total_questions = Question.query.count()
+    questions = load_questions()
+    total_questions = len(questions)
     
-    topic_stats = []
-    for topic in TOPICS:
-        count = Question.query.filter_by(topic=topic).count()
-        if count > 0:
-            topic_stats.append({
-                'name': topic,
-                'count': count
-            })
+    # Topic-wise statistics
+    topic_stats = {}
+    for q in questions:
+        topic = q.get('topic', 'Unknown')
+        topic_stats[topic] = topic_stats.get(topic, 0) + 1
     
-    random_questions = Question.query.order_by(db.func.random()).limit(5).all()
+    topic_list = [{'name': k, 'count': v} for k, v in topic_stats.items()]
+    
+    # Random questions
+    random_questions = random.sample(questions, min(5, len(questions))) if questions else []
     
     return render_template('student/index.html',
                          total_questions=total_questions,
-                         topic_stats=topic_stats,
+                         topic_stats=topic_list,
                          random_questions=random_questions)
 
 @app.route('/practice')
 def student_practice():
+    questions = load_questions()
+    topics = get_topics()
+    
     topic_filter = request.args.get('topic', '')
     difficulty_filter = request.args.get('difficulty', '')
     
-    query = Question.query
+    filtered = questions
     if topic_filter:
-        query = query.filter_by(topic=topic_filter)
+        filtered = [q for q in filtered if q.get('topic') == topic_filter]
     if difficulty_filter:
-        query = query.filter_by(difficulty=difficulty_filter)
-    
-    questions = query.order_by(db.func.random()).all()
+        filtered = [q for q in filtered if q.get('difficulty') == difficulty_filter]
     
     return render_template('student/practice.html',
-                         questions=questions,
-                         topics=TOPICS,
+                         questions=filtered,
+                         topics=topics,
                          current_topic=topic_filter,
                          current_difficulty=difficulty_filter)
 
 @app.route('/question/<int:id>')
 def student_question_detail(id):
-    question = Question.query.get_or_404(id)
+    questions = load_questions()
+    question = next((q for q in questions if q.get('id') == id), None)
+    if not question:
+        return "Question not found", 404
     return render_template('student/question_detail.html', question=question)
 
 @app.route('/api/questions')
 def api_questions():
-    questions = Question.query.all()
-    return jsonify([q.to_dict() for q in questions])
+    return jsonify(load_questions())
 
 # ==================== ERROR HANDLERS ====================
 
@@ -266,8 +251,6 @@ def page_not_found(e):
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template('500.html'), 500
-
-# ==================== RUN APP ====================
 
 if __name__ == '__main__':
     app.run(debug=True)
