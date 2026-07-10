@@ -246,10 +246,12 @@ def student_practice():
     questions = load_questions()
     topics = get_topics()
     chapters = sorted(list(set([q.get('chapter', 'Uncategorized') for q in questions])))
+    years = sorted(list(set([q.get('year', '') for q in questions if q.get('year')])), reverse=True)
     
     chapter_filter = request.args.get('chapter', '')
     topic_filter = request.args.get('topic', '')
     difficulty_filter = request.args.get('difficulty', '')
+    year_filter = request.args.get('year', '')
     
     filtered = questions
     if chapter_filter:
@@ -258,14 +260,18 @@ def student_practice():
         filtered = [q for q in filtered if q.get('topic') == topic_filter]
     if difficulty_filter:
         filtered = [q for q in filtered if q.get('difficulty') == difficulty_filter]
+    if year_filter:
+        filtered = [q for q in filtered if q.get('year') == year_filter]
     
     return render_template('student/practice.html',
                          questions=filtered,
                          chapters=chapters,
                          topics=topics,
+                         years=years,
                          current_chapter=chapter_filter,
                          current_topic=topic_filter,
-                         current_difficulty=difficulty_filter)
+                         current_difficulty=difficulty_filter,
+                         current_year=year_filter)
 
 @app.route('/question/<int:id>')
 def student_question_detail(id):
