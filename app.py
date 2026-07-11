@@ -263,11 +263,22 @@ def student_practice():
     if year_filter:
         filtered = [q for q in filtered if q.get('year') == year_filter]
     
+    # Chapter-wise topics (for dynamic filtering)
+    chapter_topics = {}
+    for q in questions:
+        chapter = q.get('chapter', 'Uncategorized')
+        topic = q.get('topic', 'Unknown')
+        if chapter not in chapter_topics:
+            chapter_topics[chapter] = []
+        if topic not in chapter_topics[chapter]:
+            chapter_topics[chapter].append(topic)
+    
     return render_template('student/practice.html',
                          questions=filtered,
                          chapters=chapters,
                          topics=topics,
                          years=years,
+                         chapter_topics=chapter_topics,
                          current_chapter=chapter_filter,
                          current_topic=topic_filter,
                          current_difficulty=difficulty_filter,
