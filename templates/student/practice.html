@@ -312,35 +312,41 @@
     // Chapter-wise topics data from backend
     const chapterTopics = {{ chapter_topics|tojson }};
     
+    console.log("Chapter Topics:", chapterTopics);  // Debug: Check in browser console
+    
     // Get DOM elements
     const chapterSelect = document.getElementById('chapterSelect');
     const topicSelect = document.getElementById('topicSelect');
+    
+    // Store all topics for fallback
+    const allTopics = [];
+    {% for topic in topics %}
+    allTopics.push('{{ topic }}');
+    {% endfor %}
     
     // Function to update topic options based on selected chapter
     function updateTopics() {
         const selectedChapter = chapterSelect.value;
         
-        // Clear current options (keep first "All Topics" option)
+        // Clear current options
         topicSelect.innerHTML = '<option value="">All Topics</option>';
         
-        // If no chapter selected OR chapter has no topics, show all topics
-        if (!selectedChapter || !chapterTopics[selectedChapter]) {
-            // Show all topics (from page load)
-            {% for topic in topics %}
-            const opt = document.createElement('option');
-            opt.value = '{{ topic }}';
-            opt.textContent = '{{ topic }}';
-            {% if topic == current_topic %}opt.selected = true;{% endif %}
-            topicSelect.appendChild(opt);
-            {% endfor %}
-            return;
+        // Get topics for selected chapter
+        let topicsToShow = [];
+        
+        if (selectedChapter && chapterTopics[selectedChapter]) {
+            // Show topics for the selected chapter
+            topicsToShow = chapterTopics[selectedChapter];
+        } else {
+            // Show all topics if no chapter selected
+            topicsToShow = allTopics;
         }
         
-        // Add topics for the selected chapter
-        const topics = chapterTopics[selectedChapter] || [];
-        topics.sort();
+        // Sort topics
+        topicsToShow.sort();
         
-        topics.forEach(function(topic) {
+        // Add topics to dropdown
+        topicsToShow.forEach(function(topic) {
             const opt = document.createElement('option');
             opt.value = topic;
             opt.textContent = topic;
@@ -358,6 +364,8 @@
     });
     
     // Initial setup - update topics on page load
-    updateTopics();
+    document.addEventListener('DOMContentLoaded', function() {
+        updateTopics();
+    });
 </script>
 {% endblock %}
