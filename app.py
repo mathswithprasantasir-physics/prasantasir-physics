@@ -273,6 +273,12 @@ def student_practice():
         if topic not in chapter_topics[chapter]:
             chapter_topics[chapter].append(topic)
     
+    # Sort topics for each chapter
+    for chapter in chapter_topics:
+        chapter_topics[chapter].sort()
+    
+    print("Chapter Topics:", chapter_topics)  # Debug: Check in terminal
+    
     return render_template('student/practice.html',
                          questions=filtered,
                          chapters=chapters,
