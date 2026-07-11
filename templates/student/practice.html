@@ -102,12 +102,18 @@
         background: white !important;
         min-width: 160px !important;
         flex: 1 !important;
+        transition: all 0.3s ease !important;
     }
     
     .filter-group select:focus {
         outline: none !important;
         border-color: #6C63FF !important;
         box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1) !important;
+    }
+    
+    .filter-group select:disabled {
+        opacity: 0.6 !important;
+        cursor: not-allowed !important;
     }
     
     .page-title {
@@ -230,15 +236,15 @@
     <h2 class="page-title"><i class="fas fa-search"></i> Practice Questions</h2>
 
     <div class="filter-bar">
-        <form method="GET" action="{{ url_for('student_practice') }}">
+        <form method="GET" action="{{ url_for('student_practice') }}" id="filterForm">
             <div class="filter-group">
-                <select name="chapter">
+                <select name="chapter" id="chapterSelect">
                     <option value="">All Chapters</option>
                     {% for chapter in chapters %}
                     <option value="{{ chapter }}" {% if chapter == current_chapter %}selected{% endif %}>{{ chapter }}</option>
                     {% endfor %}
                 </select>
-                <select name="topic">
+                <select name="topic" id="topicSelect">
                     <option value="">All Topics</option>
                     {% for topic in topics %}
                     <option value="{{ topic }}" {% if topic == current_topic %}selected{% endif %}>{{ topic }}</option>
@@ -301,4 +307,57 @@
     </div>
     {% endif %}
 </div>
+
+<script>
+    // Chapter-wise topics data from backend
+    const chapterTopics = {{ chapter_topics|tojson }};
+    
+    // Get DOM elements
+    const chapterSelect = document.getElementById('chapterSelect');
+    const topicSelect = document.getElementById('topicSelect');
+    
+    // Function to update topic options based on selected chapter
+    function updateTopics() {
+        const selectedChapter = chapterSelect.value;
+        
+        // Clear current options (keep first "All Topics" option)
+        topicSelect.innerHTML = '<option value="">All Topics</option>';
+        
+        // If no chapter selected OR chapter has no topics, show all topics
+        if (!selectedChapter || !chapterTopics[selectedChapter]) {
+            // Show all topics (from page load)
+            {% for topic in topics %}
+            const opt = document.createElement('option');
+            opt.value = '{{ topic }}';
+            opt.textContent = '{{ topic }}';
+            {% if topic == current_topic %}opt.selected = true;{% endif %}
+            topicSelect.appendChild(opt);
+            {% endfor %}
+            return;
+        }
+        
+        // Add topics for the selected chapter
+        const topics = chapterTopics[selectedChapter] || [];
+        topics.sort();
+        
+        topics.forEach(function(topic) {
+            const opt = document.createElement('option');
+            opt.value = topic;
+            opt.textContent = topic;
+            // Preserve current selection if it matches
+            if (topic === '{{ current_topic }}') {
+                opt.selected = true;
+            }
+            topicSelect.appendChild(opt);
+        });
+    }
+    
+    // Update topics when chapter changes
+    chapterSelect.addEventListener('change', function() {
+        updateTopics();
+    });
+    
+    // Initial setup - update topics on page load
+    updateTopics();
+</script>
 {% endblock %}
