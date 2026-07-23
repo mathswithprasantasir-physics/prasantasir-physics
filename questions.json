@@ -5071,7 +5071,7 @@
                   "option_d_image": "",
                   "correct_answer": "B",
                   "solution": "A fuse wire should have a high resistance so that it heats up quickly when excessive current flows through the circuit.<br><br>It should also have a low melting point so that it melts easily and breaks the circuit during overcurrent conditions.<br><br>$\\boxed{\\text{Option (b) is correct}}$",
-                  "solution_image": null
+                  "solution_image": null,
                   "explanation": "A fuse protects electrical circuits by melting when the current exceeds the safe limit. Therefore, it must have high resistance and a low melting point.",
                   "marks": 4,
                   "negative_marks": 1
