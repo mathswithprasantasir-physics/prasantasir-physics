@@ -7135,7 +7135,7 @@
       "exam_type": "NEET",
       "difficulty": "Medium",
       "question_text": "A potentiometer circuit is set up as shown. The potential gradient across the potentiometer wire is $k$ volt/cm and the ammeter present in the circuit reads 1.0 A when the two-way key is switched off. The balance points, when the key between the terminals (i) 1 and 2 and (ii) 1 and 3, is plugged in, are found to be at lengths $l_1$ cm and $l_2$ cm respectively. The magnitudes of the resistors $R$ and $X$, in ohms, are then equal, respectively, to",
-      "question_image": null,
+      "question_image": "/static/images/neet/current_electricity/questions/q112.png",
       "option_a": "$k(l_2 - l_1)$ and $kl_1$",
       "option_b": "$kl_1$ and $k(l_2 - l_1)$",
       "option_c": "$k(l_2 - l_1)$ and $kl_2$",
