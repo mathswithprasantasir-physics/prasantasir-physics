@@ -56,6 +56,20 @@
         margin: 8px 0 !important;
     }
     
+    /* ✅ Question Image Style */
+    .q-image {
+        margin: 12px 0 !important;
+        text-align: left !important;
+    }
+    
+    .q-image img {
+        max-width: 100% !important;
+        max-height: 300px !important;
+        border-radius: 10px !important;
+        border: 1px solid #e8eef6 !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+    }
+    
     .q-options {
         display: grid !important;
         grid-template-columns: 1fr 1fr !important;
@@ -69,6 +83,18 @@
         background: #f8faff !important;
         border-radius: 8px !important;
         text-align: left !important;
+    }
+    
+    /* ✅ Option Image Style */
+    .option-image {
+        margin-top: 5px !important;
+    }
+    
+    .option-image img {
+        max-width: 150px !important;
+        max-height: 100px !important;
+        border-radius: 6px !important;
+        border: 1px solid #e8eef6 !important;
     }
     
     .q-view-hint {
@@ -216,6 +242,15 @@
         nav {
             justify-content: center !important;
         }
+        
+        .q-image img {
+            max-height: 200px !important;
+        }
+        
+        .option-image img {
+            max-width: 100px !important;
+            max-height: 80px !important;
+        }
     }
 </style>
 {% endblock %}
@@ -280,17 +315,68 @@
                     <span class="q-difficulty {{ q.difficulty.lower() }}">{{ q.difficulty }}</span>
                     <span class="q-marks"><i class="fas fa-star"></i> +{{ q.marks }}/-{{ q.negative_marks }}</span>
                 </div>
+                
+                <!-- ✅ Question Text -->
                 <div class="q-text math-content">
                     {{ q.question_text|safe }}
                 </div>
-                {% if q.option_a or q.option_b or q.option_c or q.option_d %}
-                <div class="q-options">
-                    {% if q.option_a %}<div><strong>A.</strong> <span class="math-content">{{ q.option_a|safe }}</span></div>{% endif %}
-                    {% if q.option_b %}<div><strong>B.</strong> <span class="math-content">{{ q.option_b|safe }}</span></div>{% endif %}
-                    {% if q.option_c %}<div><strong>C.</strong> <span class="math-content">{{ q.option_c|safe }}</span></div>{% endif %}
-                    {% if q.option_d %}<div><strong>D.</strong> <span class="math-content">{{ q.option_d|safe }}</span></div>{% endif %}
+                
+                <!-- ✅ Question Image (NEW - এখানে যোগ করা হয়েছে) -->
+                {% if q.question_image %}
+                <div class="q-image">
+                    <img src="{{ q.question_image }}" alt="Question Image">
                 </div>
                 {% endif %}
+                
+                <!-- ✅ Options -->
+                {% if q.option_a or q.option_b or q.option_c or q.option_d %}
+                <div class="q-options">
+                    {% if q.option_a %}
+                    <div>
+                        <strong>A.</strong> <span class="math-content">{{ q.option_a|safe }}</span>
+                        {% if q.option_a_image %}
+                        <div class="option-image">
+                            <img src="{{ q.option_a_image }}" alt="Option A">
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if q.option_b %}
+                    <div>
+                        <strong>B.</strong> <span class="math-content">{{ q.option_b|safe }}</span>
+                        {% if q.option_b_image %}
+                        <div class="option-image">
+                            <img src="{{ q.option_b_image }}" alt="Option B">
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if q.option_c %}
+                    <div>
+                        <strong>C.</strong> <span class="math-content">{{ q.option_c|safe }}</span>
+                        {% if q.option_c_image %}
+                        <div class="option-image">
+                            <img src="{{ q.option_c_image }}" alt="Option C">
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if q.option_d %}
+                    <div>
+                        <strong>D.</strong> <span class="math-content">{{ q.option_d|safe }}</span>
+                        {% if q.option_d_image %}
+                        <div class="option-image">
+                            <img src="{{ q.option_d_image }}" alt="Option D">
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
                 <div class="q-view-hint">
                     <i class="fas fa-chevron-right"></i> Click to view solution
                 </div>
