@@ -509,16 +509,11 @@
             </div>
             <div class="chapter-stats">
                 <span><i class="fas fa-list"></i> {{ chapter.count }} questions</span>
+                {% if chapter.topic_count > 0 %}
                 <span class="topic-count">
-                    <i class="fas fa-tags"></i> 
-                    {% set topic_count = namespace(value=0) %}
-                    {% for topic in topic_stats %}
-                        {% if topic.name in chapter.name %}
-                            {% set topic_count.value = topic_count.value + 1 %}
-                        {% endif %}
-                    {% endfor %}
-                    {{ topic_count.value }} topics
+                    <i class="fas fa-tags"></i> {{ chapter.topic_count }} topics
                 </span>
+                {% endif %}
             </div>
         </a>
         {% endfor %}
