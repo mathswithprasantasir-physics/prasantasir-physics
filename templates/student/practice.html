@@ -37,12 +37,6 @@
         box-shadow: 0 4px 20px rgba(108, 99, 255, 0.08) !important;
     }
     
-    .question-link {
-        text-decoration: none !important;
-        display: block !important;
-        width: 100% !important;
-    }
-    
     .q-meta {
         display: flex !important;
         gap: 12px !important;
@@ -56,7 +50,6 @@
         margin: 8px 0 !important;
     }
     
-    /* ✅ Question Image Style */
     .q-image {
         margin: 12px 0 !important;
         text-align: left !important;
@@ -70,22 +63,67 @@
         box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
     }
     
+    /* ✅ Options Style - এখন clickable */
     .q-options {
         display: grid !important;
         grid-template-columns: 1fr 1fr !important;
-        gap: 8px !important;
+        gap: 10px !important;
         margin: 12px 0 !important;
         text-align: left !important;
     }
     
-    .q-options div {
-        padding: 8px 14px !important;
+    .q-options .option-item {
+        padding: 12px 16px !important;
         background: #f8faff !important;
-        border-radius: 8px !important;
+        border-radius: 10px !important;
+        border: 2px solid #e8eef6 !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
         text-align: left !important;
+        user-select: none !important;
     }
     
-    /* ✅ Option Image Style */
+    .q-options .option-item:hover {
+        border-color: #6C63FF !important;
+        background: #f0edff !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 12px rgba(108, 99, 255, 0.15) !important;
+    }
+    
+    .q-options .option-item.correct {
+        border-color: #00b894 !important;
+        background: #e6f9f1 !important;
+        box-shadow: 0 0 0 4px rgba(0, 184, 148, 0.1) !important;
+    }
+    
+    .q-options .option-item.correct::after {
+        content: " ✓ Correct!";
+        color: #00b894;
+        font-weight: 600;
+    }
+    
+    .q-options .option-item.wrong {
+        border-color: #ff6b6b !important;
+        background: #ffe8e8 !important;
+        box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1) !important;
+    }
+    
+    .q-options .option-item.wrong::after {
+        content: " ✗ Wrong!";
+        color: #ff6b6b;
+        font-weight: 600;
+    }
+    
+    .q-options .option-item.disabled {
+        cursor: default !important;
+        opacity: 0.8 !important;
+    }
+    
+    .q-options .option-item.disabled:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
     .option-image {
         margin-top: 5px !important;
     }
@@ -97,11 +135,62 @@
         border: 1px solid #e8eef6 !important;
     }
     
-    .q-view-hint {
-        text-align: left !important;
+    .q-actions {
+        display: flex !important;
+        gap: 12px !important;
+        flex-wrap: wrap !important;
+        margin-top: 12px !important;
+        align-items: center !important;
+    }
+    
+    .btn-solution {
+        background: #6C63FF !important;
+        color: white !important;
+        padding: 8px 20px !important;
+        border-radius: 8px !important;
+        text-decoration: none !important;
+        font-size: 0.9rem !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+        border: none !important;
+        cursor: pointer !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+    }
+    
+    .btn-solution:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px rgba(108, 99, 255, 0.3) !important;
+    }
+    
+    .btn-solution:disabled {
+        opacity: 0.5 !important;
+        cursor: not-allowed !important;
+        transform: none !important;
+    }
+    
+    .feedback-text {
+        font-size: 0.95rem !important;
+        font-weight: 500 !important;
+        padding: 6px 14px !important;
+        border-radius: 6px !important;
+        display: inline-block !important;
+    }
+    
+    .feedback-text.correct {
+        color: #00b894 !important;
+        background: #e6f9f1 !important;
+    }
+    
+    .feedback-text.wrong {
+        color: #ff6b6b !important;
+        background: #ffe8e8 !important;
+    }
+    
+    .feedback-text.waiting {
         color: #6C63FF !important;
-        font-size: 0.85rem !important;
-        margin-top: 8px !important;
+        background: #f0edff !important;
     }
     
     .filter-bar {
@@ -220,6 +309,32 @@
         margin-bottom: 20px !important;
     }
     
+    /* ✅ Answer status badges */
+    .q-status {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        padding: 4px 14px !important;
+        border-radius: 20px !important;
+        font-size: 0.8rem !important;
+        font-weight: 600 !important;
+    }
+    
+    .q-status.answered-correct {
+        background: #e6f9f1 !important;
+        color: #00b894 !important;
+    }
+    
+    .q-status.answered-wrong {
+        background: #ffe8e8 !important;
+        color: #ff6b6b !important;
+    }
+    
+    .q-status.not-answered {
+        background: #f0edff !important;
+        color: #6C63FF !important;
+    }
+    
     @media (max-width: 768px) {
         .filter-group {
             flex-direction: column !important;
@@ -306,82 +421,83 @@
     {% if questions %}
     <div class="question-list">
         {% for q in questions %}
-        <a href="{{ url_for('student_question_detail', id=q.id) }}" class="question-link">
-            <div class="question-card">
-                <div class="q-meta">
-                    <span class="q-topic">{{ q.topic }}</span>
-                    <span class="q-year">{{ q.year }}</span>
-                    <span class="q-exam">{{ q.exam_type }}</span>
-                    <span class="q-difficulty {{ q.difficulty.lower() }}">{{ q.difficulty }}</span>
-                    <span class="q-marks"><i class="fas fa-star"></i> +{{ q.marks }}/-{{ q.negative_marks }}</span>
-                </div>
-                
-                <!-- ✅ Question Text -->
-                <div class="q-text math-content">
-                    {{ q.question_text|safe }}
-                </div>
-                
-                <!-- ✅ Question Image (NEW - এখানে যোগ করা হয়েছে) -->
-                {% if q.question_image %}
-                <div class="q-image">
-                    <img src="{{ q.question_image }}" alt="Question Image">
-                </div>
-                {% endif %}
-                
-                <!-- ✅ Options -->
-                {% if q.option_a or q.option_b or q.option_c or q.option_d %}
-                <div class="q-options">
-                    {% if q.option_a %}
-                    <div>
-                        <strong>A.</strong> <span class="math-content">{{ q.option_a|safe }}</span>
-                        {% if q.option_a_image %}
-                        <div class="option-image">
-                            <img src="{{ q.option_a_image }}" alt="Option A">
-                        </div>
-                        {% endif %}
-                    </div>
-                    {% endif %}
-                    
-                    {% if q.option_b %}
-                    <div>
-                        <strong>B.</strong> <span class="math-content">{{ q.option_b|safe }}</span>
-                        {% if q.option_b_image %}
-                        <div class="option-image">
-                            <img src="{{ q.option_b_image }}" alt="Option B">
-                        </div>
-                        {% endif %}
-                    </div>
-                    {% endif %}
-                    
-                    {% if q.option_c %}
-                    <div>
-                        <strong>C.</strong> <span class="math-content">{{ q.option_c|safe }}</span>
-                        {% if q.option_c_image %}
-                        <div class="option-image">
-                            <img src="{{ q.option_c_image }}" alt="Option C">
-                        </div>
-                        {% endif %}
-                    </div>
-                    {% endif %}
-                    
-                    {% if q.option_d %}
-                    <div>
-                        <strong>D.</strong> <span class="math-content">{{ q.option_d|safe }}</span>
-                        {% if q.option_d_image %}
-                        <div class="option-image">
-                            <img src="{{ q.option_d_image }}" alt="Option D">
-                        </div>
-                        {% endif %}
-                    </div>
-                    {% endif %}
-                </div>
-                {% endif %}
-                
-                <div class="q-view-hint">
-                    <i class="fas fa-chevron-right"></i> Click to view solution
-                </div>
+        <div class="question-card" data-question-id="{{ q.id }}">
+            <div class="q-meta">
+                <span class="q-topic">{{ q.topic }}</span>
+                <span class="q-year">{{ q.year }}</span>
+                <span class="q-exam">{{ q.exam_type }}</span>
+                <span class="q-difficulty {{ q.difficulty.lower() }}">{{ q.difficulty }}</span>
+                <span class="q-marks"><i class="fas fa-star"></i> +{{ q.marks }}/-{{ q.negative_marks }}</span>
+                <span class="q-status not-answered" id="status-{{ q.id }}">
+                    <i class="fas fa-circle"></i> Not Answered
+                </span>
             </div>
-        </a>
+            
+            <div class="q-text math-content">
+                {{ q.question_text|safe }}
+            </div>
+            
+            {% if q.question_image %}
+            <div class="q-image">
+                <img src="{{ q.question_image }}" alt="Question Image">
+            </div>
+            {% endif %}
+            
+            {% if q.option_a or q.option_b or q.option_c or q.option_d %}
+            <div class="q-options" id="options-{{ q.id }}">
+                {% if q.option_a %}
+                <div class="option-item" data-question="{{ q.id }}" data-option="A" onclick="checkAnswer({{ q.id }}, 'A', '{{ q.correct_answer }}')">
+                    <strong>A.</strong> <span class="math-content">{{ q.option_a|safe }}</span>
+                    {% if q.option_a_image %}
+                    <div class="option-image">
+                        <img src="{{ q.option_a_image }}" alt="Option A">
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                {% if q.option_b %}
+                <div class="option-item" data-question="{{ q.id }}" data-option="B" onclick="checkAnswer({{ q.id }}, 'B', '{{ q.correct_answer }}')">
+                    <strong>B.</strong> <span class="math-content">{{ q.option_b|safe }}</span>
+                    {% if q.option_b_image %}
+                    <div class="option-image">
+                        <img src="{{ q.option_b_image }}" alt="Option B">
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                {% if q.option_c %}
+                <div class="option-item" data-question="{{ q.id }}" data-option="C" onclick="checkAnswer({{ q.id }}, 'C', '{{ q.correct_answer }}')">
+                    <strong>C.</strong> <span class="math-content">{{ q.option_c|safe }}</span>
+                    {% if q.option_c_image %}
+                    <div class="option-image">
+                        <img src="{{ q.option_c_image }}" alt="Option C">
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                {% if q.option_d %}
+                <div class="option-item" data-question="{{ q.id }}" data-option="D" onclick="checkAnswer({{ q.id }}, 'D', '{{ q.correct_answer }}')">
+                    <strong>D.</strong> <span class="math-content">{{ q.option_d|safe }}</span>
+                    {% if q.option_d_image %}
+                    <div class="option-image">
+                        <img src="{{ q.option_d_image }}" alt="Option D">
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+            
+            <div class="q-actions">
+                <span id="feedback-{{ q.id }}" class="feedback-text waiting">Select an option to check</span>
+                <a href="{{ url_for('student_question_detail', id=q.id) }}" class="btn-solution">
+                    <i class="fas fa-lightbulb"></i> Click to View Solution
+                </a>
+            </div>
+        </div>
         {% endfor %}
     </div>
     {% else %}
@@ -398,7 +514,7 @@
     // Chapter-wise topics data from backend
     const chapterTopics = {{ chapter_topics|tojson }};
     
-    console.log("Chapter Topics:", chapterTopics);  // Debug: Check in browser console
+    console.log("Chapter Topics:", chapterTopics);
     
     // Get DOM elements
     const chapterSelect = document.getElementById('chapterSelect');
@@ -417,26 +533,20 @@
         // Clear current options
         topicSelect.innerHTML = '<option value="">All Topics</option>';
         
-        // Get topics for selected chapter
         let topicsToShow = [];
         
         if (selectedChapter && chapterTopics[selectedChapter]) {
-            // Show topics for the selected chapter
             topicsToShow = chapterTopics[selectedChapter];
         } else {
-            // Show all topics if no chapter selected
             topicsToShow = allTopics;
         }
         
-        // Sort topics
         topicsToShow.sort();
         
-        // Add topics to dropdown
         topicsToShow.forEach(function(topic) {
             const opt = document.createElement('option');
             opt.value = topic;
             opt.textContent = topic;
-            // Preserve current selection if it matches
             if (topic === '{{ current_topic }}') {
                 opt.selected = true;
             }
@@ -444,14 +554,67 @@
         });
     }
     
-    // Update topics when chapter changes
     chapterSelect.addEventListener('change', function() {
         updateTopics();
     });
     
-    // Initial setup - update topics on page load
     document.addEventListener('DOMContentLoaded', function() {
         updateTopics();
     });
+    
+    // =============================================
+    // ✅ Answer Checking Function
+    // =============================================
+    function checkAnswer(questionId, selectedOption, correctAnswer) {
+        const optionsContainer = document.getElementById(`options-${questionId}`);
+        const optionItems = optionsContainer.querySelectorAll('.option-item');
+        const feedback = document.getElementById(`feedback-${questionId}`);
+        const statusBadge = document.getElementById(`status-${questionId}`);
+        
+        // Check if already answered
+        if (optionsContainer.dataset.answered === 'true') {
+            feedback.textContent = 'You already answered this question!';
+            feedback.className = 'feedback-text waiting';
+            return;
+        }
+        
+        let isCorrect = (selectedOption === correctAnswer);
+        let selectedElement = null;
+        
+        // Disable all options
+        optionItems.forEach(item => {
+            item.classList.add('disabled');
+            if (item.dataset.option === selectedOption) {
+                selectedElement = item;
+            }
+        });
+        
+        // Mark correct and wrong
+        optionItems.forEach(item => {
+            if (item.dataset.option === correctAnswer) {
+                item.classList.add('correct');
+            }
+        });
+        
+        if (selectedElement && !isCorrect) {
+            selectedElement.classList.add('wrong');
+        }
+        
+        // Update feedback
+        if (isCorrect) {
+            feedback.textContent = '✅ Correct! Great job!';
+            feedback.className = 'feedback-text correct';
+            statusBadge.className = 'q-status answered-correct';
+            statusBadge.innerHTML = '<i class="fas fa-check-circle"></i> Correct';
+        } else {
+            feedback.textContent = `❌ Wrong! The correct answer is ${correctAnswer}`;
+            feedback.className = 'feedback-text wrong';
+            statusBadge.className = 'q-status answered-wrong';
+            statusBadge.innerHTML = '<i class="fas fa-times-circle"></i> Wrong';
+        }
+        
+        // Mark as answered
+        optionsContainer.dataset.answered = 'true';
+    }
 </script>
 {% endblock %}
