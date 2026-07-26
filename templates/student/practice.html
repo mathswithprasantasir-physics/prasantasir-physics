@@ -5,7 +5,7 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='student_style.css') }}">
 <style>
-    /* Additional practice page specific styles */
+    /* ===== PRACTICE PAGE SPECIFIC STYLES ===== */
     .container {
         max-width: 1280px !important;
         width: 100% !important;
@@ -323,6 +323,82 @@
         justify-content: flex-end !important;
     }
     
+    /* ===== PAGINATION STYLES ===== */
+    .pagination-container {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 15px !important;
+        margin-top: 25px !important;
+        padding: 15px 20px !important;
+        background: white !important;
+        border-radius: 12px !important;
+        border: 1px solid #DFE6E9 !important;
+    }
+    
+    .pagination-info {
+        color: #636E72 !important;
+        font-size: 0.95rem !important;
+    }
+    
+    .pagination-info strong {
+        color: #2D3436 !important;
+    }
+    
+    .pagination-info .page-info {
+        margin-left: 10px !important;
+        color: #2D3436 !important;
+        font-size: 0.85rem !important;
+    }
+    
+    .pagination-links {
+        display: flex !important;
+        gap: 6px !important;
+        flex-wrap: wrap !important;
+    }
+    
+    .pagination-btn {
+        padding: 8px 16px !important;
+        border-radius: 8px !important;
+        border: 1px solid #DFE6E9 !important;
+        text-decoration: none !important;
+        color: #2D3436 !important;
+        transition: all 0.3s ease !important;
+        background: white !important;
+        font-size: 0.9rem !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+    }
+    
+    .pagination-btn:hover {
+        border-color: #6C63FF !important;
+        background: #f0edff !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 12px rgba(108, 99, 255, 0.15) !important;
+    }
+    
+    .pagination-btn.active {
+        border-color: #6C63FF !important;
+        background: #6C63FF !important;
+        color: white !important;
+        font-weight: 600 !important;
+        cursor: default !important;
+    }
+    
+    .pagination-btn.active:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    .pagination-ellipsis {
+        padding: 8px 6px !important;
+        color: #636E72 !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    
     @media (max-width: 768px) {
         .filter-group {
             flex-direction: column !important;
@@ -353,6 +429,20 @@
         .option-image img {
             max-width: 100px !important;
             max-height: 80px !important;
+        }
+        
+        .pagination-container {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            text-align: center !important;
+        }
+        
+        .pagination-links {
+            justify-content: center !important;
+        }
+        
+        .pagination-info {
+            text-align: center !important;
         }
     }
 </style>
@@ -488,6 +578,66 @@
         </div>
         {% endfor %}
     </div>
+    
+    <!-- ===== PAGINATION ===== -->
+    {% if total_pages > 1 %}
+    <div class="pagination-container">
+        <div class="pagination-info">
+            Showing <strong>{{ questions|length }}</strong> of <strong>{{ total_questions }}</strong> questions
+            <span class="page-info">(Page {{ page }} of {{ total_pages }})</span>
+        </div>
+        <div class="pagination-links">
+            {% if page > 1 %}
+            <a href="{{ url_for('student_practice', page=page-1, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
+               class="pagination-btn">
+                <i class="fas fa-chevron-left"></i> Previous
+            </a>
+            {% endif %}
+            
+            {% set start_page = [page - 2, 1]|max %}
+            {% set end_page = [page + 2, total_pages]|min %}
+            
+            {% if start_page > 1 %}
+            <a href="{{ url_for('student_practice', page=1, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
+               class="pagination-btn">
+                1
+            </a>
+            {% if start_page > 2 %}
+            <span class="pagination-ellipsis">…</span>
+            {% endif %}
+            {% endif %}
+            
+            {% for p in range(start_page, end_page + 1) %}
+            {% if p == page %}
+            <span class="pagination-btn active">{{ p }}</span>
+            {% else %}
+            <a href="{{ url_for('student_practice', page=p, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
+               class="pagination-btn">
+                {{ p }}
+            </a>
+            {% endif %}
+            {% endfor %}
+            
+            {% if end_page < total_pages %}
+            {% if end_page < total_pages - 1 %}
+            <span class="pagination-ellipsis">…</span>
+            {% endif %}
+            <a href="{{ url_for('student_practice', page=total_pages, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
+               class="pagination-btn">
+                {{ total_pages }}
+            </a>
+            {% endif %}
+            
+            {% if page < total_pages %}
+            <a href="{{ url_for('student_practice', page=page+1, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
+               class="pagination-btn">
+                Next <i class="fas fa-chevron-right"></i>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    
     {% else %}
     <div class="empty-state">
         <i class="fas fa-inbox"></i>
@@ -499,10 +649,10 @@
 </div>
 
 <script>
+    // =============================================
     // Chapter-wise topics data from backend
+    // =============================================
     var chapterTopics = {{ chapter_topics|tojson }};
-    
-    console.log("Chapter Topics:", chapterTopics);
     
     // Get DOM elements
     var chapterSelect = document.getElementById('chapterSelect');
@@ -514,15 +664,14 @@
     allTopics.push('{{ topic }}');
     {% endfor %}
     
-    // Function to update topic options based on selected chapter
+    // =============================================
+    // Function to update topic options
+    // =============================================
     function updateTopics() {
         var selectedChapter = chapterSelect.value;
-        
-        // Clear current options
         topicSelect.innerHTML = '<option value="">All Topics</option>';
         
         var topicsToShow = [];
-        
         if (selectedChapter && chapterTopics[selectedChapter]) {
             topicsToShow = chapterTopics[selectedChapter];
         } else {
@@ -542,13 +691,8 @@
         }
     }
     
-    chapterSelect.addEventListener('change', function() {
-        updateTopics();
-    });
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        updateTopics();
-    });
+    chapterSelect.addEventListener('change', updateTopics);
+    document.addEventListener('DOMContentLoaded', updateTopics);
     
     // =============================================
     // Answer Checking Function
@@ -577,13 +721,14 @@
             }
         }
         
-        // Mark correct and wrong
+        // Mark correct answer
         for (var i = 0; i < optionItems.length; i++) {
             if (optionItems[i].dataset.option === correctAnswer) {
                 optionItems[i].classList.add('correct');
             }
         }
         
+        // Mark wrong answer if selected
         if (selectedElement && !isCorrect) {
             selectedElement.classList.add('wrong');
         }
