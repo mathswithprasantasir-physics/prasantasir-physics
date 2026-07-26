@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Practice - NEET Physics{% endblock %}
+{% block title %}Home - NEET Physics Practice{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='student_style.css') }}">
 <style>
-    /* ===== PRACTICE PAGE SPECIFIC STYLES ===== */
+    /* ===== HOME PAGE SPECIFIC STYLES ===== */
     .container {
         max-width: 1280px !important;
         width: 100% !important;
@@ -14,6 +14,166 @@
         text-align: left !important;
     }
     
+    .welcome-section {
+        background: white !important;
+        padding: 30px 35px !important;
+        border-radius: 16px !important;
+        margin-bottom: 30px !important;
+        border: 1px solid rgba(108, 99, 255, 0.05) !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
+    }
+    
+    .welcome-section h2 {
+        font-size: 1.8rem !important;
+        color: #1a3a55 !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .welcome-section h2 i {
+        color: #6C63FF !important;
+        margin-right: 10px !important;
+    }
+    
+    .welcome-section p {
+        color: #636E72 !important;
+        font-size: 1.05rem !important;
+        margin: 0 !important;
+    }
+    
+    .stats-grid {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+        gap: 20px !important;
+        margin-bottom: 30px !important;
+    }
+    
+    .stat-card {
+        background: white !important;
+        padding: 22px 25px !important;
+        border-radius: 16px !important;
+        border: 1px solid rgba(108, 99, 255, 0.05) !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 18px !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-4px) !important;
+        box-shadow: 0 15px 50px rgba(108, 99, 255, 0.15) !important;
+    }
+    
+    .stat-icon {
+        width: 55px !important;
+        height: 55px !important;
+        border-radius: 14px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 1.5rem !important;
+        color: white !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .stat-icon.blue { background: linear-gradient(135deg, #6C63FF, #5A52D5); }
+    .stat-icon.green { background: linear-gradient(135deg, #00D2A0, #00B894); }
+    .stat-icon.orange { background: linear-gradient(135deg, #FFC107, #F9A825); }
+    .stat-icon.purple { background: linear-gradient(135deg, #A29BFE, #6C5CE7); }
+    .stat-icon.red { background: linear-gradient(135deg, #FF4757, #E74C3C); }
+    
+    .stat-info {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    
+    .stat-label {
+        font-size: 0.8rem !important;
+        color: #636E72 !important;
+        font-weight: 500 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+    }
+    
+    .stat-value {
+        font-size: 2rem !important;
+        font-weight: 700 !important;
+        color: #2D3436 !important;
+        line-height: 1.2 !important;
+    }
+    
+    .section-title {
+        font-size: 1.3rem !important;
+        color: #1a3a55 !important;
+        margin-bottom: 20px !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+    }
+    
+    .section-title i {
+        color: #6C63FF !important;
+    }
+    
+    /* ===== CHAPTER GRID ===== */
+    .chapter-grid {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+        gap: 16px !important;
+        margin-bottom: 30px !important;
+    }
+    
+    .chapter-card {
+        background: linear-gradient(135deg, #F8F9FF, #EEF0FF) !important;
+        padding: 20px 24px !important;
+        border-radius: 12px !important;
+        border: 2px solid transparent !important;
+        transition: all 0.3s ease !important;
+        text-decoration: none !important;
+        display: block !important;
+    }
+    
+    .chapter-card:hover {
+        border-color: #6C63FF !important;
+        transform: translateY(-4px) !important;
+        box-shadow: 0 8px 25px rgba(108, 99, 255, 0.12) !important;
+    }
+    
+    .chapter-name {
+        font-weight: 600 !important;
+        color: #2D3436 !important;
+        font-size: 1rem !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+    }
+    
+    .chapter-name i {
+        color: #6C63FF !important;
+        font-size: 1.1rem !important;
+    }
+    
+    .chapter-stats {
+        display: flex !important;
+        gap: 20px !important;
+        margin-top: 8px !important;
+        font-size: 0.85rem !important;
+        color: #636E72 !important;
+    }
+    
+    .chapter-stats i {
+        color: #6C63FF !important;
+    }
+    
+    .chapter-stats .topic-count {
+        background: rgba(108, 99, 255, 0.1) !important;
+        padding: 2px 12px !important;
+        border-radius: 20px !important;
+        color: #6C63FF !important;
+        font-weight: 500 !important;
+    }
+    
+    /* ===== RANDOM QUESTIONS ===== */
     .question-list {
         display: flex !important;
         flex-direction: column !important;
@@ -38,247 +198,150 @@
         box-shadow: 0 4px 20px rgba(108, 99, 255, 0.08) !important;
     }
     
+    .question-link {
+        text-decoration: none !important;
+        display: block !important;
+    }
+    
+    .question-link:hover .question-card {
+        border-color: #6C63FF !important;
+        transform: translateX(6px) !important;
+        box-shadow: 0 15px 50px rgba(108, 99, 255, 0.25) !important;
+    }
+    
     .q-meta {
         display: flex !important;
         gap: 12px !important;
         flex-wrap: wrap !important;
         margin-bottom: 10px !important;
         justify-content: flex-start !important;
-        align-items: center !important;
+    }
+    
+    .q-topic {
+        background: linear-gradient(135deg, #6C63FF, #5A52D5) !important;
+        color: white !important;
+        padding: 3px 14px !important;
+        border-radius: 30px !important;
+        font-size: 0.75rem !important;
+        font-weight: 600 !important;
+    }
+    
+    .q-year {
+        background: #DFE6E9 !important;
+        padding: 3px 12px !important;
+        border-radius: 30px !important;
+        font-size: 0.75rem !important;
+        font-weight: 500 !important;
+        color: #636E72 !important;
+    }
+    
+    .q-difficulty {
+        padding: 3px 12px !important;
+        border-radius: 30px !important;
+        font-size: 0.75rem !important;
+        font-weight: 600 !important;
+    }
+    
+    .q-difficulty.easy { background: #d4edda; color: #155724; }
+    .q-difficulty.medium { background: #fff3cd; color: #856404; }
+    .q-difficulty.hard { background: #f8d7da; color: #721c24; }
+    
+    .q-exam {
+        background: #DFE6E9 !important;
+        padding: 3px 12px !important;
+        border-radius: 30px !important;
+        font-size: 0.75rem !important;
+        color: #636E72 !important;
+    }
+    
+    .q-marks {
+        background: #DFE6E9 !important;
+        padding: 3px 12px !important;
+        border-radius: 30px !important;
+        font-size: 0.75rem !important;
+        font-weight: 600 !important;
+        color: #FF6584 !important;
     }
     
     .q-text {
-        text-align: left !important;
+        color: #2D3436 !important;
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
         margin: 8px 0 !important;
-    }
-    
-    .q-image {
-        margin: 12px 0 !important;
-        text-align: left !important;
-    }
-    
-    .q-image img {
-        max-width: 100% !important;
-        max-height: 300px !important;
-        border-radius: 10px !important;
-        border: 1px solid #e8eef6 !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
     }
     
     .q-options {
         display: grid !important;
         grid-template-columns: 1fr 1fr !important;
-        gap: 10px !important;
+        gap: 8px !important;
         margin: 12px 0 !important;
-        text-align: left !important;
+        font-size: 0.95rem !important;
     }
     
-    .q-options .option-item {
-        padding: 12px 16px !important;
+    .q-options div {
+        padding: 8px 14px !important;
         background: #f8faff !important;
-        border-radius: 10px !important;
-        border: 2px solid #e8eef6 !important;
-        cursor: pointer !important;
+        border-radius: 8px !important;
         transition: all 0.3s ease !important;
-        text-align: left !important;
-        user-select: none !important;
-    }
-    
-    .q-options .option-item:hover {
-        border-color: #6C63FF !important;
-        background: #f0edff !important;
-        transform: translateY(-2px) !important;
-        box-shadow: 0 4px 12px rgba(108, 99, 255, 0.15) !important;
-    }
-    
-    .q-options .option-item.correct {
-        border-color: #00b894 !important;
-        background: #e6f9f1 !important;
-        box-shadow: 0 0 0 4px rgba(0, 184, 148, 0.1) !important;
-    }
-    
-    .q-options .option-item.correct::after {
-        content: " ✓ Correct!";
-        color: #00b894;
-        font-weight: 600;
-    }
-    
-    .q-options .option-item.wrong {
-        border-color: #ff6b6b !important;
-        background: #ffe8e8 !important;
-        box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1) !important;
-    }
-    
-    .q-options .option-item.wrong::after {
-        content: " ✗ Wrong!";
-        color: #ff6b6b;
-        font-weight: 600;
-    }
-    
-    .q-options .option-item.disabled {
-        cursor: default !important;
-        opacity: 0.8 !important;
-    }
-    
-    .q-options .option-item.disabled:hover {
-        transform: none !important;
-        box-shadow: none !important;
-    }
-    
-    .option-image {
-        margin-top: 5px !important;
-    }
-    
-    .option-image img {
-        max-width: 150px !important;
-        max-height: 100px !important;
-        border-radius: 6px !important;
         border: 1px solid #e8eef6 !important;
     }
     
-    .q-actions {
-        display: flex !important;
-        gap: 12px !important;
-        flex-wrap: wrap !important;
-        margin-top: 12px !important;
-        align-items: center !important;
+    .q-options div:hover {
+        background: #E8ECFF !important;
     }
     
-    .btn-solution {
-        background: #6C63FF !important;
-        color: white !important;
-        padding: 8px 20px !important;
-        border-radius: 8px !important;
-        text-decoration: none !important;
-        font-size: 0.9rem !important;
-        font-weight: 500 !important;
-        transition: all 0.3s ease !important;
-        border: none !important;
-        cursor: pointer !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 8px !important;
-    }
-    
-    .btn-solution:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 25px rgba(108, 99, 255, 0.3) !important;
-    }
-    
-    .feedback-text {
-        font-size: 0.95rem !important;
-        font-weight: 500 !important;
-        padding: 6px 14px !important;
-        border-radius: 6px !important;
-        display: inline-block !important;
-    }
-    
-    .feedback-text.correct {
-        color: #00b894 !important;
-        background: #e6f9f1 !important;
-    }
-    
-    .feedback-text.wrong {
-        color: #ff6b6b !important;
-        background: #ffe8e8 !important;
-    }
-    
-    .feedback-text.waiting {
+    .q-view-hint {
+        text-align: left !important;
         color: #6C63FF !important;
-        background: #f0edff !important;
+        font-size: 0.85rem !important;
+        margin-top: 8px !important;
     }
     
-    .q-status {
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 6px !important;
-        padding: 4px 14px !important;
-        border-radius: 20px !important;
-        font-size: 0.75rem !important;
-        font-weight: 600 !important;
+    .q-view-hint i {
+        margin-right: 6px !important;
     }
     
-    .q-status.answered-correct {
-        background: #e6f9f1 !important;
-        color: #00b894 !important;
-    }
-    
-    .q-status.answered-wrong {
-        background: #ffe8e8 !important;
-        color: #ff6b6b !important;
-    }
-    
-    .q-status.not-answered {
-        background: #f0edff !important;
-        color: #6C63FF !important;
-    }
-    
-    .filter-bar {
-        background: white !important;
-        padding: 22px 25px !important;
-        border-radius: 16px !important;
-        margin-bottom: 25px !important;
-        width: 100% !important;
-    }
-    
-    .filter-group {
-        display: flex !important;
-        gap: 15px !important;
-        flex-wrap: wrap !important;
-        align-items: center !important;
-        justify-content: flex-start !important;
-    }
-    
-    .filter-group select {
-        padding: 10px 18px !important;
-        border: 2px solid #DFE6E9 !important;
-        border-radius: 10px !important;
-        font-size: 0.9rem !important;
-        background: white !important;
-        min-width: 160px !important;
-        flex: 1 !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    .filter-group select:focus {
-        outline: none !important;
-        border-color: #6C63FF !important;
-        box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1) !important;
-    }
-    
-    .btn-filter {
-        background: #6C63FF !important;
+    .btn-primary {
+        background: #FF6584 !important;
         color: white !important;
-        border: none !important;
-        padding: 10px 24px !important;
-        border-radius: 10px !important;
-        font-weight: 600 !important;
-        cursor: pointer !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    .btn-filter:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 25px rgba(108, 99, 255, 0.3) !important;
-    }
-    
-    .btn-clear {
-        background: #e8eef6 !important;
-        color: #3d5a78 !important;
-        padding: 10px 20px !important;
+        padding: 12px 28px !important;
         border-radius: 10px !important;
         text-decoration: none !important;
-        font-weight: 500 !important;
+        font-weight: 600 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 10px !important;
         transition: all 0.3s ease !important;
     }
     
-    .btn-clear:hover {
-        background: #d0d0d0 !important;
+    .btn-primary:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 10px 30px rgba(255, 101, 132, 0.4) !important;
+    }
+    
+    .btn-secondary {
+        background: #6C63FF !important;
+        color: white !important;
+        padding: 12px 28px !important;
+        border-radius: 10px !important;
+        text-decoration: none !important;
+        font-weight: 600 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .btn-secondary:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 10px 30px rgba(108, 99, 255, 0.4) !important;
     }
     
     .empty-state {
         text-align: center !important;
         padding: 60px 20px !important;
+        background: white !important;
+        border-radius: 16px !important;
     }
     
     .empty-state i {
@@ -288,25 +351,28 @@
     }
     
     .empty-state h3 {
-        color: #1a3a55 !important;
+        color: #2D3436 !important;
         margin-bottom: 10px !important;
     }
     
     .empty-state p {
-        color: #5f7892 !important;
+        color: #636E72 !important;
         margin-bottom: 20px !important;
     }
     
-    .page-title {
-        text-align: left !important;
-        margin-bottom: 25px !important;
-        font-size: 1.5rem !important;
-        color: #1a3a55 !important;
+    .view-all-link {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        color: #6C63FF !important;
+        text-decoration: none !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
     }
     
-    .page-title i {
-        color: #6C63FF !important;
-        margin-right: 10px !important;
+    .view-all-link:hover {
+        color: #5A52D5 !important;
+        transform: translateX(4px) !important;
     }
     
     header {
@@ -325,181 +391,6 @@
         align-items: center !important;
     }
     
-    /* ===== SEARCH BAR ===== */
-    .search-bar {
-        margin-bottom: 15px !important;
-    }
-    
-    .search-bar .search-input-wrapper {
-        position: relative !important;
-    }
-    
-    .search-bar .search-input-wrapper i {
-        position: absolute !important;
-        left: 15px !important;
-        top: 50% !important;
-        transform: translateY(-50%) !important;
-        color: #636E72 !important;
-    }
-    
-    .search-bar .search-input-wrapper input {
-        width: 100% !important;
-        padding: 12px 18px 12px 45px !important;
-        border: 2px solid #DFE6E9 !important;
-        border-radius: 10px !important;
-        font-size: 1rem !important;
-        transition: all 0.3s ease !important;
-        background: white !important;
-    }
-    
-    .search-bar .search-input-wrapper input:focus {
-        outline: none !important;
-        border-color: #6C63FF !important;
-        box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1) !important;
-    }
-    
-    /* ===== PROGRESS BAR ===== */
-    .progress-container {
-        margin-bottom: 20px !important;
-        padding: 15px 20px !important;
-        background: white !important;
-        border-radius: 12px !important;
-        border: 1px solid #DFE6E9 !important;
-    }
-    
-    .progress-header {
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        flex-wrap: wrap !important;
-        gap: 10px !important;
-    }
-    
-    .progress-header .progress-label {
-        font-weight: 500 !important;
-        color: #2D3436 !important;
-    }
-    
-    .progress-header .progress-count {
-        font-size: 0.9rem !important;
-        color: #636E72 !important;
-    }
-    
-    .progress-bar-track {
-        background: #f0f0f0 !important;
-        border-radius: 10px !important;
-        height: 8px !important;
-        margin-top: 10px !important;
-        overflow: hidden !important;
-    }
-    
-    .progress-bar-fill {
-        background: linear-gradient(135deg, #6C63FF, #FF6584) !important;
-        height: 100% !important;
-        width: 0% !important;
-        transition: width 0.5s ease !important;
-        border-radius: 10px !important;
-    }
-    
-    /* ===== BOOKMARK ===== */
-    .bookmark-btn {
-        cursor: pointer !important;
-        font-size: 1.3rem !important;
-        background: none !important;
-        border: none !important;
-        padding: 5px 10px !important;
-        color: #636E72 !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    .bookmark-btn:hover {
-        transform: scale(1.2) !important;
-    }
-    
-    .bookmark-btn .far {
-        color: #636E72 !important;
-    }
-    
-    .bookmark-btn .fas {
-        color: #FFC107 !important;
-    }
-    
-    /* ===== PAGINATION STYLES ===== */
-    .pagination-container {
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        flex-wrap: wrap !important;
-        gap: 15px !important;
-        margin-top: 25px !important;
-        padding: 15px 20px !important;
-        background: white !important;
-        border-radius: 12px !important;
-        border: 1px solid #DFE6E9 !important;
-    }
-    
-    .pagination-info {
-        color: #636E72 !important;
-        font-size: 0.95rem !important;
-    }
-    
-    .pagination-info strong {
-        color: #2D3436 !important;
-    }
-    
-    .pagination-info .page-info {
-        margin-left: 10px !important;
-        color: #2D3436 !important;
-        font-size: 0.85rem !important;
-    }
-    
-    .pagination-links {
-        display: flex !important;
-        gap: 6px !important;
-        flex-wrap: wrap !important;
-    }
-    
-    .pagination-btn {
-        padding: 8px 16px !important;
-        border-radius: 8px !important;
-        border: 1px solid #DFE6E9 !important;
-        text-decoration: none !important;
-        color: #2D3436 !important;
-        transition: all 0.3s ease !important;
-        background: white !important;
-        font-size: 0.9rem !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 6px !important;
-    }
-    
-    .pagination-btn:hover {
-        border-color: #6C63FF !important;
-        background: #f0edff !important;
-        transform: translateY(-2px) !important;
-        box-shadow: 0 4px 12px rgba(108, 99, 255, 0.15) !important;
-    }
-    
-    .pagination-btn.active {
-        border-color: #6C63FF !important;
-        background: #6C63FF !important;
-        color: white !important;
-        font-weight: 600 !important;
-        cursor: default !important;
-    }
-    
-    .pagination-btn.active:hover {
-        transform: none !important;
-        box-shadow: none !important;
-    }
-    
-    .pagination-ellipsis {
-        padding: 8px 6px !important;
-        color: #636E72 !important;
-        display: flex !important;
-        align-items: center !important;
-    }
-    
     /* ===== DARK TOGGLE ===== */
     .dark-toggle {
         background: rgba(255,255,255,0.15) !important;
@@ -515,164 +406,112 @@
     .dark-toggle:hover {
         background: rgba(255,255,255,0.25) !important;
     }
-    
-    /* ===== PRACTICE PAGE DARK MODE OPTIONS ===== */
-    body.dark-mode .question-card .q-text,
-    body.dark-mode .question-card .math-content {
-        color: #e0e0e0 !important;
-    }
-    
-    body.dark-mode .q-options .option-item {
-        background: #252547 !important;
-        border-color: #3d3d6b !important;
-        color: #e0e0e0 !important;
-    }
-    
-    body.dark-mode .q-options .option-item:hover {
-        background: #3d3d7a !important;
-        border-color: #6C63FF !important;
-    }
-    
-    body.dark-mode .q-options .option-item strong {
-        color: #e0e0e0 !important;
-    }
-    
-    body.dark-mode .q-options .option-item .math-content {
-        color: #e0e0e0 !important;
-    }
-    
-    body.dark-mode .filter-bar {
-        background: #1a1a2e !important;
-        border-color: #2d2d4a !important;
-    }
-    
-    body.dark-mode .filter-group select {
-        background: #252547 !important;
-        border-color: #3d3d6b !important;
-        color: #e0e0e0 !important;
-    }
-    
-    body.dark-mode .filter-group select option {
-        background: #1a1a2e !important;
-        color: #e0e0e0 !important;
-    }
-    
-    body.dark-mode .progress-container {
-        background: #1a1a2e !important;
-        border-color: #2d2d4a !important;
-    }
-    
-    body.dark-mode .progress-header .progress-label {
-        color: #e0e0e0 !important;
-    }
-    
-    body.dark-mode .progress-header .progress-count {
-        color: #8888aa !important;
-    }
-    
-    body.dark-mode .page-title {
-        color: #e0e0e0 !important;
-    }
-    
-    body.dark-mode .pagination-container {
-        background: #1a1a2e !important;
-        border-color: #2d2d4a !important;
-    }
-    
-    body.dark-mode .pagination-info {
-        color: #8888aa !important;
-    }
-    
-    body.dark-mode .pagination-info strong {
-        color: #e0e0e0 !important;
-    }
-    
-    body.dark-mode .feedback-text.waiting {
-        background: #3d3d6b !important;
-        color: #8B83FF !important;
-    }
-    
+
+    /* ===== HOME PAGE DARK MODE FIXES ===== */
     body.dark-mode .question-card {
         background: #1a1a2e !important;
         border-color: #2d2d4a !important;
     }
-    
+
+    body.dark-mode .question-card .q-text,
+    body.dark-mode .question-card .q-text *,
+    body.dark-mode .question-card .math-content {
+        color: #e0e0e0 !important;
+    }
+
+    body.dark-mode .q-options div {
+        background: #252547 !important;
+        border: 1px solid #3d3d6b !important;
+        color: #e0e0e0 !important;
+    }
+
+    body.dark-mode .q-options div:hover {
+        background: #3d3d7a !important;
+    }
+
+    body.dark-mode .q-options div strong {
+        color: #e0e0e0 !important;
+    }
+
+    body.dark-mode .q-options div .math-content {
+        color: #e0e0e0 !important;
+    }
+
+    body.dark-mode .q-view-hint {
+        color: #8B83FF !important;
+    }
+
+    body.dark-mode .q-view-hint i {
+        color: #8B83FF !important;
+    }
+
+    body.dark-mode .welcome-section {
+        background: #1a1a2e !important;
+        border-color: #2d2d4a !important;
+    }
+
+    body.dark-mode .welcome-section h2 {
+        color: #e0e0e0 !important;
+    }
+
+    body.dark-mode .welcome-section p {
+        color: #8888aa !important;
+    }
+
+    body.dark-mode .section-title {
+        color: #e0e0e0 !important;
+    }
+
     body.dark-mode .q-meta .q-year,
     body.dark-mode .q-meta .q-exam,
     body.dark-mode .q-meta .q-marks {
         background: #2d2d4a !important;
         color: #8888aa !important;
     }
-    
-    body.dark-mode .q-status.not-answered {
-        background: #3d3d6b !important;
-        color: #8B83FF !important;
+
+    body.dark-mode .stat-card {
+        background: #1a1a2e !important;
+        border-color: #2d2d4a !important;
     }
-    
-    body.dark-mode .q-status.answered-correct {
-        background: #1a3d2a !important;
-        color: #00d2a0 !important;
+
+    body.dark-mode .stat-card .stat-value {
+        color: #e0e0e0 !important;
     }
-    
-    body.dark-mode .q-status.answered-wrong {
-        background: #3d1a1a !important;
-        color: #ff6b6b !important;
+
+    body.dark-mode .stat-card .stat-label {
+        color: #8888aa !important;
     }
-    
+
+    body.dark-mode .chapter-card {
+        background: #1a1a2e !important;
+        border-color: #2d2d4a !important;
+    }
+
+    body.dark-mode .chapter-card:hover {
+        border-color: #6C63FF !important;
+    }
+
+    body.dark-mode .chapter-name {
+        color: #e0e0e0 !important;
+    }
+
+    body.dark-mode .chapter-stats {
+        color: #8888aa !important;
+    }
+
     body.dark-mode .empty-state {
         background: #1a1a2e !important;
     }
-    
+
     body.dark-mode .empty-state h3 {
         color: #e0e0e0 !important;
     }
-    
+
     body.dark-mode .empty-state p {
         color: #8888aa !important;
     }
     
-    body.dark-mode .search-bar .search-input-wrapper input {
-        background: #252547 !important;
-        border-color: #3d3d6b !important;
-        color: #e0e0e0 !important;
-    }
-    
-    body.dark-mode .search-bar .search-input-wrapper input::placeholder {
-        color: #8888aa !important;
-    }
-    
-    body.dark-mode .search-bar .search-input-wrapper input:focus {
-        border-color: #6C63FF !important;
-        box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1) !important;
-    }
-    
-    body.dark-mode .btn-clear {
-        background: #3d3d6b !important;
-        color: #e0e0e0 !important;
-    }
-    
-    body.dark-mode .btn-clear:hover {
-        background: #4d4d8b !important;
-    }
-    
-    body.dark-mode .bookmark-btn .far {
-        color: #8888aa !important;
-    }
-    
-    body.dark-mode .bookmark-btn .fas {
-        color: #FFC107 !important;
-    }
-    
     @media (max-width: 768px) {
-        .filter-group {
-            flex-direction: column !important;
-        }
-        
-        .filter-group select {
-            width: 100% !important;
-            min-width: unset !important;
-        }
-        
         .q-options {
             grid-template-columns: 1fr !important;
         }
@@ -686,33 +525,35 @@
             justify-content: center !important;
         }
         
-        .q-image img {
-            max-height: 200px !important;
+        .stats-grid {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 15px !important;
         }
         
-        .option-image img {
-            max-width: 100px !important;
-            max-height: 80px !important;
+        .chapter-grid {
+            grid-template-columns: 1fr !important;
         }
         
-        .pagination-container {
-            flex-direction: column !important;
-            align-items: stretch !important;
-            text-align: center !important;
+        .welcome-section {
+            padding: 20px !important;
         }
         
-        .pagination-links {
-            justify-content: center !important;
+        .welcome-section h2 {
+            font-size: 1.4rem !important;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .stats-grid {
+            grid-template-columns: 1fr !important;
         }
         
-        .pagination-info {
-            text-align: center !important;
+        .chapter-grid {
+            grid-template-columns: 1fr !important;
         }
         
-        .progress-header {
-            flex-direction: column !important;
-            align-items: stretch !important;
-            text-align: center !important;
+        .q-options {
+            grid-template-columns: 1fr !important;
         }
     }
 </style>
@@ -726,438 +567,129 @@
             <span>2027</span>
         </div>
         <nav>
-            <a href="{{ url_for('student_home') }}"><i class="fas fa-home"></i> Home</a>
-            <a href="{{ url_for('student_practice') }}" class="active"><i class="fas fa-book-open"></i> Practice</a>
+            <a href="{{ url_for('student_home') }}" class="active"><i class="fas fa-home"></i> Home</a>
+            <a href="{{ url_for('student_practice') }}"><i class="fas fa-book-open"></i> Practice</a>
             <button onclick="toggleDarkMode()" class="dark-toggle">
                 <i class="fas fa-moon"></i>
             </button>
         </nav>
     </header>
 
-    <h2 class="page-title"><i class="fas fa-search"></i> Practice Questions</h2>
-
-    <!-- ===== SEARCH BAR ===== -->
-    <div class="search-bar">
-        <div class="search-input-wrapper">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Search questions by keyword...">
-        </div>
+    <!-- ===== WELCOME SECTION ===== -->
+    <div class="welcome-section">
+        <h2><i class="fas fa-rocket"></i> Welcome to NEET Physics Practice!</h2>
+        <p>Master your Physics concepts with thousands of NEET-level questions. Practice, learn, and track your progress.</p>
     </div>
 
-    <!-- ===== PROGRESS BAR ===== -->
-    <div class="progress-container">
-        <div class="progress-header">
-            <span class="progress-label"><i class="fas fa-chart-line" style="color:#6C63FF;"></i> Progress</span>
-            <span class="progress-count">
-                <span id="answeredCount">0</span> / <span id="totalCount">{{ questions|length }}</span> answered
-            </span>
-        </div>
-        <div class="progress-bar-track">
-            <div class="progress-bar-fill" id="progressBar"></div>
-        </div>
-    </div>
-
-    <div class="filter-bar">
-        <form method="GET" action="{{ url_for('student_practice') }}" id="filterForm">
-            <div class="filter-group">
-                <select name="chapter" id="chapterSelect">
-                    <option value="">All Chapters</option>
-                    {% for chapter in chapters %}
-                    <option value="{{ chapter }}" {% if chapter == current_chapter %}selected{% endif %}>{{ chapter }}</option>
-                    {% endfor %}
-                </select>
-                <select name="topic" id="topicSelect">
-                    <option value="">All Topics</option>
-                    {% for topic in topics %}
-                    <option value="{{ topic }}" {% if topic == current_topic %}selected{% endif %}>{{ topic }}</option>
-                    {% endfor %}
-                </select>
-                <select name="difficulty">
-                    <option value="">All Difficulty</option>
-                    <option value="Easy" {% if current_difficulty == 'Easy' %}selected{% endif %}>Easy</option>
-                    <option value="Medium" {% if current_difficulty == 'Medium' %}selected{% endif %}>Medium</option>
-                    <option value="Hard" {% if current_difficulty == 'Hard' %}selected{% endif %}>Hard</option>
-                </select>
-                <select name="year">
-                    <option value="">All Years</option>
-                    {% for year in years %}
-                    <option value="{{ year }}" {% if year == current_year %}selected{% endif %}>{{ year }}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit" class="btn-filter"><i class="fas fa-filter"></i> Filter</button>
-                <a href="{{ url_for('student_practice') }}" class="btn-clear"><i class="fas fa-times"></i> Clear</a>
+    <!-- ===== STATISTICS ===== -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon blue"><i class="fas fa-question-circle"></i></div>
+            <div class="stat-info">
+                <span class="stat-label">Total Questions</span>
+                <span class="stat-value">{{ total_questions }}</span>
             </div>
-        </form>
-    </div>
-
-    {% if questions %}
-    <div class="question-list">
-        {% for q in questions %}
-        <div class="question-card" data-question-id="{{ q.id }}">
-            <div class="q-meta">
-                <span class="q-topic">{{ q.topic }}</span>
-                <span class="q-year">{{ q.year }}</span>
-                <span class="q-exam">{{ q.exam_type }}</span>
-                <span class="q-difficulty {{ q.difficulty.lower() }}">{{ q.difficulty }}</span>
-                <span class="q-marks"><i class="fas fa-star"></i> +{{ q.marks }}/-{{ q.negative_marks }}</span>
-                <span class="q-status not-answered" id="status-{{ q.id }}">
-                    <i class="fas fa-circle"></i> Not Answered
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon green"><i class="fas fa-book"></i></div>
+            <div class="stat-info">
+                <span class="stat-label">Chapters</span>
+                <span class="stat-value">{{ chapter_stats|length }}</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon orange"><i class="fas fa-tags"></i></div>
+            <div class="stat-info">
+                <span class="stat-label">Topics</span>
+                <span class="stat-value">{{ topic_stats|length }}</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon purple"><i class="fas fa-star"></i></div>
+            <div class="stat-info">
+                <span class="stat-label">Practice Now</span>
+                <span class="stat-value" style="font-size:1.2rem;">
+                    <a href="{{ url_for('student_practice') }}" style="color:#6C63FF; text-decoration:none;">
+                        Start <i class="fas fa-arrow-right"></i>
+                    </a>
                 </span>
-                <button class="bookmark-btn" onclick="event.stopPropagation(); toggleBookmark({{ q.id }})" type="button">
-                    <i class="far fa-bookmark" id="bookmark-{{ q.id }}"></i>
-                </button>
-            </div>
-            
-            <div class="q-text math-content">
-                {{ q.question_text|safe }}
-            </div>
-            
-            {% if q.question_image %}
-            <div class="q-image">
-                <img src="{{ q.question_image }}" alt="Question Image">
-            </div>
-            {% endif %}
-            
-            {% if q.option_a or q.option_b or q.option_c or q.option_d %}
-            <div class="q-options" id="options-{{ q.id }}">
-                {% if q.option_a %}
-                <div class="option-item" data-question="{{ q.id }}" data-option="A" onclick="checkAnswer({{ q.id }}, 'A', '{{ q.correct_answer }}')">
-                    <strong>A.</strong> <span class="math-content">{{ q.option_a|safe }}</span>
-                    {% if q.option_a_image %}
-                    <div class="option-image">
-                        <img src="{{ q.option_a_image }}" alt="Option A">
-                    </div>
-                    {% endif %}
-                </div>
-                {% endif %}
-                
-                {% if q.option_b %}
-                <div class="option-item" data-question="{{ q.id }}" data-option="B" onclick="checkAnswer({{ q.id }}, 'B', '{{ q.correct_answer }}')">
-                    <strong>B.</strong> <span class="math-content">{{ q.option_b|safe }}</span>
-                    {% if q.option_b_image %}
-                    <div class="option-image">
-                        <img src="{{ q.option_b_image }}" alt="Option B">
-                    </div>
-                    {% endif %}
-                </div>
-                {% endif %}
-                
-                {% if q.option_c %}
-                <div class="option-item" data-question="{{ q.id }}" data-option="C" onclick="checkAnswer({{ q.id }}, 'C', '{{ q.correct_answer }}')">
-                    <strong>C.</strong> <span class="math-content">{{ q.option_c|safe }}</span>
-                    {% if q.option_c_image %}
-                    <div class="option-image">
-                        <img src="{{ q.option_c_image }}" alt="Option C">
-                    </div>
-                    {% endif %}
-                </div>
-                {% endif %}
-                
-                {% if q.option_d %}
-                <div class="option-item" data-question="{{ q.id }}" data-option="D" onclick="checkAnswer({{ q.id }}, 'D', '{{ q.correct_answer }}')">
-                    <strong>D.</strong> <span class="math-content">{{ q.option_d|safe }}</span>
-                    {% if q.option_d_image %}
-                    <div class="option-image">
-                        <img src="{{ q.option_d_image }}" alt="Option D">
-                    </div>
-                    {% endif %}
-                </div>
-                {% endif %}
-            </div>
-            {% endif %}
-            
-            <div class="q-actions">
-                <span id="feedback-{{ q.id }}" class="feedback-text waiting">Select an option to check</span>
-                <a href="{{ url_for('student_question_detail', id=q.id) }}" class="btn-solution">
-                    <i class="fas fa-lightbulb"></i> Click to View Solution
-                </a>
             </div>
         </div>
+    </div>
+
+    <!-- ===== CHAPTERS ===== -->
+    {% if chapter_stats %}
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:20px;">
+        <h3 class="section-title" style="margin-bottom:0;"><i class="fas fa-book"></i> Chapters</h3>
+        <a href="{{ url_for('student_practice') }}" class="view-all-link">
+            View All <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+    
+    <div class="chapter-grid">
+        {% for chapter in chapter_stats %}
+        <a href="{{ url_for('student_practice') }}?chapter={{ chapter.name }}" class="chapter-card">
+            <div class="chapter-name">
+                <i class="fas fa-book-open"></i> {{ chapter.name }}
+            </div>
+            <div class="chapter-stats">
+                <span><i class="fas fa-list"></i> {{ chapter.count }} questions</span>
+                {% if chapter.topic_count > 0 %}
+                <span class="topic-count">
+                    <i class="fas fa-tags"></i> {{ chapter.topic_count }} topics
+                </span>
+                {% endif %}
+            </div>
+        </a>
         {% endfor %}
     </div>
-    
-    <!-- ===== PAGINATION ===== -->
-    {% if total_pages > 1 %}
-    <div class="pagination-container">
-        <div class="pagination-info">
-            Showing <strong>{{ questions|length }}</strong> of <strong>{{ total_questions }}</strong> questions
-            <span class="page-info">(Page {{ page }} of {{ total_pages }})</span>
-        </div>
-        <div class="pagination-links">
-            {% if page > 1 %}
-            <a href="{{ url_for('student_practice', page=page-1, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
-               class="pagination-btn">
-                <i class="fas fa-chevron-left"></i> Previous
-            </a>
-            {% endif %}
-            
-            {% set start_page = [page - 2, 1]|max %}
-            {% set end_page = [page + 2, total_pages]|min %}
-            
-            {% if start_page > 1 %}
-            <a href="{{ url_for('student_practice', page=1, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
-               class="pagination-btn">
-                1
-            </a>
-            {% if start_page > 2 %}
-            <span class="pagination-ellipsis">…</span>
-            {% endif %}
-            {% endif %}
-            
-            {% for p in range(start_page, end_page + 1) %}
-            {% if p == page %}
-            <span class="pagination-btn active">{{ p }}</span>
-            {% else %}
-            <a href="{{ url_for('student_practice', page=p, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
-               class="pagination-btn">
-                {{ p }}
-            </a>
-            {% endif %}
-            {% endfor %}
-            
-            {% if end_page < total_pages %}
-            {% if end_page < total_pages - 1 %}
-            <span class="pagination-ellipsis">…</span>
-            {% endif %}
-            <a href="{{ url_for('student_practice', page=total_pages, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
-               class="pagination-btn">
-                {{ total_pages }}
-            </a>
-            {% endif %}
-            
-            {% if page < total_pages %}
-            <a href="{{ url_for('student_practice', page=page+1, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
-               class="pagination-btn">
-                Next <i class="fas fa-chevron-right"></i>
-            </a>
-            {% endif %}
-        </div>
-    </div>
     {% endif %}
-    
+
+    <!-- ===== RANDOM QUESTIONS ===== -->
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:20px;">
+        <h3 class="section-title" style="margin-bottom:0;"><i class="fas fa-random"></i> Random Questions</h3>
+        <a href="{{ url_for('student_practice') }}" class="view-all-link">
+            View All <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    {% if random_questions %}
+    <div class="question-list">
+        {% for q in random_questions %}
+        <a href="{{ url_for('student_question_detail', id=q.id) }}" class="question-link">
+            <div class="question-card">
+                <div class="q-meta">
+                    <span class="q-topic">{{ q.topic }}</span>
+                    <span class="q-year">{{ q.year }}</span>
+                    <span class="q-exam">{{ q.exam_type }}</span>
+                    <span class="q-difficulty {{ q.difficulty.lower() }}">{{ q.difficulty }}</span>
+                    <span class="q-marks"><i class="fas fa-star"></i> +{{ q.marks }}/-{{ q.negative_marks }}</span>
+                </div>
+                <div class="q-text math-content">
+                    {{ q.question_text|safe }}
+                </div>
+                {% if q.option_a or q.option_b or q.option_c or q.option_d %}
+                <div class="q-options">
+                    {% if q.option_a %}<div><strong>A.</strong> <span class="math-content">{{ q.option_a|safe }}</span></div>{% endif %}
+                    {% if q.option_b %}<div><strong>B.</strong> <span class="math-content">{{ q.option_b|safe }}</span></div>{% endif %}
+                    {% if q.option_c %}<div><strong>C.</strong> <span class="math-content">{{ q.option_c|safe }}</span></div>{% endif %}
+                    {% if q.option_d %}<div><strong>D.</strong> <span class="math-content">{{ q.option_d|safe }}</span></div>{% endif %}
+                </div>
+                {% endif %}
+                <div class="q-view-hint">
+                    <i class="fas fa-chevron-right"></i> Click to view solution
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
     {% else %}
     <div class="empty-state">
         <i class="fas fa-inbox"></i>
-        <h3>No questions found</h3>
-        <p>Try changing the filter or come back later</p>
-        <a href="{{ url_for('student_practice') }}" class="btn-primary"><i class="fas fa-sync"></i> Reset Filters</a>
+        <h3>No questions available</h3>
+        <p>Please check back later or add some questions from the admin panel.</p>
+        <a href="{{ url_for('student_practice') }}" class="btn-primary">Go to Practice</a>
     </div>
     {% endif %}
 </div>
-
-<script>
-    // =============================================
-    // Chapter-wise topics data from backend
-    // =============================================
-    var chapterTopics = {{ chapter_topics|tojson }};
-    
-    // Get DOM elements
-    var chapterSelect = document.getElementById('chapterSelect');
-    var topicSelect = document.getElementById('topicSelect');
-    
-    // Store all topics for fallback
-    var allTopics = [];
-    {% for topic in topics %}
-    allTopics.push('{{ topic }}');
-    {% endfor %}
-    
-    // =============================================
-    // Function to update topic options
-    // =============================================
-    function updateTopics() {
-        var selectedChapter = chapterSelect.value;
-        topicSelect.innerHTML = '<option value="">All Topics</option>';
-        
-        var topicsToShow = [];
-        if (selectedChapter && chapterTopics[selectedChapter]) {
-            topicsToShow = chapterTopics[selectedChapter];
-        } else {
-            topicsToShow = allTopics;
-        }
-        
-        topicsToShow.sort();
-        
-        for (var i = 0; i < topicsToShow.length; i++) {
-            var opt = document.createElement('option');
-            opt.value = topicsToShow[i];
-            opt.textContent = topicsToShow[i];
-            if (topicsToShow[i] === '{{ current_topic }}') {
-                opt.selected = true;
-            }
-            topicSelect.appendChild(opt);
-        }
-    }
-    
-    chapterSelect.addEventListener('change', updateTopics);
-    document.addEventListener('DOMContentLoaded', updateTopics);
-    
-    // =============================================
-    // Answer Checking Function
-    // =============================================
-    function checkAnswer(questionId, selectedOption, correctAnswer) {
-        var optionsContainer = document.getElementById('options-' + questionId);
-        var optionItems = optionsContainer.querySelectorAll('.option-item');
-        var feedback = document.getElementById('feedback-' + questionId);
-        var statusBadge = document.getElementById('status-' + questionId);
-        
-        // Check if already answered
-        if (optionsContainer.dataset.answered === 'true') {
-            feedback.textContent = 'You already answered this question!';
-            feedback.className = 'feedback-text waiting';
-            return;
-        }
-        
-        var isCorrect = (selectedOption === correctAnswer);
-        var selectedElement = null;
-        
-        // Disable all options
-        for (var i = 0; i < optionItems.length; i++) {
-            optionItems[i].classList.add('disabled');
-            if (optionItems[i].dataset.option === selectedOption) {
-                selectedElement = optionItems[i];
-            }
-        }
-        
-        // Mark correct answer
-        for (var i = 0; i < optionItems.length; i++) {
-            if (optionItems[i].dataset.option === correctAnswer) {
-                optionItems[i].classList.add('correct');
-            }
-        }
-        
-        // Mark wrong answer if selected
-        if (selectedElement && !isCorrect) {
-            selectedElement.classList.add('wrong');
-        }
-        
-        // Update feedback
-        if (isCorrect) {
-            feedback.textContent = '✅ Correct! Great job!';
-            feedback.className = 'feedback-text correct';
-            statusBadge.className = 'q-status answered-correct';
-            statusBadge.innerHTML = '<i class="fas fa-check-circle"></i> Correct';
-            
-            // ===== CONFETTI CELEBRATION =====
-            confetti({
-                particleCount: 80,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#6C63FF', '#FF6584', '#00D2A0', '#FFC107']
-            });
-        } else {
-            feedback.textContent = '❌ Wrong! The correct answer is ' + correctAnswer;
-            feedback.className = 'feedback-text wrong';
-            statusBadge.className = 'q-status answered-wrong';
-            statusBadge.innerHTML = '<i class="fas fa-times-circle"></i> Wrong';
-        }
-        
-        // Mark as answered
-        optionsContainer.dataset.answered = 'true';
-        
-        // Update progress
-        updateProgress();
-    }
-    
-    // =============================================
-    // Progress Update Function
-    // =============================================
-    function updateProgress() {
-        var total = document.querySelectorAll('.question-card').length;
-        var answered = document.querySelectorAll('.q-status.answered-correct, .q-status.answered-wrong').length;
-        var answeredCount = document.getElementById('answeredCount');
-        var totalCount = document.getElementById('totalCount');
-        var progressBar = document.getElementById('progressBar');
-        
-        if (answeredCount) answeredCount.textContent = answered;
-        if (totalCount) totalCount.textContent = total;
-        if (progressBar) {
-            var percentage = total > 0 ? (answered / total) * 100 : 0;
-            progressBar.style.width = percentage + '%';
-        }
-    }
-    
-    // =============================================
-    // Search Function
-    // =============================================
-    document.getElementById('searchInput').addEventListener('input', function() {
-        var query = this.value.toLowerCase().trim();
-        var cards = document.querySelectorAll('.question-card');
-        
-        cards.forEach(function(card) {
-            var isVisible = card.textContent.toLowerCase().includes(query);
-            card.style.display = isVisible ? 'block' : 'none';
-        });
-        
-        updateProgress();
-    });
-    
-    // =============================================
-    // Bookmark Function - COMPLETELY FIXED
-    // =============================================
-    function toggleBookmark(id) {
-        // Stop event from bubbling up
-        if (event) event.stopPropagation();
-        
-        var icon = document.getElementById('bookmark-' + id);
-        if (!icon) {
-            console.error('Bookmark icon not found for id:', id);
-            return;
-        }
-        
-        // Get current bookmarks from localStorage
-        var bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-        console.log('Current bookmarks:', bookmarks);
-        
-        // Check current state - is it already bookmarked?
-        var isCurrentlyBookmarked = icon.classList.contains('fas');
-        console.log('Is currently bookmarked?', isCurrentlyBookmarked);
-        
-        if (isCurrentlyBookmarked) {
-            // UNBOOKMARK - Remove bookmark
-            console.log('Removing bookmark for question:', id);
-            icon.className = 'far fa-bookmark';
-            
-            // Remove from array
-            var index = bookmarks.indexOf(id);
-            if (index > -1) {
-                bookmarks.splice(index, 1);
-            }
-            localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-            console.log('Updated bookmarks after removal:', bookmarks);
-        } else {
-            // BOOKMARK - Add bookmark
-            console.log('Adding bookmark for question:', id);
-            icon.className = 'fas fa-bookmark';
-            
-            // Add to array if not exists
-            if (!bookmarks.includes(id)) {
-                bookmarks.push(id);
-                localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-                console.log('Updated bookmarks after addition:', bookmarks);
-            }
-        }
-    }
-    
-    // =============================================
-    // Load bookmarks on page load
-    // =============================================
-    document.addEventListener('DOMContentLoaded', function() {
-        var bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-        console.log('📚 Loading bookmarks from localStorage:', bookmarks);
-        
-        // Apply bookmarks to all icons
-        bookmarks.forEach(function(id) {
-            var icon = document.getElementById('bookmark-' + id);
-            if (icon) {
-                icon.className = 'fas fa-bookmark';
-                console.log('Applied bookmark to question:', id);
-            } else {
-                console.warn('Bookmark icon not found for ID:', id);
-            }
-        });
-        
-        // Initialize progress
-        updateProgress();
-    });
-</script>
 {% endblock %}
