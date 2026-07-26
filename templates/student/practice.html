@@ -511,6 +511,145 @@
         background: rgba(255,255,255,0.25) !important;
     }
     
+    /* ===== PRACTICE PAGE DARK MODE OPTIONS ===== */
+    body.dark-mode .question-card .q-text,
+    body.dark-mode .question-card .math-content {
+        color: #e0e0e0 !important;
+    }
+    
+    body.dark-mode .q-options .option-item {
+        background: #252547 !important;
+        border-color: #3d3d6b !important;
+        color: #e0e0e0 !important;
+    }
+    
+    body.dark-mode .q-options .option-item:hover {
+        background: #3d3d7a !important;
+        border-color: #6C63FF !important;
+    }
+    
+    body.dark-mode .q-options .option-item strong {
+        color: #e0e0e0 !important;
+    }
+    
+    body.dark-mode .q-options .option-item .math-content {
+        color: #e0e0e0 !important;
+    }
+    
+    body.dark-mode .filter-bar {
+        background: #1a1a2e !important;
+        border-color: #2d2d4a !important;
+    }
+    
+    body.dark-mode .filter-group select {
+        background: #252547 !important;
+        border-color: #3d3d6b !important;
+        color: #e0e0e0 !important;
+    }
+    
+    body.dark-mode .filter-group select option {
+        background: #1a1a2e !important;
+        color: #e0e0e0 !important;
+    }
+    
+    body.dark-mode .progress-container {
+        background: #1a1a2e !important;
+        border-color: #2d2d4a !important;
+    }
+    
+    body.dark-mode .progress-header .progress-label {
+        color: #e0e0e0 !important;
+    }
+    
+    body.dark-mode .progress-header .progress-count {
+        color: #8888aa !important;
+    }
+    
+    body.dark-mode .page-title {
+        color: #e0e0e0 !important;
+    }
+    
+    body.dark-mode .pagination-container {
+        background: #1a1a2e !important;
+        border-color: #2d2d4a !important;
+    }
+    
+    body.dark-mode .pagination-info {
+        color: #8888aa !important;
+    }
+    
+    body.dark-mode .pagination-info strong {
+        color: #e0e0e0 !important;
+    }
+    
+    body.dark-mode .feedback-text.waiting {
+        background: #3d3d6b !important;
+        color: #8B83FF !important;
+    }
+    
+    body.dark-mode .question-card {
+        background: #1a1a2e !important;
+        border-color: #2d2d4a !important;
+    }
+    
+    body.dark-mode .q-meta .q-year,
+    body.dark-mode .q-meta .q-exam,
+    body.dark-mode .q-meta .q-marks {
+        background: #2d2d4a !important;
+        color: #8888aa !important;
+    }
+    
+    body.dark-mode .q-status.not-answered {
+        background: #3d3d6b !important;
+        color: #8B83FF !important;
+    }
+    
+    body.dark-mode .q-status.answered-correct {
+        background: #1a3d2a !important;
+        color: #00d2a0 !important;
+    }
+    
+    body.dark-mode .q-status.answered-wrong {
+        background: #3d1a1a !important;
+        color: #ff6b6b !important;
+    }
+    
+    body.dark-mode .empty-state {
+        background: #1a1a2e !important;
+    }
+    
+    body.dark-mode .empty-state h3 {
+        color: #e0e0e0 !important;
+    }
+    
+    body.dark-mode .empty-state p {
+        color: #8888aa !important;
+    }
+    
+    body.dark-mode .search-bar .search-input-wrapper input {
+        background: #252547 !important;
+        border-color: #3d3d6b !important;
+        color: #e0e0e0 !important;
+    }
+    
+    body.dark-mode .search-bar .search-input-wrapper input::placeholder {
+        color: #8888aa !important;
+    }
+    
+    body.dark-mode .search-bar .search-input-wrapper input:focus {
+        border-color: #6C63FF !important;
+        box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1) !important;
+    }
+    
+    body.dark-mode .btn-clear {
+        background: #3d3d6b !important;
+        color: #e0e0e0 !important;
+    }
+    
+    body.dark-mode .btn-clear:hover {
+        background: #4d4d8b !important;
+    }
+    
     @media (max-width: 768px) {
         .filter-group {
             flex-direction: column !important;
@@ -940,23 +1079,24 @@
     });
     
     // =============================================
-    // Bookmark Function
+    // Bookmark Function - FIXED
     // =============================================
     function toggleBookmark(id) {
         var icon = document.getElementById('bookmark-' + id);
+        // Check if it's currently bookmarked (has 'fas' class)
         var isBookmarked = icon.classList.contains('fas');
         
         if (isBookmarked) {
+            // Remove bookmark - change to regular (far)
             icon.classList.remove('fas');
             icon.classList.add('far');
-            icon.style.color = '#636E72';
             var bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
             bookmarks = bookmarks.filter(function(b) { return b !== id; });
             localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
         } else {
+            // Add bookmark - change to solid (fas)
             icon.classList.remove('far');
             icon.classList.add('fas');
-            icon.style.color = '#FFC107';
             var bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
             if (!bookmarks.includes(id)) {
                 bookmarks.push(id);
@@ -973,7 +1113,6 @@
             if (icon) {
                 icon.classList.remove('far');
                 icon.classList.add('fas');
-                icon.style.color = '#FFC107';
             }
         });
         updateProgress();
