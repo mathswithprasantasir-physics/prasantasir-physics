@@ -7720,8 +7720,9 @@
           "option_c_image": "",
           "option_d_image": "",
           "correct_answer": "C",
-          "solution": "Initially, the charges are $+Q$ and $-Q$ separated by a distance $r$.\n\nThe electrostatic force is:\n$$F = -\\frac{1}{4\\pi\\varepsilon_0}\\frac{Q^2}{r^2}$$\n\nAfter transferring 25% of the charge from A to B:\n$$Q_A = Q - \\frac{Q}{4} = \\frac{3Q}{4}$$\n$$Q_B = -Q + \\frac{Q}{4} = -\\frac{3Q}{4}$$\n\nHence, the new force is:\n$$F' = \\frac{1}{4\\pi\\varepsilon_0}\\frac{(\\frac{3Q}{4})(-\\frac{3Q}{4})}{r^2} = -\\frac{1}{4\\pi\\varepsilon_0}\\frac{9Q^2}{16r^2}$$\n\nComparing with the initial force:\n$$F' = \\frac{9}{16}F$$\n\nTherefore, $\\boxed{\\text{Option (c) is correct}}$.",
           "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/solution_q1.png",
+          "solution": "Initially, the charges are $+Q$ and $-Q$ separated by a distance $r$.\n\nThe electrostatic force is:\n$$F = -\\frac{1}{4\\pi\\varepsilon_0}\\frac{Q^2}{r^2}$$\n\nAfter transferring 25% of the charge from A to B:\n$$Q_A = Q - \\frac{Q}{4} = \\frac{3Q}{4}$$\n$$Q_B = -Q + \\frac{Q}{4} = -\\frac{3Q}{4}$$\n\nHence, the new force is:\n$$F' = \\frac{1}{4\\pi\\varepsilon_0}\\frac{(\\frac{3Q}{4})(-\\frac{3Q}{4})}{r^2} = -\\frac{1}{4\\pi\\varepsilon_0}\\frac{9Q^2}{16r^2}$$\n\nComparing with the initial force:\n$$F' = \\frac{9}{16}F$$\n\nTherefore, $\\boxed{\\text{Option (c) is correct}}$.",
+          
           "explanation": "When charge is transferred, the magnitude of both charges becomes $\\frac{3Q}{4}$. Since electrostatic force is proportional to the product of the charges, the new force becomes $\\frac{9}{16}$ of the original force.",
           "marks": 4,
           "negative_marks": 1
