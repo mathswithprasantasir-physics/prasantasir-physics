@@ -4,385 +4,6 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='student_style.css') }}">
-<style>
-    /* ===== MOBILE RESPONSIVE FIXES ===== */
-    .container {
-        max-width: 1280px !important;
-        width: 100% !important;
-        margin: 0 auto !important;
-        padding: 20px !important;
-        text-align: left !important;
-    }
-    
-    .question-detail {
-        background: white !important;
-        padding: 35px 40px !important;
-        border-radius: 16px !important;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
-        overflow: hidden !important;
-    }
-    
-    .q-meta {
-        display: flex !important;
-        gap: 12px !important;
-        flex-wrap: wrap !important;
-        margin-bottom: 15px !important;
-        justify-content: flex-start !important;
-    }
-    
-    .q-topic {
-        background: linear-gradient(135deg, #6C63FF, #5A52D5) !important;
-        color: white !important;
-        padding: 4px 16px !important;
-        border-radius: 30px !important;
-        font-size: 0.8rem !important;
-        font-weight: 600 !important;
-    }
-    
-    .q-year, .q-exam {
-        background: #DFE6E9 !important;
-        padding: 4px 14px !important;
-        border-radius: 30px !important;
-        font-size: 0.75rem !important;
-        color: #636E72 !important;
-    }
-    
-    .q-difficulty {
-        padding: 4px 14px !important;
-        border-radius: 30px !important;
-        font-size: 0.75rem !important;
-        font-weight: 600 !important;
-    }
-    
-    .q-difficulty.easy { background: #d4edda; color: #155724; }
-    .q-difficulty.medium { background: #fff3cd; color: #856404; }
-    .q-difficulty.hard { background: #f8d7da; color: #721c24; }
-    
-    .q-marks {
-        background: #DFE6E9 !important;
-        padding: 4px 14px !important;
-        border-radius: 30px !important;
-        font-size: 0.75rem !important;
-        font-weight: 600 !important;
-        color: #FF6584 !important;
-    }
-    
-    .q-full-text {
-        margin: 20px 0 !important;
-        padding: 20px !important;
-        background: #f8faff !important;
-        border-radius: 12px !important;
-        border-left: 4px solid #6C63FF !important;
-        overflow-x: auto !important;
-    }
-    
-    .q-full-text h3 {
-        color: #6C63FF !important;
-        margin-bottom: 10px !important;
-        font-size: 1rem !important;
-    }
-    
-    .q-full-options {
-        margin: 20px 0 !important;
-        padding: 20px !important;
-        background: #f8faff !important;
-        border-radius: 12px !important;
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
-        gap: 10px !important;
-    }
-    
-    .q-full-options h3 {
-        grid-column: 1 / -1 !important;
-        color: #6C63FF !important;
-        margin-bottom: 10px !important;
-        font-size: 1rem !important;
-    }
-    
-    .q-full-options div {
-        padding: 10px 16px !important;
-        background: white !important;
-        border-radius: 8px !important;
-        border: 1px solid #DFE6E9 !important;
-        overflow-x: auto !important;
-        word-break: break-word !important;
-    }
-    
-    .q-answer-box {
-        margin: 20px 0 !important;
-    }
-    
-    .q-correct-answer {
-        background: #d4edda !important;
-        padding: 14px 22px !important;
-        border-radius: 10px !important;
-        font-size: 1.1rem !important;
-        font-weight: 500 !important;
-    }
-    
-    /* ===== SOLUTION BOX - FIXED FOR MOBILE ===== */
-    .q-solution-box {
-        margin: 20px 0 !important;
-        padding: 22px 25px !important;
-        background: #fff8e1 !important;
-        border-radius: 12px !important;
-        border-left: 4px solid #FFC107 !important;
-        overflow: hidden !important;
-    }
-    
-    .q-solution-box h3 {
-        color: #2D3436 !important;
-        margin-bottom: 10px !important;
-    }
-    
-    .solution-image {
-        margin: 10px 0 !important;
-        border-radius: 12px !important;
-        overflow: hidden !important;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
-    }
-    
-    .solution-image img {
-        display: block !important;
-        max-width: 100% !important;
-        height: auto !important;
-    }
-    
-    /* ===== MATH CONTENT - SCROLLABLE FOR BIG EQUATIONS ===== */
-    .math-content {
-        font-size: 1.05rem !important;
-        line-height: 1.8 !important;
-        padding: 5px 0 !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        -webkit-overflow-scrolling: touch !important;
-        white-space: normal !important;
-        word-wrap: break-word !important;
-    }
-    
-    /* MathJax specific fixes */
-    .math-content mjx-container {
-        display: inline-block !important;
-        max-width: 100% !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        padding: 10px 0 !important;
-    }
-    
-    .math-content mjx-container[jax="SVG"][display="true"] {
-        display: block !important;
-        margin: 10px 0 !important;
-        max-width: 100% !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        padding: 10px 0 !important;
-    }
-    
-    /* Force MathJax to be scrollable on mobile */
-    .math-content .MathJax {
-        font-size: 1.05rem !important;
-        max-width: 100% !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-    }
-    
-    .math-content .MathJax_Display {
-        margin: 10px 0 !important;
-        max-width: 100% !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        padding: 5px 0 !important;
-    }
-    
-    /* ===== SOLUTION CONTENT SPECIFIC ===== */
-    .solution-content {
-        background: white !important;
-        padding: 15px 20px !important;
-        border-radius: 8px !important;
-        margin-top: 10px !important;
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch !important;
-    }
-    
-    .solution-content mjx-container {
-        padding: 15px 5px !important;
-    }
-    
-    /* ===== EXPLANATION BOX ===== */
-    .q-explanation-box {
-        margin: 20px 0 !important;
-        padding: 22px 25px !important;
-        background: #f0edff !important;
-        border-radius: 12px !important;
-        border-left: 4px solid #6C63FF !important;
-        overflow-x: auto !important;
-    }
-    
-    .q-explanation-box h3 {
-        color: #2D3436 !important;
-        margin-bottom: 10px !important;
-    }
-    
-    .explanation-content {
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch !important;
-    }
-    
-    .q-actions-full {
-        display: flex !important;
-        gap: 15px !important;
-        margin-top: 25px !important;
-        flex-wrap: wrap !important;
-    }
-    
-    .q-actions-full a {
-        padding: 12px 24px !important;
-        border-radius: 10px !important;
-        text-decoration: none !important;
-        font-weight: 500 !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 8px !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    .q-actions-full a:hover {
-        transform: translateY(-2px) !important;
-    }
-    
-    .btn-view {
-        background: #E8ECFF !important;
-        color: #6C63FF !important;
-    }
-    
-    .btn-primary {
-        background: #FF6584 !important;
-        color: white !important;
-    }
-    
-    .btn-primary:hover {
-        box-shadow: 0 10px 30px rgba(255, 101, 132, 0.4) !important;
-    }
-    
-    .question-image {
-        margin: 10px 0 !important;
-        border-radius: 12px !important;
-        overflow: hidden !important;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
-    }
-    
-    .question-image img {
-        display: block !important;
-        max-width: 100% !important;
-        height: auto !important;
-    }
-    
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 768px) {
-        .container {
-            padding: 10px !important;
-        }
-        
-        .question-detail {
-            padding: 20px !important;
-        }
-        
-        .q-full-options {
-            grid-template-columns: 1fr !important;
-            padding: 15px !important;
-        }
-        
-        .q-full-text {
-            padding: 15px !important;
-        }
-        
-        .q-solution-box {
-            padding: 15px 18px !important;
-        }
-        
-        .q-explanation-box {
-            padding: 15px 18px !important;
-        }
-        
-        .q-actions-full {
-            flex-direction: column !important;
-        }
-        
-        .q-actions-full a {
-            justify-content: center !important;
-        }
-        
-        .q-correct-answer {
-            font-size: 0.95rem !important;
-            padding: 12px 16px !important;
-        }
-        
-        /* ===== BIG EQUATION FIX FOR MOBILE ===== */
-        .math-content {
-            font-size: 0.95rem !important;
-            overflow-x: auto !important;
-            -webkit-overflow-scrolling: touch !important;
-            padding: 5px 2px !important;
-        }
-        
-        .math-content mjx-container {
-            font-size: 0.95rem !important;
-            padding: 10px 2px !important;
-        }
-        
-        .math-content mjx-container[jax="SVG"][display="true"] {
-            font-size: 0.95rem !important;
-            padding: 10px 2px !important;
-        }
-        
-        .solution-content {
-            padding: 12px 15px !important;
-        }
-        
-        .solution-content mjx-container {
-            padding: 12px 2px !important;
-        }
-        
-        .q-full-options div {
-            padding: 8px 12px !important;
-            font-size: 0.9rem !important;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .question-detail {
-            padding: 15px !important;
-        }
-        
-        .q-full-text {
-            padding: 12px !important;
-        }
-        
-        .q-full-options {
-            padding: 12px !important;
-        }
-        
-        .q-solution-box {
-            padding: 12px 15px !important;
-        }
-        
-        .q-explanation-box {
-            padding: 12px 15px !important;
-        }
-        
-        .math-content {
-            font-size: 0.85rem !important;
-        }
-        
-        .math-content mjx-container {
-            font-size: 0.85rem !important;
-        }
-        
-        .math-content mjx-container[jax="SVG"][display="true"] {
-            font-size: 0.85rem !important;
-        }
-    }
-</style>
 {% endblock %}
 
 {% block content %}
@@ -407,22 +28,20 @@
             <span class="q-marks"><i class="fas fa-star"></i> +{{ question.marks }}/-{{ question.negative_marks }}</span>
         </div>
         
-        <!-- ===== QUESTION ===== -->
         <div class="q-full-text">
-            <h3><i class="fas fa-question-circle"></i> Question:</h3>
+            <h3>Question:</h3>
             <div class="math-content">
                 {{ question.question_text|safe }}
             </div>
             {% if question.question_image %}
             <div class="question-image">
-                <img src="{{ question.question_image }}" alt="Question Image">
+                <img src="{{ question.question_image }}" alt="Question Image" style="max-width:100%; border-radius:10px; margin-top:10px;">
             </div>
             {% endif %}
         </div>
 
-        <!-- ===== OPTIONS ===== -->
         <div class="q-full-options">
-            <h3><i class="fas fa-list-ul"></i> Options:</h3>
+            <h3>Options:</h3>
             {% if question.option_a %}
             <div>
                 <strong>A.</strong> 
@@ -461,26 +80,23 @@
             {% endif %}
         </div>
 
-        <!-- ===== CORRECT ANSWER ===== -->
         <div class="q-answer-box">
             <div class="q-correct-answer">
                 <i class="fas fa-check-circle"></i> Correct Answer: <strong>{{ question.correct_answer }}</strong>
             </div>
         </div>
 
-        <!-- ===== SOLUTION (Image First, then Text - Scrollable) ===== -->
+        <!-- Solution Section - Image First -->
         {% if question.solution or question.solution_image %}
         <div class="q-solution-box">
             <h3><i class="fas fa-lightbulb"></i> Solution:</h3>
             
-            <!-- Solution Image First -->
             {% if question.solution_image %}
             <div class="solution-image">
-                <img src="{{ question.solution_image }}" alt="Solution Image">
+                <img src="{{ question.solution_image }}" alt="Solution Image" style="max-width:100%; border-radius:10px; margin-top:10px; margin-bottom:20px; border:1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
             </div>
             {% endif %}
             
-            <!-- Solution Text - With Horizontal Scroll for Big Equations -->
             {% if question.solution %}
             <div class="math-content solution-content">
                 {{ question.solution|safe }}
@@ -489,7 +105,6 @@
         </div>
         {% endif %}
 
-        <!-- ===== EXPLANATION ===== -->
         {% if question.explanation %}
         <div class="q-explanation-box">
             <h3><i class="fas fa-info-circle"></i> Explanation:</h3>
@@ -499,25 +114,10 @@
         </div>
         {% endif %}
 
-        <!-- ===== ACTIONS ===== -->
         <div class="q-actions-full">
             <a href="{{ url_for('student_practice') }}" class="btn-view"><i class="fas fa-arrow-left"></i> Back to Practice</a>
             <a href="{{ url_for('student_practice') }}?topic={{ question.topic }}" class="btn-primary"><i class="fas fa-filter"></i> More from {{ question.topic }}</a>
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        if (window.MathJax && MathJax.typesetPromise) {
-            MathJax.typesetPromise().then(function() {
-                console.log('✅ MathJax rendered on question detail');
-            }).catch(function(err) {
-                console.log('MathJax error:', err);
-            });
-        }
-    });
-</script>
 {% endblock %}
