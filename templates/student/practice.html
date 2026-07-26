@@ -5,6 +5,7 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='student_style.css') }}">
 <style>
+    /* Additional practice page specific styles */
     .container {
         max-width: 1280px !important;
         width: 100% !important;
@@ -60,10 +61,9 @@
         max-height: 300px !important;
         border-radius: 10px !important;
         border: 1px solid #e8eef6 !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
     }
     
-    /* ✅ Options Style - এখন clickable */
     .q-options {
         display: grid !important;
         grid-template-columns: 1fr 1fr !important;
@@ -164,12 +164,6 @@
         box-shadow: 0 8px 25px rgba(108, 99, 255, 0.3) !important;
     }
     
-    .btn-solution:disabled {
-        opacity: 0.5 !important;
-        cursor: not-allowed !important;
-        transform: none !important;
-    }
-    
     .feedback-text {
         font-size: 0.95rem !important;
         font-weight: 500 !important;
@@ -191,6 +185,31 @@
     .feedback-text.waiting {
         color: #6C63FF !important;
         background: #f0edff !important;
+    }
+    
+    .q-status {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        padding: 4px 14px !important;
+        border-radius: 20px !important;
+        font-size: 0.75rem !important;
+        font-weight: 600 !important;
+    }
+    
+    .q-status.answered-correct {
+        background: #e6f9f1 !important;
+        color: #00b894 !important;
+    }
+    
+    .q-status.answered-wrong {
+        background: #ffe8e8 !important;
+        color: #ff6b6b !important;
+    }
+    
+    .q-status.not-answered {
+        background: #f0edff !important;
+        color: #6C63FF !important;
     }
     
     .filter-bar {
@@ -224,38 +243,6 @@
         outline: none !important;
         border-color: #6C63FF !important;
         box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1) !important;
-    }
-    
-    .filter-group select:disabled {
-        opacity: 0.6 !important;
-        cursor: not-allowed !important;
-    }
-    
-    .page-title {
-        text-align: left !important;
-        margin-bottom: 25px !important;
-        font-size: 1.5rem !important;
-        color: #1a3a55 !important;
-    }
-    
-    .page-title i {
-        color: #6C63FF !important;
-        margin-right: 10px !important;
-    }
-    
-    header {
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        flex-wrap: wrap !important;
-        width: 100% !important;
-    }
-    
-    nav {
-        display: flex !important;
-        gap: 10px !important;
-        flex-wrap: wrap !important;
-        justify-content: flex-end !important;
     }
     
     .btn-filter {
@@ -309,30 +296,31 @@
         margin-bottom: 20px !important;
     }
     
-    /* ✅ Answer status badges */
-    .q-status {
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 6px !important;
-        padding: 4px 14px !important;
-        border-radius: 20px !important;
-        font-size: 0.8rem !important;
-        font-weight: 600 !important;
+    .page-title {
+        text-align: left !important;
+        margin-bottom: 25px !important;
+        font-size: 1.5rem !important;
+        color: #1a3a55 !important;
     }
     
-    .q-status.answered-correct {
-        background: #e6f9f1 !important;
-        color: #00b894 !important;
-    }
-    
-    .q-status.answered-wrong {
-        background: #ffe8e8 !important;
-        color: #ff6b6b !important;
-    }
-    
-    .q-status.not-answered {
-        background: #f0edff !important;
+    .page-title i {
         color: #6C63FF !important;
+        margin-right: 10px !important;
+    }
+    
+    header {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        width: 100% !important;
+    }
+    
+    nav {
+        display: flex !important;
+        gap: 10px !important;
+        flex-wrap: wrap !important;
+        justify-content: flex-end !important;
     }
     
     @media (max-width: 768px) {
@@ -512,28 +500,28 @@
 
 <script>
     // Chapter-wise topics data from backend
-    const chapterTopics = {{ chapter_topics|tojson }};
+    var chapterTopics = {{ chapter_topics|tojson }};
     
     console.log("Chapter Topics:", chapterTopics);
     
     // Get DOM elements
-    const chapterSelect = document.getElementById('chapterSelect');
-    const topicSelect = document.getElementById('topicSelect');
+    var chapterSelect = document.getElementById('chapterSelect');
+    var topicSelect = document.getElementById('topicSelect');
     
     // Store all topics for fallback
-    const allTopics = [];
+    var allTopics = [];
     {% for topic in topics %}
     allTopics.push('{{ topic }}');
     {% endfor %}
     
     // Function to update topic options based on selected chapter
     function updateTopics() {
-        const selectedChapter = chapterSelect.value;
+        var selectedChapter = chapterSelect.value;
         
         // Clear current options
         topicSelect.innerHTML = '<option value="">All Topics</option>';
         
-        let topicsToShow = [];
+        var topicsToShow = [];
         
         if (selectedChapter && chapterTopics[selectedChapter]) {
             topicsToShow = chapterTopics[selectedChapter];
@@ -543,15 +531,15 @@
         
         topicsToShow.sort();
         
-        topicsToShow.forEach(function(topic) {
-            const opt = document.createElement('option');
-            opt.value = topic;
-            opt.textContent = topic;
-            if (topic === '{{ current_topic }}') {
+        for (var i = 0; i < topicsToShow.length; i++) {
+            var opt = document.createElement('option');
+            opt.value = topicsToShow[i];
+            opt.textContent = topicsToShow[i];
+            if (topicsToShow[i] === '{{ current_topic }}') {
                 opt.selected = true;
             }
             topicSelect.appendChild(opt);
-        });
+        }
     }
     
     chapterSelect.addEventListener('change', function() {
@@ -563,13 +551,13 @@
     });
     
     // =============================================
-    // ✅ Answer Checking Function
+    // Answer Checking Function
     // =============================================
     function checkAnswer(questionId, selectedOption, correctAnswer) {
-        const optionsContainer = document.getElementById(`options-${questionId}`);
-        const optionItems = optionsContainer.querySelectorAll('.option-item');
-        const feedback = document.getElementById(`feedback-${questionId}`);
-        const statusBadge = document.getElementById(`status-${questionId}`);
+        var optionsContainer = document.getElementById('options-' + questionId);
+        var optionItems = optionsContainer.querySelectorAll('.option-item');
+        var feedback = document.getElementById('feedback-' + questionId);
+        var statusBadge = document.getElementById('status-' + questionId);
         
         // Check if already answered
         if (optionsContainer.dataset.answered === 'true') {
@@ -578,23 +566,23 @@
             return;
         }
         
-        let isCorrect = (selectedOption === correctAnswer);
-        let selectedElement = null;
+        var isCorrect = (selectedOption === correctAnswer);
+        var selectedElement = null;
         
         // Disable all options
-        optionItems.forEach(item => {
-            item.classList.add('disabled');
-            if (item.dataset.option === selectedOption) {
-                selectedElement = item;
+        for (var i = 0; i < optionItems.length; i++) {
+            optionItems[i].classList.add('disabled');
+            if (optionItems[i].dataset.option === selectedOption) {
+                selectedElement = optionItems[i];
             }
-        });
+        }
         
         // Mark correct and wrong
-        optionItems.forEach(item => {
-            if (item.dataset.option === correctAnswer) {
-                item.classList.add('correct');
+        for (var i = 0; i < optionItems.length; i++) {
+            if (optionItems[i].dataset.option === correctAnswer) {
+                optionItems[i].classList.add('correct');
             }
-        });
+        }
         
         if (selectedElement && !isCorrect) {
             selectedElement.classList.add('wrong');
@@ -607,7 +595,7 @@
             statusBadge.className = 'q-status answered-correct';
             statusBadge.innerHTML = '<i class="fas fa-check-circle"></i> Correct';
         } else {
-            feedback.textContent = `❌ Wrong! The correct answer is ${correctAnswer}`;
+            feedback.textContent = '❌ Wrong! The correct answer is ' + correctAnswer;
             feedback.className = 'feedback-text wrong';
             statusBadge.className = 'q-status answered-wrong';
             statusBadge.innerHTML = '<i class="fas fa-times-circle"></i> Wrong';
