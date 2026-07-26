@@ -41,7 +41,7 @@ header {
 }
 
 .logo h1 {
-    background: linear-gradient(135deg, #6C63FF, #FF6584) !important;
+    background: linear-gradient(135deg, #6C63FF, #d1ff65) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     background-clip: text !important;
