@@ -218,11 +218,29 @@ def student_home():
     
     # Chapter-wise statistics
     chapter_stats = {}
+    chapter_topics = {}  # Chapter-wise unique topics
+    
     for q in questions:
         chapter = q.get('chapter', 'Uncategorized')
+        topic = q.get('topic', 'Unknown')
+        
+        # Chapter question count
         chapter_stats[chapter] = chapter_stats.get(chapter, 0) + 1
+        
+        # Chapter-wise unique topics
+        if chapter not in chapter_topics:
+            chapter_topics[chapter] = set()
+        if topic and topic != 'Unknown':
+            chapter_topics[chapter].add(topic)
     
-    chapter_list = [{'name': k, 'count': v} for k, v in chapter_stats.items()]
+    # Create chapter list with topic count
+    chapter_list = []
+    for chapter, count in chapter_stats.items():
+        chapter_list.append({
+            'name': chapter,
+            'count': count,
+            'topic_count': len(chapter_topics.get(chapter, set()))
+        })
     
     # Topic-wise statistics
     topic_stats = {}
