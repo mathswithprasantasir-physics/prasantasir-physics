@@ -503,23 +503,6 @@ nav a.active {
     border-radius: 8px !important;
 }
 
-/* ===== BOOKMARK ===== */
-.bookmark-btn {
-    cursor: pointer !important;
-    font-size: 1.1rem !important;
-    background: none !important;
-    border: none !important;
-    padding: 0 !important;
-}
-
-.bookmark-btn .far {
-    color: #636E72 !important;
-}
-
-.bookmark-btn .fas {
-    color: #FFC107 !important;
-}
-
 /* ===== QUESTION DETAIL ===== */
 .question-detail {
     background: white !important;
@@ -1212,14 +1195,6 @@ body.dark-mode .explanation-content * {
     color: #e0e0e0 !important;
 }
 
-/* ===== BOOKMARK ===== */
-body.dark-mode .bookmark-btn .far {
-    color: #8888aa !important;
-}
-
-body.dark-mode .bookmark-btn .fas {
-    color: #FFC107 !important;
-}
 
 /* ===== NAV LINKS ===== */
 body.dark-mode nav a {
