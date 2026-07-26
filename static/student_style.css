@@ -431,27 +431,6 @@ nav a.active {
     align-items: center !important;
 }
 
-/* ===== SEARCH ===== */
-.search-bar {
-    margin-bottom: 15px !important;
-}
-
-.search-bar input {
-    width: 100% !important;
-    padding: 12px 18px 12px 45px !important;
-    border: 2px solid #DFE6E9 !important;
-    border-radius: 10px !important;
-    font-size: 1rem !important;
-    transition: all 0.3s ease !important;
-    background: white !important;
-}
-
-.search-bar input:focus {
-    outline: none !important;
-    border-color: #6C63FF !important;
-    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1) !important;
-}
-
 /* ===== PROGRESS ===== */
 .progress-container {
     margin-bottom: 20px !important;
@@ -1043,22 +1022,6 @@ body.dark-mode .btn-clear {
 
 body.dark-mode .btn-clear:hover {
     background: #4d4d8b !important;
-}
-
-/* ===== SEARCH ===== */
-body.dark-mode .search-bar input {
-    background: #252547 !important;
-    border-color: #3d3d6b !important;
-    color: #e0e0e0 !important;
-}
-
-body.dark-mode .search-bar input::placeholder {
-    color: #8888aa !important;
-}
-
-body.dark-mode .search-bar input:focus {
-    border-color: #6C63FF !important;
-    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1) !important;
 }
 
 /* ===== PAGINATION ===== */
