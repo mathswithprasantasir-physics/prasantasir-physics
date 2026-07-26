@@ -819,21 +819,31 @@ body::after {
     transform: none !important;
 }
 
-.solution-header {
+/* ===== SHARE HEADER ===== */
+.share-header {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
     flex-wrap: wrap !important;
     gap: 10px !important;
-    margin-bottom: 15px !important;
+    margin-bottom: 20px !important;
+    padding-bottom: 15px !important;
+    border-bottom: 2px solid #f0f0f0 !important;
 }
 
-.solution-header h3 {
+.share-header h2 {
     margin: 0 !important;
+    font-size: 1.3rem !important;
+    color: #1a3a55 !important;
+}
+
+.share-header h2 i {
+    color: #6C63FF !important;
+    margin-right: 10px !important;
 }
 
 @media (max-width: 768px) {
-    .solution-header {
+    .share-header {
         flex-direction: column !important;
         align-items: stretch !important;
     }
