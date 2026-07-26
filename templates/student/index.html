@@ -115,17 +115,17 @@
         color: #6C63FF !important;
     }
     
-    /* ===== TOPIC GRID ===== */
-    .topic-grid {
+    /* ===== CHAPTER GRID (แทน Topic) ===== */
+    .chapter-grid {
         display: grid !important;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
         gap: 16px !important;
         margin-bottom: 30px !important;
     }
     
-    .topic-card {
+    .chapter-card {
         background: linear-gradient(135deg, #F8F9FF, #EEF0FF) !important;
-        padding: 18px 22px !important;
+        padding: 20px 24px !important;
         border-radius: 12px !important;
         border: 2px solid transparent !important;
         transition: all 0.3s ease !important;
@@ -133,19 +133,27 @@
         display: block !important;
     }
     
-    .topic-card:hover {
+    .chapter-card:hover {
         border-color: #6C63FF !important;
         transform: translateY(-4px) !important;
         box-shadow: 0 8px 25px rgba(108, 99, 255, 0.12) !important;
     }
     
-    .topic-name {
+    .chapter-name {
         font-weight: 600 !important;
         color: #2D3436 !important;
         font-size: 1rem !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
     }
     
-    .topic-stats {
+    .chapter-name i {
+        color: #6C63FF !important;
+        font-size: 1.1rem !important;
+    }
+    
+    .chapter-stats {
         display: flex !important;
         gap: 20px !important;
         margin-top: 8px !important;
@@ -153,11 +161,19 @@
         color: #636E72 !important;
     }
     
-    .topic-stats i {
+    .chapter-stats i {
         color: #6C63FF !important;
     }
     
-    /* ===== RANDOM QUESTIONS (Practice Style) ===== */
+    .chapter-stats .topic-count {
+        background: rgba(108, 99, 255, 0.1) !important;
+        padding: 2px 12px !important;
+        border-radius: 20px !important;
+        color: #6C63FF !important;
+        font-weight: 500 !important;
+    }
+    
+    /* ===== RANDOM QUESTIONS ===== */
     .question-list {
         display: flex !important;
         flex-direction: column !important;
@@ -343,6 +359,21 @@
         margin-bottom: 20px !important;
     }
     
+    .view-all-link {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        color: #6C63FF !important;
+        text-decoration: none !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .view-all-link:hover {
+        color: #5A52D5 !important;
+        transform: translateX(4px) !important;
+    }
+    
     header {
         display: flex !important;
         justify-content: space-between !important;
@@ -377,8 +408,8 @@
             gap: 15px !important;
         }
         
-        .topic-grid {
-            grid-template-columns: 1fr 1fr !important;
+        .chapter-grid {
+            grid-template-columns: 1fr !important;
         }
         
         .welcome-section {
@@ -395,7 +426,7 @@
             grid-template-columns: 1fr !important;
         }
         
-        .topic-grid {
+        .chapter-grid {
             grid-template-columns: 1fr !important;
         }
         
@@ -461,15 +492,33 @@
         </div>
     </div>
 
-    <!-- ===== TOPICS ===== -->
-    {% if topic_stats %}
-    <h3 class="section-title"><i class="fas fa-tags"></i> Topics</h3>
-    <div class="topic-grid">
-        {% for topic in topic_stats %}
-        <a href="{{ url_for('student_practice') }}?topic={{ topic.name }}" class="topic-card">
-            <div class="topic-name">{{ topic.name }}</div>
-            <div class="topic-stats">
-                <span><i class="fas fa-list"></i> {{ topic.count }} questions</span>
+    <!-- ===== CHAPTERS (Topic-এর বদলে Chapter) ===== -->
+    {% if chapter_stats %}
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:20px;">
+        <h3 class="section-title" style="margin-bottom:0;"><i class="fas fa-book"></i> Chapters</h3>
+        <a href="{{ url_for('student_practice') }}" class="view-all-link">
+            View All <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+    
+    <div class="chapter-grid">
+        {% for chapter in chapter_stats %}
+        <a href="{{ url_for('student_practice') }}?chapter={{ chapter.name }}" class="chapter-card">
+            <div class="chapter-name">
+                <i class="fas fa-book-open"></i> {{ chapter.name }}
+            </div>
+            <div class="chapter-stats">
+                <span><i class="fas fa-list"></i> {{ chapter.count }} questions</span>
+                <span class="topic-count">
+                    <i class="fas fa-tags"></i> 
+                    {% set topic_count = namespace(value=0) %}
+                    {% for topic in topic_stats %}
+                        {% if topic.name in chapter.name %}
+                            {% set topic_count.value = topic_count.value + 1 %}
+                        {% endif %}
+                    {% endfor %}
+                    {{ topic_count.value }} topics
+                </span>
             </div>
         </a>
         {% endfor %}
@@ -479,7 +528,7 @@
     <!-- ===== RANDOM QUESTIONS ===== -->
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:20px;">
         <h3 class="section-title" style="margin-bottom:0;"><i class="fas fa-random"></i> Random Questions</h3>
-        <a href="{{ url_for('student_practice') }}" class="btn-secondary" style="padding: 8px 20px; font-size:0.9rem;">
+        <a href="{{ url_for('student_practice') }}" class="view-all-link">
             View All <i class="fas fa-arrow-right"></i>
         </a>
     </div>
