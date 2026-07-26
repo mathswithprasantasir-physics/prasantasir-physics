@@ -92,5 +92,34 @@
         });
     </script>
     {% block extra_js %}{% endblock %}
+
+
+    <!-- ===== FOOTER ===== -->
+<footer class="footer-note">
+    <p>© 2027 NEET Physics Practice. All rights reserved.</p>
+</footer>
+
+<!-- ===== WATERMARK ===== -->
+<div style="position: fixed; bottom: 20px; right: 25px; z-index: 99999; pointer-events: none; user-select: none; opacity: 0.08;">
+    <span style="font-size: 1.3rem; font-weight: 700; color: #6C63FF; letter-spacing: 2px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase;">
+        ⚛️ Prasanta Sir
+    </span>
+</div>
+
+<!-- ===== SCRIPTS ===== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+<script>
+    // MathJax configuration
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </body>
 </html>
