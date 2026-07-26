@@ -248,15 +248,10 @@ def student_practice():
     chapters = sorted(list(set([q.get('chapter', 'Uncategorized') for q in questions])))
     years = sorted(list(set([q.get('year', '') for q in questions if q.get('year')])), reverse=True)
     
-    # Filter parameters
     chapter_filter = request.args.get('chapter', '')
     topic_filter = request.args.get('topic', '')
     difficulty_filter = request.args.get('difficulty', '')
     year_filter = request.args.get('year', '')
-    
-    # Get page number (default 1)
-    page = request.args.get('page', 1, type=int)
-    per_page = 10  # 10 questions per page
     
     filtered = questions
     if chapter_filter:
@@ -268,21 +263,6 @@ def student_practice():
     if year_filter:
         filtered = [q for q in filtered if q.get('year') == year_filter]
     
-    # Pagination
-    total_questions_count = len(filtered)
-    total_pages = (total_questions_count + per_page - 1) // per_page
-    
-    # Ensure page is within bounds
-    if page < 1:
-        page = 1
-    if page > total_pages and total_pages > 0:
-        page = total_pages
-    
-    # Slice questions for current page
-    start = (page - 1) * per_page
-    end = start + per_page
-    paginated_questions = filtered[start:end]
-    
     # Chapter-wise topics (for dynamic filtering)
     chapter_topics = {}
     for q in questions:
@@ -293,11 +273,14 @@ def student_practice():
         if topic not in chapter_topics[chapter]:
             chapter_topics[chapter].append(topic)
     
+    # Sort topics for each chapter
     for chapter in chapter_topics:
         chapter_topics[chapter].sort()
     
+    print("Chapter Topics:", chapter_topics)  # Debug: Check in terminal
+    
     return render_template('student/practice.html',
-                         questions=paginated_questions,
+                         questions=filtered,
                          chapters=chapters,
                          topics=topics,
                          years=years,
@@ -305,11 +288,7 @@ def student_practice():
                          current_chapter=chapter_filter,
                          current_topic=topic_filter,
                          current_difficulty=difficulty_filter,
-                         current_year=year_filter,
-                         page=page,
-                         total_pages=total_pages,
-                         total_questions=total_questions_count,
-                         per_page=per_page)
+                         current_year=year_filter)
 
 @app.route('/question/<int:id>')
 def student_question_detail(id):
