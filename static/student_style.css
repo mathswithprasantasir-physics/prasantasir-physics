@@ -814,7 +814,7 @@ body::after {
 }
 
 /* ===== FIX: Equation same line ===== */
-.solution-content mjx-container[jax="SVG"][display="true"] {
+.solution-content .MathJax_Display {
     display: inline-block !important;
     margin: 0 5px !important;
     padding: 2px 8px !important;
