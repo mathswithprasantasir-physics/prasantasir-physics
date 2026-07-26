@@ -115,7 +115,7 @@
         color: #6C63FF !important;
     }
     
-    /* ===== CHAPTER GRID (แทน Topic) ===== */
+    /* ===== CHAPTER GRID ===== */
     .chapter-grid {
         display: grid !important;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
@@ -387,6 +387,23 @@
         gap: 10px !important;
         flex-wrap: wrap !important;
         justify-content: flex-end !important;
+        align-items: center !important;
+    }
+    
+    /* ===== DARK TOGGLE ===== */
+    .dark-toggle {
+        background: rgba(255,255,255,0.15) !important;
+        border: none !important;
+        color: white !important;
+        padding: 8px 14px !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        font-size: 1rem !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .dark-toggle:hover {
+        background: rgba(255,255,255,0.25) !important;
     }
     
     @media (max-width: 768px) {
@@ -447,6 +464,9 @@
         <nav>
             <a href="{{ url_for('student_home') }}" class="active"><i class="fas fa-home"></i> Home</a>
             <a href="{{ url_for('student_practice') }}"><i class="fas fa-book-open"></i> Practice</a>
+            <button onclick="toggleDarkMode()" class="dark-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
         </nav>
     </header>
 
@@ -492,7 +512,7 @@
         </div>
     </div>
 
-    <!-- ===== CHAPTERS (Topic-এর বদলে Chapter) ===== -->
+    <!-- ===== CHAPTERS ===== -->
     {% if chapter_stats %}
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:20px;">
         <h3 class="section-title" style="margin-bottom:0;"><i class="fas fa-book"></i> Chapters</h3>
