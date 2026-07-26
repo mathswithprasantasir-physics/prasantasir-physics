@@ -31,9 +31,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
     </script>
     
-    <!-- CRITICAL FIX: Force left alignment -->
     <style>
-        /* Force everything to left */
         html, body {
             margin: 0 !important;
             padding: 0 !important;
@@ -41,13 +39,11 @@
             max-width: 100% !important;
             overflow-x: hidden !important;
         }
-        
         body {
             background: #f0f4fa !important;
             display: block !important;
             text-align: left !important;
         }
-        
         .container {
             max-width: 1280px !important;
             width: 100% !important;
@@ -55,22 +51,12 @@
             padding: 20px !important;
             text-align: left !important;
         }
-        
-        /* All child elements left aligned */
         .container * {
             text-align: left !important;
         }
-        
-        /* But keep center alignment for some elements */
-        .stat-card, .topic-card, .question-card {
-            text-align: left !important;
-        }
-        
         .empty-state, .footer-note {
             text-align: center !important;
         }
-        
-        /* Fix header */
         header {
             display: flex !important;
             justify-content: space-between !important;
@@ -103,12 +89,6 @@
         <p>© 2027 NEET Physics Practice. All rights reserved.</p>
     </footer>
 
-    <!-- ===== WATERMARK ===== -->
-    <div style="position: fixed; bottom: 20px; right: 25px; z-index: 99999; pointer-events: none; user-select: none; opacity: 0.08;">
-        <span style="font-size: 1.3rem; font-weight: 700; color: #6C63FF; letter-spacing: 2px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase;">
-            ⚛️ Prasanta Sir
-        </span>
-    </div>
 
     <!-- ===== SCRIPTS ===== -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
@@ -151,7 +131,6 @@
         document.addEventListener('keydown', function(e) {
             const key = e.key.toUpperCase();
             if (['A', 'B', 'C', 'D'].includes(key)) {
-                // Find first unanswered question
                 const cards = document.querySelectorAll('.question-card');
                 for (let card of cards) {
                     const options = card.querySelector('.q-options');
@@ -165,7 +144,6 @@
                 }
             }
             
-            // N for Next Question
             if (e.key === 'n' || e.key === 'N') {
                 const cards = document.querySelectorAll('.question-card');
                 for (let i = 0; i < cards.length; i++) {
@@ -178,7 +156,6 @@
             }
         });
 
-        // Show keyboard hints
         console.log('⌨️ Keyboard Shortcuts: A, B, C, D = Select Option | N = Next Question');
     </script>
 
