@@ -4,6 +4,64 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='student_style.css') }}">
+<style>
+    /* ===== SHARE BUTTON STYLE ===== */
+    .btn-share {
+        background: #6C63FF !important;
+        color: white !important;
+        border: none !important;
+        padding: 8px 20px !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        font-weight: 500 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        transition: all 0.3s ease !important;
+        font-size: 0.9rem !important;
+    }
+    
+    .btn-share:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px rgba(108, 99, 255, 0.3) !important;
+    }
+    
+    .btn-share:disabled {
+        opacity: 0.6 !important;
+        cursor: not-allowed !important;
+        transform: none !important;
+    }
+    
+    .solution-header {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .solution-header h3 {
+        margin: 0 !important;
+    }
+    
+    /* ===== MOBILE EQUATION FIX ===== */
+    @media (max-width: 768px) {
+        .math-content {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+        }
+        
+        .solution-header {
+            flex-direction: column !important;
+            align-items: stretch !important;
+        }
+        
+        .btn-share {
+            justify-content: center !important;
+        }
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -86,10 +144,15 @@
             </div>
         </div>
 
-        <!-- Solution Section - Image First -->
+        <!-- ===== SOLUTION SECTION WITH SHARE BUTTON ===== -->
         {% if question.solution or question.solution_image %}
-        <div class="q-solution-box">
-            <h3><i class="fas fa-lightbulb"></i> Solution:</h3>
+        <div class="q-solution-box" id="solution-box">
+            <div class="solution-header">
+                <h3><i class="fas fa-lightbulb"></i> Solution:</h3>
+                <button onclick="shareSolution(event)" class="btn-share">
+                    <i class="fas fa-share-alt"></i> Share Solution
+                </button>
+            </div>
             
             {% if question.solution_image %}
             <div class="solution-image">
@@ -120,4 +183,72 @@
         </div>
     </div>
 </div>
+
+<!-- ===== SHARE SCRIPT ===== -->
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script>
+function shareSolution(event) {
+    const element = document.getElementById('solution-box');
+    const btn = event.currentTarget;
+    const originalText = btn.innerHTML;
+    
+    // Show loading state
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+    btn.disabled = true;
+    
+    html2canvas(element, {
+        scale: 2,
+        backgroundColor: '#ffffff',
+        allowTaint: true,
+        useCORS: true,
+        logging: false,
+        onclone: function(clonedDoc) {
+            // Ensure MathJax is rendered
+        }
+    }).then(function(canvas) {
+        // Reset button
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        
+        // Check if Web Share API is available (mobile)
+        if (navigator.share) {
+            canvas.toBlob(function(blob) {
+                try {
+                    const file = new File([blob], 'solution.png', { type: 'image/png' });
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        navigator.share({
+                            title: 'Physics Solution',
+                            text: 'Check out this solution!',
+                            files: [file]
+                        }).catch(function(e) {
+                            if (e.name !== 'AbortError') {
+                                downloadImage(canvas);
+                            }
+                        });
+                    } else {
+                        downloadImage(canvas);
+                    }
+                } catch (e) {
+                    downloadImage(canvas);
+                }
+            }, 'image/png');
+        } else {
+            // Desktop: Download as image
+            downloadImage(canvas);
+        }
+    }).catch(function(error) {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        alert('Error capturing solution. Please try again.');
+        console.error(error);
+    });
+}
+
+function downloadImage(canvas) {
+    const link = document.createElement('a');
+    link.download = 'solution.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+}
+</script>
 {% endblock %}
