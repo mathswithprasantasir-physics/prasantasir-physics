@@ -32,17 +32,27 @@
         transform: none !important;
     }
     
-    .solution-header {
+    /* ===== SHARE HEADER ===== */
+    .share-header {
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
         flex-wrap: wrap !important;
         gap: 10px !important;
-        margin-bottom: 15px !important;
+        margin-bottom: 20px !important;
+        padding-bottom: 15px !important;
+        border-bottom: 2px solid #f0f0f0 !important;
     }
     
-    .solution-header h3 {
+    .share-header h2 {
         margin: 0 !important;
+        font-size: 1.3rem !important;
+        color: #1a3a55 !important;
+    }
+    
+    .share-header h2 i {
+        color: #6C63FF !important;
+        margin-right: 10px !important;
     }
     
     /* ===== MOBILE EQUATION FIX ===== */
@@ -52,7 +62,7 @@
             -webkit-overflow-scrolling: touch !important;
         }
         
-        .solution-header {
+        .share-header {
             flex-direction: column !important;
             align-items: stretch !important;
         }
@@ -77,118 +87,131 @@
         </nav>
     </header>
 
-    <div class="question-detail">
-        <div class="q-meta">
-            <span class="q-topic">{{ question.topic }}</span>
-            <span class="q-year">{{ question.year }}</span>
-            <span class="q-exam">{{ question.exam_type }}</span>
-            <span class="q-difficulty {{ question.difficulty.lower() }}">{{ question.difficulty }}</span>
-            <span class="q-marks"><i class="fas fa-star"></i> +{{ question.marks }}/-{{ question.negative_marks }}</span>
-        </div>
-        
-        <div class="q-full-text">
-            <h3>Question:</h3>
-            <div class="math-content">
-                {{ question.question_text|safe }}
-            </div>
-            {% if question.question_image %}
-            <div class="question-image">
-                <img src="{{ question.question_image }}" alt="Question Image" style="max-width:100%; border-radius:10px; margin-top:10px;">
-            </div>
-            {% endif %}
-        </div>
-
-        <div class="q-full-options">
-            <h3>Options:</h3>
-            {% if question.option_a %}
-            <div>
-                <strong>A.</strong> 
-                <span class="math-content">{{ question.option_a|safe }}</span>
-                {% if question.option_a_image %}
-                <br><img src="{{ question.option_a_image }}" alt="Option A" style="max-width:200px; border-radius:8px; margin-top:5px;">
-                {% endif %}
-            </div>
-            {% endif %}
-            {% if question.option_b %}
-            <div>
-                <strong>B.</strong> 
-                <span class="math-content">{{ question.option_b|safe }}</span>
-                {% if question.option_b_image %}
-                <br><img src="{{ question.option_b_image }}" alt="Option B" style="max-width:200px; border-radius:8px; margin-top:5px;">
-                {% endif %}
-            </div>
-            {% endif %}
-            {% if question.option_c %}
-            <div>
-                <strong>C.</strong> 
-                <span class="math-content">{{ question.option_c|safe }}</span>
-                {% if question.option_c_image %}
-                <br><img src="{{ question.option_c_image }}" alt="Option C" style="max-width:200px; border-radius:8px; margin-top:5px;">
-                {% endif %}
-            </div>
-            {% endif %}
-            {% if question.option_d %}
-            <div>
-                <strong>D.</strong> 
-                <span class="math-content">{{ question.option_d|safe }}</span>
-                {% if question.option_d_image %}
-                <br><img src="{{ question.option_d_image }}" alt="Option D" style="max-width:200px; border-radius:8px; margin-top:5px;">
-                {% endif %}
-            </div>
-            {% endif %}
-        </div>
-
-        <div class="q-answer-box">
-            <div class="q-correct-answer">
-                <i class="fas fa-check-circle"></i> Correct Answer: <strong>{{ question.correct_answer }}</strong>
-            </div>
-        </div>
-
-        <!-- ===== SOLUTION SECTION WITH SHARE BUTTON ===== -->
-        {% if question.solution or question.solution_image %}
-        <div class="q-solution-box" id="solution-box">
-            <div class="solution-header">
-                <h3><i class="fas fa-lightbulb"></i> Solution:</h3>
-                <button onclick="shareSolution(event)" class="btn-share">
-                    <i class="fas fa-share-alt"></i> Share Solution
+    <!-- ===== FULL PAGE CONTENT (for screenshot) ===== -->
+    <div id="share-content">
+        <div class="question-detail">
+            
+            <!-- ===== SHARE HEADER ===== -->
+            <div class="share-header">
+                <h2><i class="fas fa-atom"></i> NEET Physics - Question {{ question.id }}</h2>
+                <button onclick="sharePage(event)" class="btn-share">
+                    <i class="fas fa-share-alt"></i> Share Question
                 </button>
             </div>
             
-            {% if question.solution_image %}
-            <div class="solution-image">
-                <img src="{{ question.solution_image }}" alt="Solution Image" style="max-width:100%; border-radius:10px; margin-top:10px; margin-bottom:20px; border:1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+            <div class="q-meta">
+                <span class="q-topic">{{ question.topic }}</span>
+                <span class="q-year">{{ question.year }}</span>
+                <span class="q-exam">{{ question.exam_type }}</span>
+                <span class="q-difficulty {{ question.difficulty.lower() }}">{{ question.difficulty }}</span>
+                <span class="q-marks"><i class="fas fa-star"></i> +{{ question.marks }}/-{{ question.negative_marks }}</span>
             </div>
-            {% endif %}
             
-            {% if question.solution %}
-            <div class="math-content solution-content">
-                {{ question.solution|safe }}
+            <div class="q-full-text">
+                <h3>Question:</h3>
+                <div class="math-content">
+                    {{ question.question_text|safe }}
+                </div>
+                {% if question.question_image %}
+                <div class="question-image">
+                    <img src="{{ question.question_image }}" alt="Question Image" style="max-width:100%; border-radius:10px; margin-top:10px;">
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="q-full-options">
+                <h3>Options:</h3>
+                {% if question.option_a %}
+                <div>
+                    <strong>A.</strong> 
+                    <span class="math-content">{{ question.option_a|safe }}</span>
+                    {% if question.option_a_image %}
+                    <br><img src="{{ question.option_a_image }}" alt="Option A" style="max-width:200px; border-radius:8px; margin-top:5px;">
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% if question.option_b %}
+                <div>
+                    <strong>B.</strong> 
+                    <span class="math-content">{{ question.option_b|safe }}</span>
+                    {% if question.option_b_image %}
+                    <br><img src="{{ question.option_b_image }}" alt="Option B" style="max-width:200px; border-radius:8px; margin-top:5px;">
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% if question.option_c %}
+                <div>
+                    <strong>C.</strong> 
+                    <span class="math-content">{{ question.option_c|safe }}</span>
+                    {% if question.option_c_image %}
+                    <br><img src="{{ question.option_c_image }}" alt="Option C" style="max-width:200px; border-radius:8px; margin-top:5px;">
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% if question.option_d %}
+                <div>
+                    <strong>D.</strong> 
+                    <span class="math-content">{{ question.option_d|safe }}</span>
+                    {% if question.option_d_image %}
+                    <br><img src="{{ question.option_d_image }}" alt="Option D" style="max-width:200px; border-radius:8px; margin-top:5px;">
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="q-answer-box">
+                <div class="q-correct-answer">
+                    <i class="fas fa-check-circle"></i> Correct Answer: <strong>{{ question.correct_answer }}</strong>
+                </div>
+            </div>
+
+            <!-- Solution Section -->
+            {% if question.solution or question.solution_image %}
+            <div class="q-solution-box">
+                <h3><i class="fas fa-lightbulb"></i> Solution:</h3>
+                
+                {% if question.solution_image %}
+                <div class="solution-image">
+                    <img src="{{ question.solution_image }}" alt="Solution Image" style="max-width:100%; border-radius:10px; margin-top:10px; margin-bottom:20px; border:1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                </div>
+                {% endif %}
+                
+                {% if question.solution %}
+                <div class="math-content solution-content">
+                    {{ question.solution|safe }}
+                </div>
+                {% endif %}
             </div>
             {% endif %}
-        </div>
-        {% endif %}
 
-        {% if question.explanation %}
-        <div class="q-explanation-box">
-            <h3><i class="fas fa-info-circle"></i> Explanation:</h3>
-            <div class="math-content explanation-content">
-                {{ question.explanation|safe }}
+            {% if question.explanation %}
+            <div class="q-explanation-box">
+                <h3><i class="fas fa-info-circle"></i> Explanation:</h3>
+                <div class="math-content explanation-content">
+                    {{ question.explanation|safe }}
+                </div>
             </div>
-        </div>
-        {% endif %}
+            {% endif %}
 
-        <div class="q-actions-full">
-            <a href="{{ url_for('student_practice') }}" class="btn-view"><i class="fas fa-arrow-left"></i> Back to Practice</a>
-            <a href="{{ url_for('student_practice') }}?topic={{ question.topic }}" class="btn-primary"><i class="fas fa-filter"></i> More from {{ question.topic }}</a>
+            <!-- ===== FOOTER IN SCREENSHOT ===== -->
+            <div style="margin-top: 30px; padding-top: 15px; border-top: 2px solid #f0f0f0; text-align: center; color: #999; font-size: 0.8rem;">
+                <p>📚 NEET Physics Practice | Prasanta Sir | physics.prasanta.com</p>
+            </div>
+
         </div>
+    </div>
+
+    <div class="q-actions-full" style="margin-top: 20px;">
+        <a href="{{ url_for('student_practice') }}" class="btn-view"><i class="fas fa-arrow-left"></i> Back to Practice</a>
+        <a href="{{ url_for('student_practice') }}?topic={{ question.topic }}" class="btn-primary"><i class="fas fa-filter"></i> More from {{ question.topic }}</a>
     </div>
 </div>
 
 <!-- ===== SHARE SCRIPT ===== -->
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
-function shareSolution(event) {
-    const element = document.getElementById('solution-box');
+function sharePage(event) {
+    const element = document.getElementById('share-content');
     const btn = event.currentTarget;
     const originalText = btn.innerHTML;
     
@@ -196,57 +219,66 @@ function shareSolution(event) {
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
     btn.disabled = true;
     
-    html2canvas(element, {
-        scale: 2,
-        backgroundColor: '#ffffff',
-        allowTaint: true,
-        useCORS: true,
-        logging: false,
-        onclone: function(clonedDoc) {
-            // Ensure MathJax is rendered
-        }
-    }).then(function(canvas) {
-        // Reset button
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-        
-        // Check if Web Share API is available (mobile)
-        if (navigator.share) {
-            canvas.toBlob(function(blob) {
-                try {
-                    const file = new File([blob], 'solution.png', { type: 'image/png' });
-                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                        navigator.share({
-                            title: 'Physics Solution',
-                            text: 'Check out this solution!',
-                            files: [file]
-                        }).catch(function(e) {
-                            if (e.name !== 'AbortError') {
-                                downloadImage(canvas);
-                            }
-                        });
-                    } else {
+    // Scroll to top to capture full content
+    window.scrollTo(0, 0);
+    
+    // Wait a moment for scroll to complete
+    setTimeout(function() {
+        html2canvas(element, {
+            scale: 2,
+            backgroundColor: '#ffffff',
+            allowTaint: true,
+            useCORS: true,
+            logging: false,
+            scrollY: 0,
+            windowHeight: element.scrollHeight,
+            height: element.scrollHeight,
+            onclone: function(clonedDoc) {
+                // Ensure MathJax is rendered
+            }
+        }).then(function(canvas) {
+            // Reset button
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+            
+            // Check if Web Share API is available (mobile)
+            if (navigator.share) {
+                canvas.toBlob(function(blob) {
+                    try {
+                        const file = new File([blob], 'question.png', { type: 'image/png' });
+                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                            navigator.share({
+                                title: 'Physics Question',
+                                text: 'Check out this physics question!',
+                                files: [file]
+                            }).catch(function(e) {
+                                if (e.name !== 'AbortError') {
+                                    downloadImage(canvas);
+                                }
+                            });
+                        } else {
+                            downloadImage(canvas);
+                        }
+                    } catch (e) {
                         downloadImage(canvas);
                     }
-                } catch (e) {
-                    downloadImage(canvas);
-                }
-            }, 'image/png');
-        } else {
-            // Desktop: Download as image
-            downloadImage(canvas);
-        }
-    }).catch(function(error) {
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-        alert('Error capturing solution. Please try again.');
-        console.error(error);
-    });
+                }, 'image/png');
+            } else {
+                // Desktop: Download as image
+                downloadImage(canvas);
+            }
+        }).catch(function(error) {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+            alert('Error capturing page. Please try again.');
+            console.error(error);
+        });
+    }, 300);
 }
 
 function downloadImage(canvas) {
     const link = document.createElement('a');
-    link.download = 'solution.png';
+    link.download = 'question.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
 }
