@@ -41,7 +41,7 @@ header {
 }
 
 .logo h1 {
-    background: linear-gradient(135deg, #6C63FF, #d1ff65) !important;
+    background: linear-gradient(135deg, #6C63FF, #FF6584) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     background-clip: text !important;
@@ -97,7 +97,7 @@ header {
     transition: all 0.3s ease !important;
 }
 
-/* ===== NEW: Question Meta & Status ===== */
+/* ===== Question Meta & Status ===== */
 .q-meta {
     display: flex !important;
     gap: 12px !important;
@@ -130,7 +130,7 @@ header {
     color: #6C63FF !important;
 }
 
-/* ===== NEW: Clickable Options ===== */
+/* ===== Clickable Options ===== */
 .q-options {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
@@ -189,7 +189,7 @@ header {
     box-shadow: none !important;
 }
 
-/* ===== NEW: Feedback Text ===== */
+/* ===== Feedback Text ===== */
 .feedback-text {
     font-size: 0.95rem !important;
     font-weight: 500 !important;
@@ -213,7 +213,7 @@ header {
     background: #f0edff !important;
 }
 
-/* ===== NEW: Solution Button ===== */
+/* ===== Solution Button ===== */
 .btn-solution {
     background: #6C63FF !important;
     color: white !important;
@@ -241,7 +241,7 @@ header {
     transform: none !important;
 }
 
-/* ===== NEW: Question Actions ===== */
+/* ===== Question Actions ===== */
 .q-actions {
     display: flex !important;
     gap: 12px !important;
@@ -250,7 +250,7 @@ header {
     align-items: center !important;
 }
 
-/* ===== NEW: Question Image ===== */
+/* ===== Question Image ===== */
 .q-image {
     margin: 12px 0 !important;
     text-align: left !important;
@@ -264,7 +264,7 @@ header {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
 }
 
-/* ===== NEW: Option Image ===== */
+/* ===== Option Image ===== */
 .option-image {
     margin-top: 5px !important;
 }
@@ -276,7 +276,7 @@ header {
     border: 1px solid #e8eef6 !important;
 }
 
-/* ===== NEW: Solution Image ===== */
+/* ===== Solution Image ===== */
 .solution-image {
     margin: 10px 0 !important;
     border-radius: 12px !important;
@@ -499,7 +499,7 @@ header {
     margin: 10px 0 !important;
 }
 
-/* ===== NEW: Empty State ===== */
+/* ===== Empty State ===== */
 .empty-state {
     text-align: center !important;
     padding: 60px 20px !important;
@@ -521,7 +521,7 @@ header {
     margin-bottom: 20px !important;
 }
 
-/* ===== NEW: Question Detail Styles ===== */
+/* ===== Question Detail Meta ===== */
 .q-detail-meta {
     display: flex !important;
     gap: 12px !important;
@@ -565,6 +565,82 @@ header {
     font-size: 0.75rem !important;
     font-weight: 600 !important;
     color: #FF6584 !important;
+}
+
+/* ===== Pagination ===== */
+.pagination-container {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 15px !important;
+    margin-top: 25px !important;
+    padding: 15px 20px !important;
+    background: white !important;
+    border-radius: 12px !important;
+    border: 1px solid #DFE6E9 !important;
+}
+
+.pagination-info {
+    color: #636E72 !important;
+    font-size: 0.95rem !important;
+}
+
+.pagination-info strong {
+    color: #2D3436 !important;
+}
+
+.pagination-info .page-info {
+    margin-left: 10px !important;
+    color: #2D3436 !important;
+    font-size: 0.85rem !important;
+}
+
+.pagination-links {
+    display: flex !important;
+    gap: 6px !important;
+    flex-wrap: wrap !important;
+}
+
+.pagination-btn {
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    border: 1px solid #DFE6E9 !important;
+    text-decoration: none !important;
+    color: #2D3436 !important;
+    transition: all 0.3s ease !important;
+    background: white !important;
+    font-size: 0.9rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+
+.pagination-btn:hover {
+    border-color: #6C63FF !important;
+    background: #f0edff !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(108, 99, 255, 0.15) !important;
+}
+
+.pagination-btn.active {
+    border-color: #6C63FF !important;
+    background: #6C63FF !important;
+    color: white !important;
+    font-weight: 600 !important;
+    cursor: default !important;
+}
+
+.pagination-btn.active:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.pagination-ellipsis {
+    padding: 8px 6px !important;
+    color: #636E72 !important;
+    display: flex !important;
+    align-items: center !important;
 }
 
 /* Responsive */
@@ -628,6 +704,20 @@ header {
     .option-image img {
         max-width: 100px !important;
         max-height: 80px !important;
+    }
+    
+    .pagination-container {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        text-align: center !important;
+    }
+    
+    .pagination-links {
+        justify-content: center !important;
+    }
+    
+    .pagination-info {
+        text-align: center !important;
     }
 }
 
