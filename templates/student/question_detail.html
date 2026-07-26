@@ -26,12 +26,6 @@
         box-shadow: 0 8px 25px rgba(108, 99, 255, 0.3) !important;
     }
     
-    .btn-share:disabled {
-        opacity: 0.6 !important;
-        cursor: not-allowed !important;
-        transform: none !important;
-    }
-    
     .solution-header {
         display: flex !important;
         justify-content: space-between !important;
@@ -71,7 +65,7 @@
         </nav>
     </header>
 
-    <div class="question-detail" id="share-content">
+    <div class="question-detail">
         <div class="q-meta">
             <span class="q-topic">{{ question.topic }}</span>
             <span class="q-year">{{ question.year }}</span>
@@ -143,7 +137,7 @@
         <div class="q-solution-box">
             <div class="solution-header">
                 <h3><i class="fas fa-lightbulb"></i> Solution:</h3>
-                <button onclick="sharePage(event)" class="btn-share">
+                <button onclick="sharePage()" class="btn-share">
                     <i class="fas fa-share-alt"></i> Share
                 </button>
             </div>
@@ -179,70 +173,59 @@
 </div>
 
 <!-- ===== SHARE SCRIPT ===== -->
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
-function sharePage(event) {
-    const element = document.getElementById('share-content');
-    const btn = event.currentTarget;
-    const originalText = btn.innerHTML;
+function sharePage() {
+    // Get current page URL
+    const url = window.location.href;
+    const title = 'NEET Physics Question';
+    const text = 'Check out this physics question!';
     
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-    btn.disabled = true;
-    
-    // Scroll to top
-    window.scrollTo(0, 0);
-    
-    setTimeout(function() {
-        html2canvas(element, {
-            scale: 2,
-            backgroundColor: '#ffffff',
-            allowTaint: true,
-            useCORS: true,
-            logging: false,
-            scrollY: 0,
-            windowHeight: element.scrollHeight,
-            height: element.scrollHeight
-        }).then(function(canvas) {
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-            
-            if (navigator.share) {
-                canvas.toBlob(function(blob) {
-                    try {
-                        const file = new File([blob], 'question.png', { type: 'image/png' });
-                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                            navigator.share({
-                                title: 'Physics Question',
-                                files: [file]
-                            }).catch(function(e) {
-                                if (e.name !== 'AbortError') {
-                                    downloadImage(canvas);
-                                }
-                            });
-                        } else {
-                            downloadImage(canvas);
-                        }
-                    } catch (e) {
-                        downloadImage(canvas);
-                    }
-                }, 'image/png');
-            } else {
-                downloadImage(canvas);
+    // Check if Web Share API is available (mobile)
+    if (navigator.share) {
+        navigator.share({
+            title: title,
+            text: text,
+            url: url
+        }).catch(function(e) {
+            if (e.name !== 'AbortError') {
+                // Fallback: Copy to clipboard
+                copyToClipboard(url);
             }
-        }).catch(function(error) {
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-            alert('Error capturing page. Please try again.');
-            console.error(error);
         });
-    }, 300);
+    } else {
+        // Desktop: Copy to clipboard
+        copyToClipboard(url);
+    }
 }
 
-function downloadImage(canvas) {
-    const link = document.createElement('a');
-    link.download = 'question.png';
-    link.href = canvas.toDataURL('image/png');
-    link.click();
+function copyToClipboard(text) {
+    // Try using navigator.clipboard
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+            alert('✅ Link copied to clipboard!');
+        }).catch(function() {
+            fallbackCopy(text);
+        });
+    } else {
+        fallbackCopy(text);
+    }
+}
+
+function fallbackCopy(text) {
+    // Fallback method
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+        document.execCommand('copy');
+        alert('✅ Link copied to clipboard!');
+    } catch (err) {
+        alert('❌ Could not copy link. Please copy manually: ' + text);
+    }
+    document.body.removeChild(textarea);
 }
 </script>
 {% endblock %}
