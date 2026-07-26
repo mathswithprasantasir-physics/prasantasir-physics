@@ -44,6 +44,7 @@
         flex-wrap: wrap !important;
         margin-bottom: 10px !important;
         justify-content: flex-start !important;
+        align-items: center !important;
     }
     
     .q-text {
@@ -321,6 +322,101 @@
         gap: 10px !important;
         flex-wrap: wrap !important;
         justify-content: flex-end !important;
+        align-items: center !important;
+    }
+    
+    /* ===== SEARCH BAR ===== */
+    .search-bar {
+        margin-bottom: 15px !important;
+    }
+    
+    .search-bar .search-input-wrapper {
+        position: relative !important;
+    }
+    
+    .search-bar .search-input-wrapper i {
+        position: absolute !important;
+        left: 15px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        color: #636E72 !important;
+    }
+    
+    .search-bar .search-input-wrapper input {
+        width: 100% !important;
+        padding: 12px 18px 12px 45px !important;
+        border: 2px solid #DFE6E9 !important;
+        border-radius: 10px !important;
+        font-size: 1rem !important;
+        transition: all 0.3s ease !important;
+        background: white !important;
+    }
+    
+    .search-bar .search-input-wrapper input:focus {
+        outline: none !important;
+        border-color: #6C63FF !important;
+        box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1) !important;
+    }
+    
+    /* ===== PROGRESS BAR ===== */
+    .progress-container {
+        margin-bottom: 20px !important;
+        padding: 15px 20px !important;
+        background: white !important;
+        border-radius: 12px !important;
+        border: 1px solid #DFE6E9 !important;
+    }
+    
+    .progress-header {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+    }
+    
+    .progress-header .progress-label {
+        font-weight: 500 !important;
+        color: #2D3436 !important;
+    }
+    
+    .progress-header .progress-count {
+        font-size: 0.9rem !important;
+        color: #636E72 !important;
+    }
+    
+    .progress-bar-track {
+        background: #f0f0f0 !important;
+        border-radius: 10px !important;
+        height: 8px !important;
+        margin-top: 10px !important;
+        overflow: hidden !important;
+    }
+    
+    .progress-bar-fill {
+        background: linear-gradient(135deg, #6C63FF, #FF6584) !important;
+        height: 100% !important;
+        width: 0% !important;
+        transition: width 0.5s ease !important;
+        border-radius: 10px !important;
+    }
+    
+    /* ===== BOOKMARK ===== */
+    .bookmark-btn {
+        cursor: pointer !important;
+        font-size: 1.1rem !important;
+        background: none !important;
+        border: none !important;
+        padding: 0 !important;
+        color: #636E72 !important;
+    }
+    
+    .bookmark-btn .far {
+        color: #636E72 !important;
+    }
+    
+    .bookmark-btn .fas {
+        color: #FFC107 !important;
     }
     
     /* ===== PAGINATION STYLES ===== */
@@ -399,6 +495,22 @@
         align-items: center !important;
     }
     
+    /* ===== DARK TOGGLE ===== */
+    .dark-toggle {
+        background: rgba(255,255,255,0.15) !important;
+        border: none !important;
+        color: white !important;
+        padding: 8px 14px !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        font-size: 1rem !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .dark-toggle:hover {
+        background: rgba(255,255,255,0.25) !important;
+    }
+    
     @media (max-width: 768px) {
         .filter-group {
             flex-direction: column !important;
@@ -444,6 +556,12 @@
         .pagination-info {
             text-align: center !important;
         }
+        
+        .progress-header {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            text-align: center !important;
+        }
     }
 </style>
 {% endblock %}
@@ -458,10 +576,34 @@
         <nav>
             <a href="{{ url_for('student_home') }}"><i class="fas fa-home"></i> Home</a>
             <a href="{{ url_for('student_practice') }}" class="active"><i class="fas fa-book-open"></i> Practice</a>
+            <button onclick="toggleDarkMode()" class="dark-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
         </nav>
     </header>
 
     <h2 class="page-title"><i class="fas fa-search"></i> Practice Questions</h2>
+
+    <!-- ===== SEARCH BAR ===== -->
+    <div class="search-bar">
+        <div class="search-input-wrapper">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search questions by keyword...">
+        </div>
+    </div>
+
+    <!-- ===== PROGRESS BAR ===== -->
+    <div class="progress-container">
+        <div class="progress-header">
+            <span class="progress-label"><i class="fas fa-chart-line" style="color:#6C63FF;"></i> Progress</span>
+            <span class="progress-count">
+                <span id="answeredCount">0</span> / <span id="totalCount">{{ questions|length }}</span> answered
+            </span>
+        </div>
+        <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+    </div>
 
     <div class="filter-bar">
         <form method="GET" action="{{ url_for('student_practice') }}" id="filterForm">
@@ -509,6 +651,9 @@
                 <span class="q-status not-answered" id="status-{{ q.id }}">
                     <i class="fas fa-circle"></i> Not Answered
                 </span>
+                <button class="bookmark-btn" onclick="event.stopPropagation(); toggleBookmark({{ q.id }})">
+                    <i class="far fa-bookmark" id="bookmark-{{ q.id }}"></i>
+                </button>
             </div>
             
             <div class="q-text math-content">
@@ -739,6 +884,14 @@
             feedback.className = 'feedback-text correct';
             statusBadge.className = 'q-status answered-correct';
             statusBadge.innerHTML = '<i class="fas fa-check-circle"></i> Correct';
+            
+            // ===== CONFETTI CELEBRATION =====
+            confetti({
+                particleCount: 80,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#6C63FF', '#FF6584', '#00D2A0', '#FFC107']
+            });
         } else {
             feedback.textContent = '❌ Wrong! The correct answer is ' + correctAnswer;
             feedback.className = 'feedback-text wrong';
@@ -748,6 +901,82 @@
         
         // Mark as answered
         optionsContainer.dataset.answered = 'true';
+        
+        // Update progress
+        updateProgress();
     }
+    
+    // =============================================
+    // Progress Update Function
+    // =============================================
+    function updateProgress() {
+        var total = document.querySelectorAll('.question-card').length;
+        var answered = document.querySelectorAll('.q-status.answered-correct, .q-status.answered-wrong').length;
+        var answeredCount = document.getElementById('answeredCount');
+        var totalCount = document.getElementById('totalCount');
+        var progressBar = document.getElementById('progressBar');
+        
+        if (answeredCount) answeredCount.textContent = answered;
+        if (totalCount) totalCount.textContent = total;
+        if (progressBar) {
+            var percentage = total > 0 ? (answered / total) * 100 : 0;
+            progressBar.style.width = percentage + '%';
+        }
+    }
+    
+    // =============================================
+    // Search Function
+    // =============================================
+    document.getElementById('searchInput').addEventListener('input', function() {
+        var query = this.value.toLowerCase().trim();
+        var cards = document.querySelectorAll('.question-card');
+        
+        cards.forEach(function(card) {
+            var isVisible = card.textContent.toLowerCase().includes(query);
+            card.style.display = isVisible ? 'block' : 'none';
+        });
+        
+        updateProgress();
+    });
+    
+    // =============================================
+    // Bookmark Function
+    // =============================================
+    function toggleBookmark(id) {
+        var icon = document.getElementById('bookmark-' + id);
+        var isBookmarked = icon.classList.contains('fas');
+        
+        if (isBookmarked) {
+            icon.classList.remove('fas');
+            icon.classList.add('far');
+            icon.style.color = '#636E72';
+            var bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+            bookmarks = bookmarks.filter(function(b) { return b !== id; });
+            localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+        } else {
+            icon.classList.remove('far');
+            icon.classList.add('fas');
+            icon.style.color = '#FFC107';
+            var bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+            if (!bookmarks.includes(id)) {
+                bookmarks.push(id);
+                localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+            }
+        }
+    }
+    
+    // Load bookmarks on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        var bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+        bookmarks.forEach(function(id) {
+            var icon = document.getElementById('bookmark-' + id);
+            if (icon) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                icon.style.color = '#FFC107';
+            }
+        });
+        updateProgress();
+    });
 </script>
 {% endblock %}
