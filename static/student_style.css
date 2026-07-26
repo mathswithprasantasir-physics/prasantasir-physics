@@ -783,3 +783,32 @@ body::after {
     z-index: 9999;
     user-select: none;
 }
+
+/* ===== MOBILE MATHJAX FIX ===== */
+@media (max-width: 768px) {
+    .math-content {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        padding: 5px 2px !important;
+        word-break: break-word !important;
+    }
+    
+    .math-content mjx-container {
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        padding: 10px 2px !important;
+        font-size: 0.9rem !important;
+    }
+    
+    .math-content mjx-container[jax="SVG"][display="true"] {
+        display: block !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        padding: 10px 2px !important;
+    }
+    
+    .solution-content {
+        padding: 10px 12px !important;
+        overflow-x: auto !important;
+    }
+}
