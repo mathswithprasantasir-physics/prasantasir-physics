@@ -812,3 +812,13 @@ body::after {
         overflow-x: auto !important;
     }
 }
+
+/* ===== FIX: Equation same line ===== */
+.solution-content mjx-container[jax="SVG"][display="true"] {
+    display: inline-block !important;
+    margin: 0 5px !important;
+    padding: 2px 8px !important;
+    vertical-align: middle !important;
+    background: transparent !important;
+    border: none !important;
+}
