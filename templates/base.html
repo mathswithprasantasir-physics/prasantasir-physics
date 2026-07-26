@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+    
     <!-- MathJax v3 -->
     <script>
         MathJax = {
@@ -99,6 +102,13 @@
     <p>© 2027 NEET Physics Practice. All rights reserved.</p>
 </footer>
 
+<!-- ===== WATERMARK ===== -->
+<div style="position: fixed; bottom: 20px; right: 25px; z-index: 99999; pointer-events: none; user-select: none; opacity: 0.08;">
+    <span style="font-size: 1.3rem; font-weight: 700; color: #6C63FF; letter-spacing: 2px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase;">
+        ⚛️ Prasanta Sir
+    </span>
+</div>
+
 <!-- ===== SCRIPTS ===== -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 <script>
@@ -114,5 +124,28 @@
     };
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+
+<!-- ===== DARK MODE SCRIPT ===== -->
+<script>
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    
+    const btn = document.querySelector('.dark-toggle i');
+    if (document.body.classList.contains('dark-mode')) {
+        if (btn) btn.className = 'fas fa-sun';
+    } else {
+        if (btn) btn.className = 'fas fa-moon';
+    }
+}
+
+// Check saved preference
+if (localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark-mode');
+    const btn = document.querySelector('.dark-toggle i');
+    if (btn) btn.className = 'fas fa-sun';
+}
+</script>
+
 </body>
 </html>
