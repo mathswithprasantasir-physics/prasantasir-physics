@@ -769,17 +769,3 @@ header {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
-
-/* ===== WATERMARK ===== */
-body::after {
-    content: "Prasanta Sir (7980608289)";
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: rgba(108, 99, 255, 0.08);
-    pointer-events: none;
-    z-index: 9999;
-    user-select: none;
-}
