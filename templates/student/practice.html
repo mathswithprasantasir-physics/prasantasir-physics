@@ -404,11 +404,17 @@
     /* ===== BOOKMARK ===== */
     .bookmark-btn {
         cursor: pointer !important;
-        font-size: 1.1rem !important;
+        font-size: 1.3rem !important;
         background: none !important;
         border: none !important;
-        padding: 0 !important;
+        padding: 5px 10px !important;
         color: #636E72 !important;
+        transition: all 0.3s ease !important;
+        margin-left: auto !important;
+    }
+    
+    .bookmark-btn:hover {
+        transform: scale(1.2) !important;
     }
     
     .bookmark-btn .far {
@@ -416,6 +422,40 @@
     }
     
     .bookmark-btn .fas {
+        color: #FFC107 !important;
+    }
+    
+    /* ===== BOOKMARKED BADGE ===== */
+    .bookmarked-badge {
+        background: #FFC107 !important;
+        color: #1a1a2e !important;
+        padding: 2px 12px !important;
+        border-radius: 20px !important;
+        font-size: 0.7rem !important;
+        font-weight: 600 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+    }
+    
+    /* ===== BOOKMARKED SECTION ===== */
+    .bookmarked-section {
+        background: linear-gradient(135deg, #FFF8E1, #FFECB3) !important;
+        border: 2px solid #FFC107 !important;
+        border-radius: 16px !important;
+        padding: 20px !important;
+        margin-bottom: 30px !important;
+    }
+    
+    .bookmarked-section .section-title {
+        color: #F57C00 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .bookmarked-section .section-title i {
         color: #FFC107 !important;
     }
     
@@ -650,6 +690,28 @@
         background: #4d4d8b !important;
     }
     
+    body.dark-mode .bookmark-btn .far {
+        color: #8888aa !important;
+    }
+    
+    body.dark-mode .bookmark-btn .fas {
+        color: #FFC107 !important;
+    }
+    
+    body.dark-mode .bookmarked-section {
+        background: #1a1a2e !important;
+        border-color: #FFC107 !important;
+    }
+    
+    body.dark-mode .bookmarked-section .section-title {
+        color: #FFC107 !important;
+    }
+    
+    body.dark-mode .bookmarked-badge {
+        background: #FFC107 !important;
+        color: #1a1a2e !important;
+    }
+    
     @media (max-width: 768px) {
         .filter-group {
             flex-direction: column !important;
@@ -700,6 +762,10 @@
             flex-direction: column !important;
             align-items: stretch !important;
             text-align: center !important;
+        }
+        
+        .bookmark-btn {
+            margin-left: 0 !important;
         }
     }
 </style>
@@ -777,159 +843,172 @@
         </form>
     </div>
 
-    {% if questions %}
-    <div class="question-list">
-        {% for q in questions %}
-        <div class="question-card" data-question-id="{{ q.id }}">
-            <div class="q-meta">
-                <span class="q-topic">{{ q.topic }}</span>
-                <span class="q-year">{{ q.year }}</span>
-                <span class="q-exam">{{ q.exam_type }}</span>
-                <span class="q-difficulty {{ q.difficulty.lower() }}">{{ q.difficulty }}</span>
-                <span class="q-marks"><i class="fas fa-star"></i> +{{ q.marks }}/-{{ q.negative_marks }}</span>
-                <span class="q-status not-answered" id="status-{{ q.id }}">
-                    <i class="fas fa-circle"></i> Not Answered
-                </span>
-                <button class="bookmark-btn" onclick="event.stopPropagation(); toggleBookmark({{ q.id }})">
-                    <i class="far fa-bookmark" id="bookmark-{{ q.id }}"></i>
-                </button>
-            </div>
-            
-            <div class="q-text math-content">
-                {{ q.question_text|safe }}
-            </div>
-            
-            {% if q.question_image %}
-            <div class="q-image">
-                <img src="{{ q.question_image }}" alt="Question Image">
-            </div>
-            {% endif %}
-            
-            {% if q.option_a or q.option_b or q.option_c or q.option_d %}
-            <div class="q-options" id="options-{{ q.id }}">
-                {% if q.option_a %}
-                <div class="option-item" data-question="{{ q.id }}" data-option="A" onclick="checkAnswer({{ q.id }}, 'A', '{{ q.correct_answer }}')">
-                    <strong>A.</strong> <span class="math-content">{{ q.option_a|safe }}</span>
-                    {% if q.option_a_image %}
-                    <div class="option-image">
-                        <img src="{{ q.option_a_image }}" alt="Option A">
-                    </div>
-                    {% endif %}
-                </div>
-                {% endif %}
-                
-                {% if q.option_b %}
-                <div class="option-item" data-question="{{ q.id }}" data-option="B" onclick="checkAnswer({{ q.id }}, 'B', '{{ q.correct_answer }}')">
-                    <strong>B.</strong> <span class="math-content">{{ q.option_b|safe }}</span>
-                    {% if q.option_b_image %}
-                    <div class="option-image">
-                        <img src="{{ q.option_b_image }}" alt="Option B">
-                    </div>
-                    {% endif %}
-                </div>
-                {% endif %}
-                
-                {% if q.option_c %}
-                <div class="option-item" data-question="{{ q.id }}" data-option="C" onclick="checkAnswer({{ q.id }}, 'C', '{{ q.correct_answer }}')">
-                    <strong>C.</strong> <span class="math-content">{{ q.option_c|safe }}</span>
-                    {% if q.option_c_image %}
-                    <div class="option-image">
-                        <img src="{{ q.option_c_image }}" alt="Option C">
-                    </div>
-                    {% endif %}
-                </div>
-                {% endif %}
-                
-                {% if q.option_d %}
-                <div class="option-item" data-question="{{ q.id }}" data-option="D" onclick="checkAnswer({{ q.id }}, 'D', '{{ q.correct_answer }}')">
-                    <strong>D.</strong> <span class="math-content">{{ q.option_d|safe }}</span>
-                    {% if q.option_d_image %}
-                    <div class="option-image">
-                        <img src="{{ q.option_d_image }}" alt="Option D">
-                    </div>
-                    {% endif %}
-                </div>
-                {% endif %}
-            </div>
-            {% endif %}
-            
-            <div class="q-actions">
-                <span id="feedback-{{ q.id }}" class="feedback-text waiting">Select an option to check</span>
-                <a href="{{ url_for('student_question_detail', id=q.id) }}" class="btn-solution">
-                    <i class="fas fa-lightbulb"></i> Click to View Solution
-                </a>
-            </div>
+    <!-- ===== BOOKMARKED QUESTIONS SECTION ===== -->
+    <div id="bookmarkedSection" style="display:none;" class="bookmarked-section">
+        <div class="section-title">
+            <i class="fas fa-bookmark"></i>
+            <h3>📌 Bookmarked Questions</h3>
+            <span class="bookmarked-badge" id="bookmarkCount">0</span>
         </div>
-        {% endfor %}
+        <div id="bookmarkedQuestionsList" class="question-list"></div>
     </div>
-    
-    <!-- ===== PAGINATION ===== -->
-    {% if total_pages > 1 %}
-    <div class="pagination-container">
-        <div class="pagination-info">
-            Showing <strong>{{ questions|length }}</strong> of <strong>{{ total_questions }}</strong> questions
-            <span class="page-info">(Page {{ page }} of {{ total_pages }})</span>
-        </div>
-        <div class="pagination-links">
-            {% if page > 1 %}
-            <a href="{{ url_for('student_practice', page=page-1, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
-               class="pagination-btn">
-                <i class="fas fa-chevron-left"></i> Previous
-            </a>
-            {% endif %}
-            
-            {% set start_page = [page - 2, 1]|max %}
-            {% set end_page = [page + 2, total_pages]|min %}
-            
-            {% if start_page > 1 %}
-            <a href="{{ url_for('student_practice', page=1, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
-               class="pagination-btn">
-                1
-            </a>
-            {% if start_page > 2 %}
-            <span class="pagination-ellipsis">…</span>
-            {% endif %}
-            {% endif %}
-            
-            {% for p in range(start_page, end_page + 1) %}
-            {% if p == page %}
-            <span class="pagination-btn active">{{ p }}</span>
-            {% else %}
-            <a href="{{ url_for('student_practice', page=p, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
-               class="pagination-btn">
-                {{ p }}
-            </a>
-            {% endif %}
+
+    <!-- ===== ALL QUESTIONS ===== -->
+    <div id="allQuestionsSection">
+        {% if questions %}
+        <div class="question-list" id="allQuestionsList">
+            {% for q in questions %}
+            <div class="question-card" data-question-id="{{ q.id }}" data-bookmarked="false">
+                <div class="q-meta">
+                    <span class="q-topic">{{ q.topic }}</span>
+                    <span class="q-year">{{ q.year }}</span>
+                    <span class="q-exam">{{ q.exam_type }}</span>
+                    <span class="q-difficulty {{ q.difficulty.lower() }}">{{ q.difficulty }}</span>
+                    <span class="q-marks"><i class="fas fa-star"></i> +{{ q.marks }}/-{{ q.negative_marks }}</span>
+                    <span class="q-status not-answered" id="status-{{ q.id }}">
+                        <i class="fas fa-circle"></i> Not Answered
+                    </span>
+                    <button class="bookmark-btn" onclick="toggleBookmark({{ q.id }})" type="button">
+                        <i class="far fa-bookmark" id="bookmark-{{ q.id }}"></i>
+                    </button>
+                </div>
+                
+                <div class="q-text math-content">
+                    {{ q.question_text|safe }}
+                </div>
+                
+                {% if q.question_image %}
+                <div class="q-image">
+                    <img src="{{ q.question_image }}" alt="Question Image">
+                </div>
+                {% endif %}
+                
+                {% if q.option_a or q.option_b or q.option_c or q.option_d %}
+                <div class="q-options" id="options-{{ q.id }}">
+                    {% if q.option_a %}
+                    <div class="option-item" data-question="{{ q.id }}" data-option="A" onclick="checkAnswer({{ q.id }}, 'A', '{{ q.correct_answer }}')">
+                        <strong>A.</strong> <span class="math-content">{{ q.option_a|safe }}</span>
+                        {% if q.option_a_image %}
+                        <div class="option-image">
+                            <img src="{{ q.option_a_image }}" alt="Option A">
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if q.option_b %}
+                    <div class="option-item" data-question="{{ q.id }}" data-option="B" onclick="checkAnswer({{ q.id }}, 'B', '{{ q.correct_answer }}')">
+                        <strong>B.</strong> <span class="math-content">{{ q.option_b|safe }}</span>
+                        {% if q.option_b_image %}
+                        <div class="option-image">
+                            <img src="{{ q.option_b_image }}" alt="Option B">
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if q.option_c %}
+                    <div class="option-item" data-question="{{ q.id }}" data-option="C" onclick="checkAnswer({{ q.id }}, 'C', '{{ q.correct_answer }}')">
+                        <strong>C.</strong> <span class="math-content">{{ q.option_c|safe }}</span>
+                        {% if q.option_c_image %}
+                        <div class="option-image">
+                            <img src="{{ q.option_c_image }}" alt="Option C">
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if q.option_d %}
+                    <div class="option-item" data-question="{{ q.id }}" data-option="D" onclick="checkAnswer({{ q.id }}, 'D', '{{ q.correct_answer }}')">
+                        <strong>D.</strong> <span class="math-content">{{ q.option_d|safe }}</span>
+                        {% if q.option_d_image %}
+                        <div class="option-image">
+                            <img src="{{ q.option_d_image }}" alt="Option D">
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                <div class="q-actions">
+                    <span id="feedback-{{ q.id }}" class="feedback-text waiting">Select an option to check</span>
+                    <a href="{{ url_for('student_question_detail', id=q.id) }}" class="btn-solution">
+                        <i class="fas fa-lightbulb"></i> Click to View Solution
+                    </a>
+                </div>
+            </div>
             {% endfor %}
-            
-            {% if end_page < total_pages %}
-            {% if end_page < total_pages - 1 %}
-            <span class="pagination-ellipsis">…</span>
-            {% endif %}
-            <a href="{{ url_for('student_practice', page=total_pages, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
-               class="pagination-btn">
-                {{ total_pages }}
-            </a>
-            {% endif %}
-            
-            {% if page < total_pages %}
-            <a href="{{ url_for('student_practice', page=page+1, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
-               class="pagination-btn">
-                Next <i class="fas fa-chevron-right"></i>
-            </a>
-            {% endif %}
         </div>
+        
+        <!-- ===== PAGINATION ===== -->
+        {% if total_pages > 1 %}
+        <div class="pagination-container">
+            <div class="pagination-info">
+                Showing <strong>{{ questions|length }}</strong> of <strong>{{ total_questions }}</strong> questions
+                <span class="page-info">(Page {{ page }} of {{ total_pages }})</span>
+            </div>
+            <div class="pagination-links">
+                {% if page > 1 %}
+                <a href="{{ url_for('student_practice', page=page-1, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
+                   class="pagination-btn">
+                    <i class="fas fa-chevron-left"></i> Previous
+                </a>
+                {% endif %}
+                
+                {% set start_page = [page - 2, 1]|max %}
+                {% set end_page = [page + 2, total_pages]|min %}
+                
+                {% if start_page > 1 %}
+                <a href="{{ url_for('student_practice', page=1, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
+                   class="pagination-btn">
+                    1
+                </a>
+                {% if start_page > 2 %}
+                <span class="pagination-ellipsis">…</span>
+                {% endif %}
+                {% endif %}
+                
+                {% for p in range(start_page, end_page + 1) %}
+                {% if p == page %}
+                <span class="pagination-btn active">{{ p }}</span>
+                {% else %}
+                <a href="{{ url_for('student_practice', page=p, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
+                   class="pagination-btn">
+                    {{ p }}
+                </a>
+                {% endif %}
+                {% endfor %}
+                
+                {% if end_page < total_pages %}
+                {% if end_page < total_pages - 1 %}
+                <span class="pagination-ellipsis">…</span>
+                {% endif %}
+                <a href="{{ url_for('student_practice', page=total_pages, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
+                   class="pagination-btn">
+                    {{ total_pages }}
+                </a>
+                {% endif %}
+                
+                {% if page < total_pages %}
+                <a href="{{ url_for('student_practice', page=page+1, chapter=current_chapter, topic=current_topic, difficulty=current_difficulty, year=current_year) }}" 
+                   class="pagination-btn">
+                    Next <i class="fas fa-chevron-right"></i>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <h3>No questions found</h3>
+            <p>Try changing the filter or come back later</p>
+            <a href="{{ url_for('student_practice') }}" class="btn-primary"><i class="fas fa-sync"></i> Reset Filters</a>
+        </div>
+        {% endif %}
     </div>
-    {% endif %}
-    
-    {% else %}
-    <div class="empty-state">
-        <i class="fas fa-inbox"></i>
-        <h3>No questions found</h3>
-        <p>Try changing the filter or come back later</p>
-        <a href="{{ url_for('student_practice') }}" class="btn-primary"><i class="fas fa-sync"></i> Reset Filters</a>
-    </div>
-    {% endif %}
 </div>
 
 <script>
@@ -1049,8 +1128,8 @@
     // Progress Update Function
     // =============================================
     function updateProgress() {
-        var total = document.querySelectorAll('.question-card').length;
-        var answered = document.querySelectorAll('.q-status.answered-correct, .q-status.answered-wrong').length;
+        var total = document.querySelectorAll('#allQuestionsList .question-card').length;
+        var answered = document.querySelectorAll('#allQuestionsList .q-status.answered-correct, #allQuestionsList .q-status.answered-wrong').length;
         var answeredCount = document.getElementById('answeredCount');
         var totalCount = document.getElementById('totalCount');
         var progressBar = document.getElementById('progressBar');
@@ -1068,7 +1147,7 @@
     // =============================================
     document.getElementById('searchInput').addEventListener('input', function() {
         var query = this.value.toLowerCase().trim();
-        var cards = document.querySelectorAll('.question-card');
+        var cards = document.querySelectorAll('#allQuestionsList .question-card');
         
         cards.forEach(function(card) {
             var isVisible = card.textContent.toLowerCase().includes(query);
@@ -1079,42 +1158,148 @@
     });
     
     // =============================================
-    // Bookmark Function - FIXED
+    // Bookmark Function - COMPLETELY FIXED
     // =============================================
     function toggleBookmark(id) {
         var icon = document.getElementById('bookmark-' + id);
-        // Check if it's currently bookmarked (has 'fas' class)
-        var isBookmarked = icon.classList.contains('fas');
+        if (!icon) {
+            console.error('Bookmark icon not found for id:', id);
+            return;
+        }
         
-        if (isBookmarked) {
-            // Remove bookmark - change to regular (far)
-            icon.classList.remove('fas');
-            icon.classList.add('far');
-            var bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-            bookmarks = bookmarks.filter(function(b) { return b !== id; });
+        // Get current bookmarks from localStorage
+        var bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+        
+        // Check current state - is it already bookmarked?
+        var isCurrentlyBookmarked = icon.classList.contains('fas');
+        
+        if (isCurrentlyBookmarked) {
+            // UNBOOKMARK - Remove bookmark
+            icon.className = 'far fa-bookmark';
+            
+            // Remove from array
+            var index = bookmarks.indexOf(id);
+            if (index > -1) {
+                bookmarks.splice(index, 1);
+            }
             localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+            
+            // Update data attribute
+            var card = document.querySelector('.question-card[data-question-id="' + id + '"]');
+            if (card) {
+                card.dataset.bookmarked = 'false';
+            }
+            
+            console.log('📕 Unbookmarked question:', id);
         } else {
-            // Add bookmark - change to solid (fas)
-            icon.classList.remove('far');
-            icon.classList.add('fas');
-            var bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+            // BOOKMARK - Add bookmark
+            icon.className = 'fas fa-bookmark';
+            
+            // Add to array if not exists
             if (!bookmarks.includes(id)) {
                 bookmarks.push(id);
                 localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
             }
+            
+            // Update data attribute
+            var card = document.querySelector('.question-card[data-question-id="' + id + '"]');
+            if (card) {
+                card.dataset.bookmarked = 'true';
+            }
+            
+            console.log('📗 Bookmarked question:', id);
+        }
+        
+        // Update bookmarked section
+        updateBookmarkedSection();
+    }
+    
+    // =============================================
+    // Update Bookmarked Section
+    // =============================================
+    function updateBookmarkedSection() {
+        var bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+        var section = document.getElementById('bookmarkedSection');
+        var list = document.getElementById('bookmarkedQuestionsList');
+        var count = document.getElementById('bookmarkCount');
+        
+        // Update count
+        if (count) {
+            count.textContent = bookmarks.length;
+        }
+        
+        // Show/hide section
+        if (bookmarks.length > 0) {
+            section.style.display = 'block';
+            
+            // Clear and rebuild list
+            list.innerHTML = '';
+            
+            // Get all question cards
+            var allCards = document.querySelectorAll('#allQuestionsList .question-card');
+            
+            // Show only bookmarked questions
+            allCards.forEach(function(card) {
+                var qId = parseInt(card.dataset.questionId);
+                if (bookmarks.includes(qId)) {
+                    // Clone the card
+                    var clone = card.cloneNode(true);
+                    // Remove any existing bookmark buttons from clone (we'll add our own)
+                    var oldBtn = clone.querySelector('.bookmark-btn');
+                    if (oldBtn) {
+                        oldBtn.remove();
+                    }
+                    // Add a new bookmark button with correct event
+                    var metaDiv = clone.querySelector('.q-meta');
+                    if (metaDiv) {
+                        var newBtn = document.createElement('button');
+                        newBtn.className = 'bookmark-btn';
+                        newBtn.type = 'button';
+                        newBtn.innerHTML = '<i class="fas fa-bookmark" style="color:#FFC107;"></i>';
+                        newBtn.onclick = function(e) {
+                            e.stopPropagation();
+                            toggleBookmark(qId);
+                        };
+                        metaDiv.appendChild(newBtn);
+                    }
+                    list.appendChild(clone);
+                }
+            });
+        } else {
+            section.style.display = 'none';
         }
     }
     
+    // =============================================
     // Load bookmarks on page load
+    // =============================================
     document.addEventListener('DOMContentLoaded', function() {
         var bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-        bookmarks.forEach(function(id) {
-            var icon = document.getElementById('bookmark-' + id);
-            if (icon) {
-                icon.classList.remove('far');
-                icon.classList.add('fas');
+        console.log('📚 Loading bookmarks from localStorage:', bookmarks);
+        
+        // Apply bookmarks to all icons
+        var allIcons = document.querySelectorAll('[id^="bookmark-"]');
+        allIcons.forEach(function(icon) {
+            var id = parseInt(icon.id.replace('bookmark-', ''));
+            if (bookmarks.includes(id)) {
+                icon.className = 'fas fa-bookmark';
+                var card = document.querySelector('.question-card[data-question-id="' + id + '"]');
+                if (card) {
+                    card.dataset.bookmarked = 'true';
+                }
+            } else {
+                icon.className = 'far fa-bookmark';
+                var card = document.querySelector('.question-card[data-question-id="' + id + '"]');
+                if (card) {
+                    card.dataset.bookmarked = 'false';
+                }
             }
         });
+        
+        // Update bookmarked section
+        updateBookmarkedSection();
+        
+        // Initialize progress
         updateProgress();
     });
 </script>
