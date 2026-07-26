@@ -7721,7 +7721,7 @@
       "option_d_image": "",
       "correct_answer": "C",
       "solution": "Initially, the charges are +Q and −Q separated by a distance r.<br><br>The electrostatic force is<br><br>$$F=-\\frac{1}{4\\pi\\varepsilon_0}\\frac{Q^2}{r^2}\\quad ...(i)$$<br><br>After transferring 25% of the charge from A to B,<br><br>$$Q_A=Q-\\frac{Q}{4}=\\frac{3Q}{4},\\qquad Q_B=-Q+\\frac{Q}{4}=-\\frac{3Q}{4}$$<br><br>Hence, the new force is<br><br>$$F'=\\frac{1}{4\\pi\\varepsilon_0}\\frac{\\left(\\frac{3Q}{4}\\right)\\left(-\\frac{3Q}{4}\\right)}{r^2}=-\\frac{1}{4\\pi\\varepsilon_0}\\frac{9Q^2}{16r^2}$$<br><br>Comparing with equation (i),<br><br>$$F'=\\frac{9}{16}F$$<br><br>Therefore, $\\boxed{\\text{Option (c) is correct}}$.",
-      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/q1.png",
+      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/solution_q1.png",
       "explanation": "When charge is transferred, the magnitude of both charges becomes 3Q/4. Since electrostatic force is proportional to the product of the charges, the new force becomes 9/16 of the original force.",
       "marks": 4,
       "negative_marks": 1
@@ -7746,7 +7746,7 @@
       "option_d_image": "",
       "correct_answer": "B",
       "solution": "A hydrogen atom consists of one electron and one proton.<br><br>Its net charge is<br><br>$$q=(-e)+(e+\\Delta e)=\\Delta e$$<br><br>Hence, the electrostatic force between two hydrogen atoms is<br><br>$$F_e=\\frac{1}{4\\pi\\varepsilon_0}\\frac{(\\Delta e)^2}{d^2}\\quad ...(i)$$<br><br>The gravitational force between the two hydrogen atoms is<br><br>$$F_g=\\frac{Gm_h^2}{d^2}\\quad ...(ii)$$<br><br>Since the net force is zero,<br><br>$$F_e=F_g$$<br><br>Therefore,<br><br>$$\\frac{(\\Delta e)^2}{4\\pi\\varepsilon_0d^2}=\\frac{Gm_h^2}{d^2}$$<br><br>$$\\Rightarrow (\\Delta e)^2=4\\pi\\varepsilon_0Gm_h^2$$<br><br>Substituting the values,<br><br>$$\\Delta e\\approx10^{-37}\\,\\text{C}$$<br><br>Hence, $\\boxed{\\text{Option (b) is correct}}$.",
-      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/q2.png",
+      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/solution_q2.png",
       "explanation": "The residual charge on each hydrogen atom is Δe. Equating the electrostatic repulsion with the gravitational attraction gives Δe of the order of 10^-37 C.",
       "marks": 4,
       "negative_marks": 1
@@ -7771,7 +7771,7 @@
       "option_d_image": "",
       "correct_answer": "A",
       "solution": "For equilibrium of one sphere,<br><br>$$T\\cos\\theta=mg\\quad ...(i)$$<br><br>$$T\\sin\\theta=\\frac{kq^2}{x^2}\\quad ...(ii)$$<br><br>From (i) and (ii),<br><br>$$\\tan\\theta=\\frac{kq^2}{mgx^2}$$<br><br>Since $\\theta$ is small,<br><br>$$\\tan\\theta\\approx\\sin\\theta=\\frac{x}{2l}$$<br><br>Hence,<br><br>$$\\frac{x}{2l}=\\frac{kq^2}{mgx^2}$$<br><br>$$\\Rightarrow q^2\\propto x^3$$<br><br>$$\\Rightarrow q\\propto x^{3/2}$$<br><br>Differentiating with respect to time,<br><br>$$\\frac{dq}{dt}\\propto\\frac{3}{2}\\sqrt{x}\\frac{dx}{dt}$$<br><br>Since the charge leaks at a constant rate, $\\frac{dq}{dt}$ is constant.<br><br>Therefore,<br><br>$$v=\\frac{dx}{dt}\\propto\\frac{1}{\\sqrt{x}}$$<br><br>Hence, $\\boxed{\\text{Option (a) is correct}}$.",
-      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/q3.png",
+      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/solution_q3.png",
       "explanation": "Using the equilibrium condition for small angles, q is proportional to x^(3/2). Since charge decreases uniformly with time, the approaching speed varies inversely as the square root of the separation.",
       "marks": 4,
       "negative_marks": 1
@@ -7796,7 +7796,7 @@
       "option_d_image": "",
       "correct_answer": "D",
       "solution": "Let the mass of each ball be m and the charge on each ball be q.<br><br>The electrostatic force is<br><br>$$F=\\frac{1}{4\\pi\\varepsilon_0}\\frac{q^2}{r^2}$$<br><br>In equilibrium,<br><br>$$T\\cos\\theta=mg\\quad ...(i)$$<br><br>$$T\\sin\\theta=F\\quad ...(ii)$$<br><br>Thus,<br><br>$$\\tan\\theta=\\frac{F}{mg}$$<br><br>For the initial arrangement,<br><br>$$\\frac{r/2}{y}=\\frac{1}{4\\pi\\varepsilon_0}\\frac{q^2}{mgr^2}\\quad ...(iii)$$<br><br>After clamping at half the height,<br><br>$$\\frac{r'/2}{y/2}=\\frac{1}{4\\pi\\varepsilon_0}\\frac{q^2}{mgr'^2}\\quad ...(iv)$$<br><br>Dividing (iv) by (iii),<br><br>$$\\frac{2r'}{r}=\\frac{r^2}{r'^2}$$<br><br>$$\\Rightarrow r'^3=\\frac{r^3}{2}$$<br><br>$$\\Rightarrow r'=\\frac{r}{\\sqrt[3]{2}}$$<br><br>Hence, $\\boxed{\\text{Option (d) is correct}}$.",
-      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/q4.png",
+      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/solution_q4.png",
       "explanation": "Reducing the effective suspension height changes the equilibrium geometry. Solving the new equilibrium condition gives the new separation as r divided by the cube root of 2.",
       "marks": 4,
       "negative_marks": 1
@@ -7871,7 +7871,7 @@
       "option_d_image": "",
       "correct_answer": "A",
       "solution": "Let two equal charges $Q$ be placed at points $A$ and $B$, separated by a distance $r$. A charge $q$ is placed at the midpoint $C$.<br><br>For equilibrium, the net force on either charge $Q$ must be zero.<br><br>The repulsive force due to the other charge $Q$ is<br><br>$$\\frac{1}{4\\pi\\varepsilon_0}\\frac{Q^2}{r^2}$$<br><br>The force due to the middle charge is<br><br>$$\\frac{1}{4\\pi\\varepsilon_0}\\frac{Qq}{(r/2)^2}$$<br><br>Hence,<br><br>$$\\frac{1}{4\\pi\\varepsilon_0}\\frac{Q^2}{r^2}+\\frac{1}{4\\pi\\varepsilon_0}\\frac{Qq}{(r/2)^2}=0$$<br><br>$$\\Rightarrow \\frac{Q^2}{r^2}=-\\frac{4Qq}{r^2}$$<br><br>$$\\Rightarrow Q=-4q$$<br><br>$$\\boxed{q=-\\frac{Q}{4}}$$<br><br>Therefore, $\\boxed{\\text{Option (a) is correct}}$.",
-      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/q7.png",
+      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/solution_q7.png",
       "explanation": "The force on each outer charge due to the other outer charge must be balanced by the force due to the central charge. Solving the equilibrium condition gives q = -Q/4.",
       "marks": 4,
       "negative_marks": 1
@@ -7946,7 +7946,7 @@
       "option_d_image": "",
       "correct_answer": "B",
       "solution": "The acceleration during the first second is<br><br>$$a=\\frac{6-0}{1}=6\\,\\text{m s}^{-2}$$<br><br>For the interval $0$ to $1\\,$s,<br><br>$$s_1=\\frac{1}{2}a(1)^2=\\frac{1}{2}\\times6=3\\,\\text{m}$$<br><br>After one second, the electric field is reversed.<br><br>For the interval $1$ to $2\\,$s,<br><br>$$s_2=6(1)-\\frac{1}{2}\\times6(1)^2=3\\,\\text{m}$$<br><br>For the interval $2$ to $3\\,$s,<br><br>$$s_3=0-\\frac{1}{2}\\times6(1)^2=-3\\,\\text{m}$$<br><br>Total displacement,<br><br>$$s=s_1+s_2+s_3=3\\,\\text{m}$$<br><br>Average velocity,<br><br>$$\\bar{v}=\\frac{3}{3}=1\\,\\text{m s}^{-1}$$<br><br>Total distance travelled,<br><br>$$3+3+3=9\\,\\text{m}$$<br><br>Average speed,<br><br>$$\\frac{9}{3}=3\\,\\text{m s}^{-1}$$<br><br>Hence, $\\boxed{\\text{Option (b) is correct}}$.",
-      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/q10.png",
+      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/solution_q10.png",
       "explanation": "The car accelerates for 1 s and then decelerates under the reversed electric field. Using kinematic equations, the average velocity is 1 m s⁻¹ and the average speed is 3 m s⁻¹.",
       "marks": 4,
       "negative_marks": 1
@@ -8071,7 +8071,7 @@
       "option_d_image": "",
       "correct_answer": "A",
       "solution": "The given arrangement consists of two dipoles.<br><br>One dipole is formed by charges $-q$ and $+q$ along the positive $y$-axis having dipole moment $qa$.<br><br>The other dipole is formed by charges $-q$ and $+q$ along the positive $x$-axis having dipole moment $qa$.<br><br>Hence, the resultant dipole moment is<br><br>$$p=\\sqrt{(qa)^2+(qa)^2}=\\sqrt{2}\\,qa$$<br><br>The resultant is directed at $45^\\circ$ to both axes, i.e. along the line joining the origin and the point $(a,a,0)$.<br><br>Therefore, $\\boxed{\\text{Option (a) is correct}}$.",
-      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/q15.png",
+      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/solution_q15.png",
       "explanation": "The dipole moments along the x-axis and y-axis are equal in magnitude. Their vector sum gives a resultant dipole moment of √2qa directed along the diagonal joining the origin to (a, a, 0).",
       "marks": 4,
       "negative_marks": 1
@@ -8196,7 +8196,7 @@
       "option_d_image": "",
       "correct_answer": "D",
       "solution": "The electric fields at the centre due to the arcs AC and BD cancel each other because of symmetry.<br><br>The electric field due to the remaining arc CD acts along the direction $OK$.<br><br>Its magnitude is equal to the electric field produced by the arc AKB, which is given as $E$.<br><br>Hence, the electric field due to the part ACDB is $E$ along $OK$.<br><br>Therefore, $\\boxed{\\text{Option (d) is correct}}$.",
-      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/q20.png",
+      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/solution_q20.png",
       "explanation": "Using symmetry, the contributions of opposite quarter arcs cancel, leaving a resultant field equal in magnitude to E and directed along OK.",
       "marks": 4,
       "negative_marks": 1
@@ -8246,7 +8246,7 @@
       "option_d_image": "",
       "correct_answer": "B",
       "solution": "Eight identical cubes can be arranged together so that the given charge lies at the centre of the larger cube.<br><br>According to Gauss's law, the total electric flux through the larger cube is<br><br>$$\\Phi=\\frac{q}{\\varepsilon_0}$$<br><br>Since the larger cube consists of eight identical cubes, the flux through one cube is<br><br>$$\\Phi=\\frac{1}{8}\\left(\\frac{q}{\\varepsilon_0}\\right)=\\frac{q}{8\\varepsilon_0}$$<br><br>Therefore, $\\boxed{\\text{Option (b) is correct}}$.",
-      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/q22.png",
+      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/solution_q22.png",
       "explanation": "Eight identical cubes form a larger cube with the charge at its centre. The total flux is shared equally among the eight cubes.",
       "marks": 4,
       "negative_marks": 1
@@ -8371,7 +8371,7 @@
       "option_d_image": "",
       "correct_answer": "B",
       "solution": "When a charge is placed at the corner of a cube, eight identical cubes can be arranged symmetrically so that the charge lies at the centre of the larger cube.<br><br>According to Gauss's law, the total electric flux through the larger cube is<br><br>$$\\Phi_{\\text{total}}=\\frac{Q}{\\varepsilon_0}$$<br><br>Hence, the flux associated with one cube is<br><br>$$\\Phi=\\frac{Q}{8\\varepsilon_0}$$<br><br>The three faces meeting at the corner containing the charge have zero flux because the electric field is parallel to these faces.<br><br>Therefore, the total electric flux through all the six faces of the given cube is<br><br>$$\\boxed{\\frac{Q}{8\\varepsilon_0}}$$<br><br>Hence, $\\boxed{\\text{Option (b) is correct}}$.",
-      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/q27.png",
+      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/solution_q27.png",
       "explanation": "Eight identical cubes together place the corner charge at the centre of a larger cube. Therefore, the flux through one cube is one-eighth of the total flux.",
       "marks": 4,
       "negative_marks": 1
@@ -8446,7 +8446,7 @@
       "option_d_image": "",
       "correct_answer": "D",
       "solution": "The electric field due to an infinite line charge at a distance $r$ is<br><br>$$E=\\frac{\\lambda}{2\\pi\\varepsilon_0r}$$<br><br>At the midpoint, each line charge is at a distance $R$.<br><br>Therefore,<br><br>$$E_1=E_2=\\frac{\\lambda}{2\\pi\\varepsilon_0R}$$<br><br>The fields due to the positive and negative line charges are in the same direction at the midpoint, so they add together.<br><br>Hence,<br><br>$$E=2E_1=\\frac{\\lambda}{\\pi\\varepsilon_0R}$$<br><br>Therefore, $\\boxed{\\text{Option (d) is correct}}$.",
-      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/q30.png",
+      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/solution_q30.png",
       "explanation": "At the midpoint, the electric fields due to the positive and negative line charges are equal in magnitude and act in the same direction.",
       "marks": 4,
       "negative_marks": 1
@@ -8521,7 +8521,7 @@
       "option_d_image": "",
       "correct_answer": "B",
       "solution": "The electric dipole moment is directed from the negative charge to the positive charge.<br><br>In the given non-uniform electric field, the electric field strength at the positive charge is greater than that at the negative charge, i.e.<br><br>$$|E_1|>|E_2|$$<br><br>Hence, the resultant force on the dipole acts towards the right.<br><br>A physical system always tends to move towards a state of lower potential energy.<br><br>Therefore, the dipole moves towards the right and its potential energy decreases.<br><br>Hence, $\\boxed{\\text{Option (b) is correct}}$.",
-      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/q33.png",
+      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/solution_q33.png",
       "explanation": "A dipole in a non-uniform electric field experiences a net force towards the region of stronger electric field, thereby reducing its potential energy.",
       "marks": 4,
       "negative_marks": 1
@@ -8596,7 +8596,7 @@
       "option_d_image": "",
       "correct_answer": "D",
       "solution": "Let the separation between the centres of the two spheres be $d$. Initially,<br><br>$$F=\\frac{kq^2}{d^2}$$<br><br>When the identical uncharged sphere C touches sphere A, the charge is shared equally.<br><br>$$q_A=q_C=\\frac{q}{2}$$<br><br>Next, sphere C carrying charge $\\frac{q}{2}$ touches sphere B carrying charge $q$. The total charge becomes<br><br>$$q+\\frac{q}{2}=\\frac{3q}{2}$$<br><br>Hence, both spheres share it equally,<br><br>$$q_B=q_C=\\frac{3q}{4}$$<br><br>Finally, charges on A and B are<br><br>$$q_A=\\frac{q}{2},\\qquad q_B=\\frac{3q}{4}$$<br><br>The new force is<br><br>$$F'=\\frac{k\\left(\\frac{q}{2}\\right)\\left(\\frac{3q}{4}\\right)}{d^2}=\\frac{3}{8}\\frac{kq^2}{d^2}=\\frac{3F}{8}$$<br><br>Therefore, $\\boxed{\\text{Option (d) is correct}}$.",
-      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/q36.png",
+      "solution_image": "/static/images/neet/electrostatics/electric_charges_and_fields/solution/solution_q36.png",
       "explanation": "When identical conducting spheres touch, charge is shared equally. Applying this successively gives final charges q/2 and 3q/4, leading to a new force of 3F/8.",
       "marks": 4,
       "negative_marks": 1
