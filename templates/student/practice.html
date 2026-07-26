@@ -884,9 +884,7 @@
                     <span class="q-status not-answered" id="status-{{ q.id }}">
                         <i class="fas fa-circle"></i> Not Answered
                     </span>
-                    <button class="bookmark-btn" onclick="toggleBookmark({{ q.id }})" type="button">
-                        <i class="far fa-bookmark" id="bookmark-{{ q.id }}"></i>
-                    </button>
+                    <!-- BOOKMARK BUTTON REMOVED -->
                 </div>
                 
                 <div class="q-text math-content">
@@ -1306,66 +1304,6 @@
         performSearch('');
     }
     
-    // =============================================
-    // Bookmark Function - FIXED
-    // =============================================
-    function toggleBookmark(id) {
-        var icon = document.getElementById('bookmark-' + id);
-        if (!icon) {
-            console.error('Bookmark icon not found for id:', id);
-            return;
-        }
-        
-        // Get current bookmarks from localStorage
-        var bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-        
-        // Check current state - is it already bookmarked?
-        var isCurrentlyBookmarked = icon.classList.contains('fas');
-        
-        if (isCurrentlyBookmarked) {
-            // UNBOOKMARK - Remove bookmark
-            icon.className = 'far fa-bookmark';
-            
-            // Remove from array
-            var index = bookmarks.indexOf(id);
-            if (index > -1) {
-                bookmarks.splice(index, 1);
-            }
-            localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-            console.log('📕 Unbookmarked question:', id);
-        } else {
-            // BOOKMARK - Add bookmark
-            icon.className = 'fas fa-bookmark';
-            
-            // Add to array if not exists
-            if (!bookmarks.includes(id)) {
-                bookmarks.push(id);
-                localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-            }
-            console.log('📗 Bookmarked question:', id);
-        }
-    }
     
-    // =============================================
-    // Load bookmarks on page load
-    // =============================================
-    document.addEventListener('DOMContentLoaded', function() {
-        var bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-        console.log('📚 Loading bookmarks from localStorage:', bookmarks);
-        
-        // Apply bookmarks to all icons
-        var allIcons = document.querySelectorAll('[id^="bookmark-"]');
-        allIcons.forEach(function(icon) {
-            var id = parseInt(icon.id.replace('bookmark-', ''));
-            if (bookmarks.includes(id)) {
-                icon.className = 'fas fa-bookmark';
-            } else {
-                icon.className = 'far fa-bookmark';
-            }
-        });
-        
-        // Initialize progress
-        updateProgress();
-    });
 </script>
 {% endblock %}
