@@ -39,6 +39,68 @@
         margin: 0 !important;
     }
     
+    /* ===== TIMER ===== */
+    .timer-container {
+        display: flex !important;
+        gap: 15px !important;
+        align-items: center !important;
+        margin-bottom: 15px !important;
+        flex-wrap: wrap !important;
+    }
+    
+    .timer-display {
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+        color: #6C63FF !important;
+        background: #f0edff !important;
+        padding: 6px 16px !important;
+        border-radius: 8px !important;
+    }
+    
+    .timer-reset {
+        background: none !important;
+        border: none !important;
+        color: #636E72 !important;
+        cursor: pointer !important;
+        font-size: 0.9rem !important;
+    }
+    
+    .btn-print {
+        background: #2D3436 !important;
+        color: white !important;
+        border: none !important;
+        cursor: pointer !important;
+        padding: 12px 24px !important;
+        border-radius: 10px !important;
+        font-weight: 500 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .btn-print:hover {
+        background: #1a1a2e !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* ===== DARK TOGGLE ===== */
+    .dark-toggle {
+        background: rgba(255,255,255,0.15) !important;
+        border: none !important;
+        color: white !important;
+        padding: 8px 14px !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        font-size: 1rem !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .dark-toggle:hover {
+        background: rgba(255,255,255,0.25) !important;
+    }
+    
     @media (max-width: 768px) {
         .solution-header {
             flex-direction: column !important;
@@ -46,6 +108,10 @@
         }
         
         .btn-share {
+            justify-content: center !important;
+        }
+        
+        .timer-container {
             justify-content: center !important;
         }
     }
@@ -62,8 +128,21 @@
         <nav>
             <a href="{{ url_for('student_home') }}"><i class="fas fa-home"></i> Home</a>
             <a href="{{ url_for('student_practice') }}"><i class="fas fa-book-open"></i> Practice</a>
+            <button onclick="toggleDarkMode()" class="dark-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
         </nav>
     </header>
+
+    <!-- ===== TIMER ===== -->
+    <div class="timer-container">
+        <span class="timer-display">
+            <i class="fas fa-clock"></i> <span id="timeDisplay">00:00</span>
+        </span>
+        <button class="timer-reset" onclick="resetTimer()">
+            <i class="fas fa-redo"></i> Reset
+        </button>
+    </div>
 
     <div class="question-detail">
         <div class="q-meta">
@@ -168,64 +247,96 @@
         <div class="q-actions-full">
             <a href="{{ url_for('student_practice') }}" class="btn-view"><i class="fas fa-arrow-left"></i> Back to Practice</a>
             <a href="{{ url_for('student_practice') }}?topic={{ question.topic }}" class="btn-primary"><i class="fas fa-filter"></i> More from {{ question.topic }}</a>
+            <button onclick="window.print()" class="btn-print">
+                <i class="fas fa-print"></i> Print
+            </button>
         </div>
     </div>
 </div>
 
-<!-- ===== SHARE SCRIPT ===== -->
+<!-- ===== SHARE & TIMER SCRIPTS ===== -->
 <script>
-function sharePage() {
-    // Get current page URL
-    const url = window.location.href;
-    const title = 'NEET Physics Question';
-    const text = 'Check out this physics question!';
-    
-    // Check if Web Share API is available (mobile)
-    if (navigator.share) {
-        navigator.share({
-            title: title,
-            text: text,
-            url: url
-        }).catch(function(e) {
-            if (e.name !== 'AbortError') {
-                // Fallback: Copy to clipboard
-                copyToClipboard(url);
-            }
-        });
-    } else {
-        // Desktop: Copy to clipboard
-        copyToClipboard(url);
+    // =============================================
+    // Share Function
+    // =============================================
+    function sharePage() {
+        var url = window.location.href;
+        var title = 'NEET Physics Question';
+        var text = 'Check out this physics question!';
+        
+        if (navigator.share) {
+            navigator.share({
+                title: title,
+                text: text,
+                url: url
+            }).catch(function(e) {
+                if (e.name !== 'AbortError') {
+                    copyToClipboard(url);
+                }
+            });
+        } else {
+            copyToClipboard(url);
+        }
     }
-}
 
-function copyToClipboard(text) {
-    // Try using navigator.clipboard
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function() {
-            alert('✅ Link copied to clipboard!');
-        }).catch(function() {
+    function copyToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('✅ Link copied to clipboard!');
+            }).catch(function() {
+                fallbackCopy(text);
+            });
+        } else {
             fallbackCopy(text);
-        });
-    } else {
-        fallbackCopy(text);
+        }
     }
-}
 
-function fallbackCopy(text) {
-    // Fallback method
-    const textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.style.position = 'fixed';
-    textarea.style.opacity = '0';
-    document.body.appendChild(textarea);
-    textarea.select();
-    try {
-        document.execCommand('copy');
-        alert('✅ Link copied to clipboard!');
-    } catch (err) {
-        alert('❌ Could not copy link. Please copy manually: ' + text);
+    function fallbackCopy(text) {
+        var textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+            alert('✅ Link copied to clipboard!');
+        } catch (err) {
+            alert('❌ Could not copy link. Please copy manually: ' + text);
+        }
+        document.body.removeChild(textarea);
     }
-    document.body.removeChild(textarea);
-}
+
+    // =============================================
+    // Timer Function
+    // =============================================
+    var seconds = 0;
+    var timerInterval = null;
+
+    function startTimer() {
+        if (timerInterval) return;
+        timerInterval = setInterval(function() {
+            seconds++;
+            var mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+            var secs = String(seconds % 60).padStart(2, '0');
+            var display = document.getElementById('timeDisplay');
+            if (display) display.textContent = mins + ':' + secs;
+        }, 1000);
+    }
+
+    function resetTimer() {
+        seconds = 0;
+        var display = document.getElementById('timeDisplay');
+        if (display) display.textContent = '00:00';
+        if (timerInterval) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            startTimer();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        startTimer();
+    });
 </script>
 {% endblock %}
