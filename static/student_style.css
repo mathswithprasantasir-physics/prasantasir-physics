@@ -791,3 +791,54 @@ body::after {
         -webkit-overflow-scrolling: touch !important;
     }
 }
+
+/* ===== SHARE BUTTON STYLE ===== */
+.btn-share {
+    background: #6C63FF !important;
+    color: white !important;
+    border: none !important;
+    padding: 8px 20px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    font-weight: 500 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    transition: all 0.3s ease !important;
+    font-size: 0.9rem !important;
+}
+
+.btn-share:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(108, 99, 255, 0.3) !important;
+}
+
+.btn-share:disabled {
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+.solution-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    margin-bottom: 15px !important;
+}
+
+.solution-header h3 {
+    margin: 0 !important;
+}
+
+@media (max-width: 768px) {
+    .solution-header {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+    
+    .btn-share {
+        justify-content: center !important;
+    }
+}
