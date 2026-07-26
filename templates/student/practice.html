@@ -325,83 +325,6 @@
         align-items: center !important;
     }
     
-    /* ===== SEARCH BAR - IMPROVED ===== */
-    .search-bar {
-        margin-bottom: 15px !important;
-    }
-    
-    .search-bar .search-input-wrapper {
-        position: relative !important;
-        display: flex !important;
-        align-items: center !important;
-        background: white !important;
-        border: 2px solid #DFE6E9 !important;
-        border-radius: 10px !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    .search-bar .search-input-wrapper:focus-within {
-        border-color: #6C63FF !important;
-        box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1) !important;
-    }
-    
-    .search-bar .search-input-wrapper i {
-        padding: 0 15px !important;
-        color: #636E72 !important;
-        font-size: 1rem !important;
-    }
-    
-    .search-bar .search-input-wrapper input {
-        width: 100% !important;
-        padding: 12px 18px 12px 0 !important;
-        border: none !important;
-        border-radius: 10px !important;
-        font-size: 1rem !important;
-        background: transparent !important;
-        outline: none !important;
-    }
-    
-    .search-bar .search-input-wrapper .search-clear {
-        padding: 0 15px !important;
-        color: #636E72 !important;
-        cursor: pointer !important;
-        display: none !important;
-        font-size: 1rem !important;
-    }
-    
-    .search-bar .search-input-wrapper .search-clear.visible {
-        display: block !important;
-    }
-    
-    .search-bar .search-input-wrapper .search-clear:hover {
-        color: #ff6b6b !important;
-    }
-    
-    /* ===== SEARCH STATS ===== */
-    .search-stats {
-        margin-top: 10px !important;
-        font-size: 0.9rem !important;
-        color: #636E72 !important;
-        display: none !important;
-    }
-    
-    .search-stats.visible {
-        display: block !important;
-    }
-    
-    .search-stats strong {
-        color: #6C63FF !important;
-    }
-    
-    /* ===== SEARCH HIGHLIGHT ===== */
-    .highlight {
-        background: #FFC107 !important;
-        color: #1a1a2e !important;
-        padding: 0 4px !important;
-        border-radius: 3px !important;
-        font-weight: 600 !important;
-    }
-    
     /* ===== PROGRESS BAR ===== */
     .progress-container {
         margin-bottom: 20px !important;
@@ -443,30 +366,6 @@
         width: 0% !important;
         transition: width 0.5s ease !important;
         border-radius: 10px !important;
-    }
-    
-    /* ===== BOOKMARK ===== */
-    .bookmark-btn {
-        cursor: pointer !important;
-        font-size: 1.3rem !important;
-        background: none !important;
-        border: none !important;
-        padding: 5px 10px !important;
-        color: #636E72 !important;
-        transition: all 0.3s ease !important;
-        margin-left: auto !important;
-    }
-    
-    .bookmark-btn:hover {
-        transform: scale(1.2) !important;
-    }
-    
-    .bookmark-btn .far {
-        color: #636E72 !important;
-    }
-    
-    .bookmark-btn .fas {
-        color: #FFC107 !important;
     }
     
     /* ===== PAGINATION STYLES ===== */
@@ -676,36 +575,6 @@
         color: #8888aa !important;
     }
     
-    body.dark-mode .search-bar .search-input-wrapper {
-        background: #252547 !important;
-        border-color: #3d3d6b !important;
-    }
-    
-    body.dark-mode .search-bar .search-input-wrapper:focus-within {
-        border-color: #6C63FF !important;
-        box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1) !important;
-    }
-    
-    body.dark-mode .search-bar .search-input-wrapper input {
-        color: #e0e0e0 !important;
-    }
-    
-    body.dark-mode .search-bar .search-input-wrapper input::placeholder {
-        color: #8888aa !important;
-    }
-    
-    body.dark-mode .search-bar .search-input-wrapper i {
-        color: #8888aa !important;
-    }
-    
-    body.dark-mode .search-stats {
-        color: #8888aa !important;
-    }
-    
-    body.dark-mode .search-stats strong {
-        color: #8B83FF !important;
-    }
-    
     body.dark-mode .btn-clear {
         background: #3d3d6b !important;
         color: #e0e0e0 !important;
@@ -713,19 +582,6 @@
     
     body.dark-mode .btn-clear:hover {
         background: #4d4d8b !important;
-    }
-    
-    body.dark-mode .bookmark-btn .far {
-        color: #8888aa !important;
-    }
-    
-    body.dark-mode .bookmark-btn .fas {
-        color: #FFC107 !important;
-    }
-    
-    body.dark-mode .highlight {
-        background: #FFC107 !important;
-        color: #1a1a2e !important;
     }
     
     @media (max-width: 768px) {
@@ -779,14 +635,6 @@
             align-items: stretch !important;
             text-align: center !important;
         }
-        
-        .bookmark-btn {
-            margin-left: 0 !important;
-        }
-        
-        .search-bar .search-input-wrapper {
-            flex-wrap: wrap !important;
-        }
     }
 </style>
 {% endblock %}
@@ -808,20 +656,6 @@
     </header>
 
     <h2 class="page-title"><i class="fas fa-search"></i> Practice Questions</h2>
-
-    <!-- ===== SEARCH BAR - IMPROVED ===== -->
-    <div class="search-bar">
-        <div class="search-input-wrapper">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Search questions by keyword, topic, year, exam type...">
-            <span class="search-clear" id="searchClear" onclick="clearSearch()">
-                <i class="fas fa-times-circle"></i>
-            </span>
-        </div>
-        <div class="search-stats" id="searchStats">
-            Found <strong id="searchCount">0</strong> questions matching "<span id="searchTerm"></span>"
-        </div>
-    </div>
 
     <!-- ===== PROGRESS BAR ===== -->
     <div class="progress-container">
@@ -884,7 +718,6 @@
                     <span class="q-status not-answered" id="status-{{ q.id }}">
                         <i class="fas fa-circle"></i> Not Answered
                     </span>
-                    <!-- BOOKMARK BUTTON REMOVED -->
                 </div>
                 
                 <div class="q-text math-content">
@@ -1157,153 +990,10 @@
     }
     
     // =============================================
-    // Search Function - IMPROVED
+    // Initialize on page load
     // =============================================
-    var searchTimeout = null;
-    
-    document.getElementById('searchInput').addEventListener('input', function() {
-        var query = this.value.trim();
-        var clearBtn = document.getElementById('searchClear');
-        var stats = document.getElementById('searchStats');
-        var searchTerm = document.getElementById('searchTerm');
-        var searchCount = document.getElementById('searchCount');
-        
-        // Show/hide clear button
-        if (query.length > 0) {
-            clearBtn.classList.add('visible');
-        } else {
-            clearBtn.classList.remove('visible');
-        }
-        
-        // Clear previous timeout
-        if (searchTimeout) {
-            clearTimeout(searchTimeout);
-        }
-        
-        // Debounce search for better performance
-        searchTimeout = setTimeout(function() {
-            performSearch(query);
-        }, 300);
-    });
-    
-    function performSearch(query) {
-        var cards = document.querySelectorAll('#allQuestionsList .question-card');
-        var stats = document.getElementById('searchStats');
-        var searchTerm = document.getElementById('searchTerm');
-        var searchCount = document.getElementById('searchCount');
-        var visibleCount = 0;
-        
-        if (query.length === 0) {
-            // Show all questions
-            cards.forEach(function(card) {
-                card.style.display = 'block';
-                // Remove highlights
-                removeHighlights(card);
-            });
-            stats.classList.remove('visible');
-            updateProgress();
-            return;
-        }
-        
-        var searchLower = query.toLowerCase();
-        
-        cards.forEach(function(card) {
-            // Get all text content from the card
-            var cardText = card.textContent.toLowerCase();
-            
-            // Check if search term exists in card
-            var isMatch = cardText.includes(searchLower);
-            
-            if (isMatch) {
-                card.style.display = 'block';
-                visibleCount++;
-                // Highlight matches
-                highlightMatches(card, query);
-            } else {
-                card.style.display = 'none';
-                // Remove highlights
-                removeHighlights(card);
-            }
-        });
-        
-        // Update search stats
-        if (visibleCount > 0) {
-            stats.classList.add('visible');
-            searchTerm.textContent = query;
-            searchCount.textContent = visibleCount;
-        } else {
-            stats.classList.remove('visible');
-        }
-        
-        // Update progress for visible questions only
+    document.addEventListener('DOMContentLoaded', function() {
         updateProgress();
-    }
-    
-    function highlightMatches(card, query) {
-        // Remove existing highlights
-        removeHighlights(card);
-        
-        // Get all text nodes inside the card
-        var walker = document.createTreeWalker(
-            card,
-            NodeFilter.SHOW_TEXT,
-            {
-                acceptNode: function(node) {
-                    // Skip script and style tags
-                    if (node.parentElement.tagName === 'SCRIPT' || 
-                        node.parentElement.tagName === 'STYLE' ||
-                        node.parentElement.classList.contains('highlight')) {
-                        return NodeFilter.FILTER_REJECT;
-                    }
-                    return NodeFilter.FILTER_ACCEPT;
-                }
-            }
-        );
-        
-        var textNodes = [];
-        var node;
-        while (node = walker.nextNode()) {
-            textNodes.push(node);
-        }
-        
-        // Highlight matches in text nodes
-        textNodes.forEach(function(textNode) {
-            var text = textNode.textContent;
-            var lowerText = text.toLowerCase();
-            var searchLower = query.toLowerCase();
-            
-            if (lowerText.includes(searchLower)) {
-                var span = document.createElement('span');
-                var regex = new RegExp('(' + escapeRegex(query) + ')', 'gi');
-                span.innerHTML = text.replace(regex, '<span class="highlight">$1</span>');
-                textNode.parentNode.replaceChild(span, textNode);
-            }
-        });
-    }
-    
-    function removeHighlights(card) {
-        var highlights = card.querySelectorAll('.highlight');
-        highlights.forEach(function(el) {
-            var parent = el.parentNode;
-            var text = el.textContent;
-            var textNode = document.createTextNode(text);
-            parent.replaceChild(textNode, el);
-            // Normalize parent to merge text nodes
-            parent.normalize();
-        });
-    }
-    
-    function escapeRegex(string) {
-        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-    
-    function clearSearch() {
-        document.getElementById('searchInput').value = '';
-        document.getElementById('searchClear').classList.remove('visible');
-        document.getElementById('searchStats').classList.remove('visible');
-        performSearch('');
-    }
-    
-    
+    });
 </script>
 {% endblock %}
