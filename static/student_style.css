@@ -813,12 +813,6 @@ body::after {
     box-shadow: 0 8px 25px rgba(108, 99, 255, 0.3) !important;
 }
 
-.btn-share:disabled {
-    opacity: 0.6 !important;
-    cursor: not-allowed !important;
-    transform: none !important;
-}
-
 .solution-header {
     display: flex !important;
     justify-content: space-between !important;
