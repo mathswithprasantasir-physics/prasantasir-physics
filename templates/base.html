@@ -6,6 +6,7 @@
     <title>{% block title %}NEET Physics{% endblock %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='student_style.css') }}">
     
     <!-- Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
@@ -98,54 +99,88 @@
 
 
     <!-- ===== FOOTER ===== -->
-<footer class="footer-note">
-    <p>© 2027 NEET Physics Practice. All rights reserved.</p>
-</footer>
+    <footer class="footer-note">
+        <p>© 2027 NEET Physics Practice. All rights reserved.</p>
+    </footer>
 
-<!-- ===== WATERMARK ===== -->
-<div style="position: fixed; bottom: 20px; right: 25px; z-index: 99999; pointer-events: none; user-select: none; opacity: 0.08;">
-    <span style="font-size: 1.3rem; font-weight: 700; color: #6C63FF; letter-spacing: 2px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase;">
-        ⚛️ Prasanta Sir
-    </span>
-</div>
+    <!-- ===== WATERMARK ===== -->
+    <div style="position: fixed; bottom: 20px; right: 25px; z-index: 99999; pointer-events: none; user-select: none; opacity: 0.08;">
+        <span style="font-size: 1.3rem; font-weight: 700; color: #6C63FF; letter-spacing: 2px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase;">
+            ⚛️ Prasanta Sir
+        </span>
+    </div>
 
-<!-- ===== SCRIPTS ===== -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
-<script>
-    // MathJax configuration
-    window.MathJax = {
-        tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']],
-            displayMath: [['$$', '$$'], ['\\[', '\\]']]
-        },
-        svg: {
-            fontCache: 'global'
+    <!-- ===== SCRIPTS ===== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+    <script>
+        // MathJax configuration
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+
+    <!-- ===== DARK MODE SCRIPT ===== -->
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            
+            const btn = document.querySelector('.dark-toggle i');
+            if (document.body.classList.contains('dark-mode')) {
+                if (btn) btn.className = 'fas fa-sun';
+            } else {
+                if (btn) btn.className = 'fas fa-moon';
+            }
         }
-    };
-</script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 
-<!-- ===== DARK MODE SCRIPT ===== -->
-<script>
-function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
-    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-    
-    const btn = document.querySelector('.dark-toggle i');
-    if (document.body.classList.contains('dark-mode')) {
-        if (btn) btn.className = 'fas fa-sun';
-    } else {
-        if (btn) btn.className = 'fas fa-moon';
-    }
-}
+        // Check saved preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+            const btn = document.querySelector('.dark-toggle i');
+            if (btn) btn.className = 'fas fa-sun';
+        }
 
-// Check saved preference
-if (localStorage.getItem('darkMode') === 'true') {
-    document.body.classList.add('dark-mode');
-    const btn = document.querySelector('.dark-toggle i');
-    if (btn) btn.className = 'fas fa-sun';
-}
-</script>
+        // ===== KEYBOARD SHORTCUTS =====
+        document.addEventListener('keydown', function(e) {
+            const key = e.key.toUpperCase();
+            if (['A', 'B', 'C', 'D'].includes(key)) {
+                // Find first unanswered question
+                const cards = document.querySelectorAll('.question-card');
+                for (let card of cards) {
+                    const options = card.querySelector('.q-options');
+                    if (options && options.dataset.answered !== 'true') {
+                        const option = card.querySelector(`.option-item[data-option="${key}"]`);
+                        if (option) {
+                            option.click();
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            // N for Next Question
+            if (e.key === 'n' || e.key === 'N') {
+                const cards = document.querySelectorAll('.question-card');
+                for (let i = 0; i < cards.length; i++) {
+                    const options = cards[i].querySelector('.q-options');
+                    if (options && options.dataset.answered !== 'true') {
+                        cards[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        break;
+                    }
+                }
+            }
+        });
+
+        // Show keyboard hints
+        console.log('⌨️ Keyboard Shortcuts: A, B, C, D = Select Option | N = Next Question');
+    </script>
 
 </body>
 </html>
