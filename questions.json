@@ -8918,7 +8918,7 @@
         "option_a_image": null,
         "option_b_image": null,
         "option_c_image": null,
-        "option_d_image": ,
+        "option_d_image": null,
         "correct_answer": "A",
         "solution": "The work done in moving a charge between two points is given by<br><br>$$W=q\\Delta V=q(V_B-V_A).$$<br><br>In each of the four figures, the potential difference between points $A$ and $B$ is the same.<br><br>Therefore,<br><br>$$\\Delta V_{(a)}=\\Delta V_{(b)}=\\Delta V_{(c)}=\\Delta V_{(d)}.$$<br><br>Hence,<br><br>$$W_{(a)}=W_{(b)}=W_{(c)}=W_{(d)}.$$<br><br>Thus, the work done is the same in all four cases.<br><br>$$\\boxed{\\text{Option (a) is correct}}$$",
         "solution_image": null,
