@@ -8910,15 +8910,15 @@
         "exam_type": "NEET",
         "difficulty": "Easy",
         "question_text": "The diagrams below show regions of equipotentials. A positive charge is moved from $A$ to $B$ in each diagram.",
-        "question_image": null,
+        "question_image": "/static/images/neet/electrostatics/electric_potentials_and_capacitance/questions/q12.png",
         "option_a": "In all the four cases the work done is the same.",
         "option_b": "Minimum work is required to move $q$ in figure (a).",
         "option_c": "Maximum work is required to move $q$ in figure (b).",
         "option_d": "Maximum work is required to move $q$ in figure (c).",
-        "option_a_image": "/static/images/neet/electrostatics/electric_potentials_and_capacitance/questions/q12_option_a.png",
-        "option_b_image": "/static/images/neet/electrostatics/electric_potentials_and_capacitance/questions/q12_option_b.png",
-        "option_c_image": "/static/images/neet/electrostatics/electric_potentials_and_capacitance/questions/q12_option_c.png",
-        "option_d_image": "/static/images/neet/electrostatics/electric_potentials_and_capacitance/questions/q12_option_d.png",
+        "option_a_image": null,
+        "option_b_image": null,
+        "option_c_image": null,
+        "option_d_image": ,
         "correct_answer": "A",
         "solution": "The work done in moving a charge between two points is given by<br><br>$$W=q\\Delta V=q(V_B-V_A).$$<br><br>In each of the four figures, the potential difference between points $A$ and $B$ is the same.<br><br>Therefore,<br><br>$$\\Delta V_{(a)}=\\Delta V_{(b)}=\\Delta V_{(c)}=\\Delta V_{(d)}.$$<br><br>Hence,<br><br>$$W_{(a)}=W_{(b)}=W_{(c)}=W_{(d)}.$$<br><br>Thus, the work done is the same in all four cases.<br><br>$$\\boxed{\\text{Option (a) is correct}}$$",
         "solution_image": null,
@@ -9075,6 +9075,7 @@
         "explanation": "No work is done in moving a charge along an equipotential surface because the potential difference between any two points on the surface is zero.",
         "marks": 4,
         "negative_marks": 1
-      }
+      },
+
   ]
 }
