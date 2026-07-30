@@ -8836,7 +8836,7 @@
         "difficulty": "Medium",
         "question_text": "Four electric charges $+q$, $+q$, $-q$ and $-q$ are placed at the corners of a square of side $2L$ (see figure). The electric potential at point $A$, midway between the two charges $+q$ and $+q$, is",
         "question_image": "/static/images/neet/electrostatics/electric_potentials_and_capacitance/questions/q9.png",
-        "option_a": "$\\dfrac{1}{4\\pi\\varepsilon_0}\\dfrac{2q}{L}\\left(1+\\sqrt{5}}\\right)$",
+        "option_a": "$\\dfrac{1}{4\\pi\\varepsilon_0}\\dfrac{2q}{L}\\left(1+\\sqrt{5}\\right)$",
         "option_b": "$\\dfrac{1}{4\\pi\\varepsilon_0}\\dfrac{2q}{L}\\left(1+\\dfrac{1}{\\sqrt{5}}\\right)$",
         "option_c": "$\\dfrac{1}{4\\pi\\varepsilon_0}\\dfrac{2q}{L}\\left(1-\\dfrac{1}{\\sqrt{5}}\\right)$",
         "option_d": "zero",
