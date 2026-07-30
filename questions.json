@@ -8821,7 +8821,7 @@
         "option_d_image": "",
         "correct_answer": "A",
         "solution": "Let the side of the square be $a$.<br><br>The diagonal of the square is<br><br>$$AC=BD=\\sqrt{a^2+a^2}=a\\sqrt{2}$$<br><br>Hence, the distance of the centre from each corner is<br><br>$$OA=OB=OC=OD=\\frac{a\\sqrt{2}}{2}=\\frac{a}{\\sqrt{2}}$$<br><br>The potential at the centre due to all four charges is<br><br>$$V=\\frac{1}{4\\pi\\varepsilon_0}\\left[\\frac{-Q}{a/\\sqrt{2}}+\\frac{-q}{a/\\sqrt{2}}+\\frac{2q}{a/\\sqrt{2}}+\\frac{2Q}{a/\\sqrt{2}}\\right]$$<br><br>For the potential to be zero,<br><br>$$-Q-q+2q+2Q=0$$<br><br>$$Q+q=0$$<br><br>$$Q=-q$$<br><br>$$\\boxed{\\text{Option (a) is correct}}$$",
-        "solution_image": "/static/images/neet/electrostatics/electric_potentials_and_capacitance/solution/solution_q8.png",
+        "solution_image": "/static/images/neet/electrostatics/electric_potentials_and_capacitance/solutions/solution_q8.png",
         "explanation": "Since all four charges are equidistant from the centre, the potential is the algebraic sum of individual potentials. Setting the total potential to zero gives $Q=-q$.",
         "marks": 4,
         "negative_marks": 1
@@ -8846,7 +8846,7 @@
         "option_d_image": "",
         "correct_answer": "C",
         "solution": "Point $A$ is the midpoint of the left side of the square.<br><br>Hence,<br><br>$$PA=AS=L$$<br><br>The distance of $A$ from each negative charge is<br><br>$$AQ=AR=\\sqrt{(2L)^2+L^2}=L\\sqrt{5}$$<br><br>The electric potential at point $A$ is<br><br>$$V_A=\\frac{1}{4\\pi\\varepsilon_0}\\left[\\frac{q}{PA}+\\frac{q}{AS}-\\frac{q}{AQ}-\\frac{q}{AR}\\right]$$<br><br>Substituting the distances,<br><br>$$V_A=\\frac{1}{4\\pi\\varepsilon_0}\\left[\\frac{q}{L}+\\frac{q}{L}-\\frac{q}{L\\sqrt{5}}-\\frac{q}{L\\sqrt{5}}\\right]$$<br><br>$$=\\frac{1}{4\\pi\\varepsilon_0}\\frac{2q}{L}\\left(1-\\frac{1}{\\sqrt{5}}\\right)$$<br><br>$$\\boxed{\\text{Option (c) is correct}}$$",
-        "solution_image": "/static/images/neet/electrostatics/electric_potentials_and_capacitance/solution/solution_q9.png",
+        "solution_image": "/static/images/neet/electrostatics/electric_potentials_and_capacitance/solutions/solution_q9.png",
         "explanation": "Potential is a scalar quantity. Hence, the algebraic sum of the potentials due to all four charges gives the required potential at point $A$.",
         "marks": 4,
         "negative_marks": 1
