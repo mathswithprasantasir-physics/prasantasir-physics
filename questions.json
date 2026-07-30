@@ -8910,7 +8910,7 @@
         "exam_type": "NEET",
         "difficulty": "Easy",
         "question_text": "The diagrams below show regions of equipotentials. A positive charge is moved from $A$ to $B$ in each diagram.",
-        "question_image": "/static/images/neet/electrostatics/electric_potentials_and_capacitance/questions/q12.png",
+        "question_image": "/static/images/neet/electrostatics/electric_potentials_and_capacitance/questions/q12.PNG",
         "option_a": "In all the four cases the work done is the same.",
         "option_b": "Minimum work is required to move $q$ in figure (a).",
         "option_c": "Maximum work is required to move $q$ in figure (b).",
