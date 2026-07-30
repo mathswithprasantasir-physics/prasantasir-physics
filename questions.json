@@ -8721,7 +8721,7 @@
         "option_d_image": "",
         "correct_answer": "A",
         "solution": "The distance of both points $A$ and $B$ from the origin is the same.<br><br>$$OA=OB=a$$<br><br>Hence, the electric potential at $A$ and $B$ is equal.<br><br>$$V_A=V_B=\\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{a}$$<br><br>Since there is no change in potential, there is no change in potential energy.<br><br>Therefore,<br><br>$$W=q(V_B-V_A)=0$$<br><br>$$\\boxed{\\text{Option (a) is correct}}$$",
-        "solution_image": "/static/images/neet/electrostatics/electric_potentials_and_capacitance/solution/solution_q4.png",
+        "solution_image": "/static/images/neet/electrostatics/electric_potentials_and_capacitance/solutions/solution_q4.png",
         "explanation": "Work done depends only on the potential difference between the initial and final points. Since both points are at the same potential, the work done is zero.",
         "marks": 4,
         "negative_marks": 1
