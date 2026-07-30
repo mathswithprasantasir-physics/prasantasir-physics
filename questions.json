@@ -8710,7 +8710,7 @@
         "exam_type": "NEET",
         "difficulty": "Easy",
         "question_text": "As per the diagram, a point charge $+q$ is placed at the origin. Work done in taking another point charge $-Q$ from the point $A(0,a)$ to another point $B(a,0)$ along the straight path $AB$ is",
-        "question_image": "/static/images/neet/current_electricity/questions/q4.png",
+        "question_image": "/static/images/neet/electrostatics/electric_potentials_and_capacitance/questions/q4.png",
         "option_a": "zero",
         "option_b": "$\\dfrac{qQ}{4\\pi\\varepsilon_0a^2}\\sqrt{2}a$",
         "option_c": "$-\\dfrac{qQ}{4\\pi\\varepsilon_0a^2}\\sqrt{2}a$",
