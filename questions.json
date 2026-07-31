@@ -11546,7 +11546,7 @@
         "option_c_image": "",
         "option_d_image": "",
         "correct_answer": "D",
-        "solution": "Microwaves are produced by Klystron or magnetron valve (A-IV).$$ $$Visible light is produced by electron transitions in atoms (B-I).$$ $$Gamma rays are produced by radioactive decay of nucleus (C-II).$$ $$Infra-red rays are produced by vibration of atoms and molecules (D-III).$$ $$Therefore, A-IV, B-I, C-II, D-III.$$\\boxed{\\text{Option (d) is correct}}$$",
+        "solution": "Microwaves are produced by Klystron or magnetron valve (A-IV).<br>Visible light is produced by electron transitions in atoms (B-I).$$ $$Gamma rays are produced by radioactive decay of nucleus (C-II).$$ $$Infra-red rays are produced by vibration of atoms and molecules (D-III).$$ $$Therefore, A-IV, B-I, C-II, D-III.$$\\boxed{\\text{Option (d) is correct}}$$",
         "solution_image": "",
         "explanation": "Each EM wave has a specific production mechanism. Matching them correctly gives A-IV, B-I, C-II, D-III.",
         "marks": 4,
