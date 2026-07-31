@@ -11535,7 +11535,7 @@
         "year": "2026",
         "exam_type": "NEET",
         "difficulty": "Medium",
-        "question_text": "Match List-I with List-II:<br><br>List-I (EM wave)\nA. Microwave\nB. Visible light\nC. Gamma rays\nD. Infra-red rays\n\nList-II (Production)\nI. Electrons in atoms emit light when they move from a higher energy level to a lower energy level.\nII. Radioactive decay of nucleus.\nIII. Vibration of atoms and molecules.\nIV. Klystron valve or magnetron valve.",
+        "question_text": "Match List-I with List-II:<br><br>List-I (EM wave)<br>A. Microwave<br>B. Visible light<br>C. Gamma rays<br>D. Infra-red rays<br><br>List-II (Production)<br>I. Electrons in atoms emit light when they move from a higher energy level to a lower energy level.<br>II. Radioactive decay of nucleus.<br>III. Vibration of atoms and molecules.<br>IV. Klystron valve or magnetron valve.",
         "question_image": "",
         "option_a": "A-IV, B-III, C-II, D-I",
         "option_b": "A-III, B-I, C-II, D-IV",
