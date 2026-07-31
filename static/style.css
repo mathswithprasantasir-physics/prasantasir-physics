@@ -1100,8 +1100,10 @@ nav a.active {
     }
 }
 
-/* ===== MATCHING COLUMN STYLES ===== */
-.matching-grid {
+/* ============================================
+   MATCHING COLUMN STYLES
+   ============================================ */
+   .matching-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px 50px;
@@ -1119,6 +1121,7 @@ nav a.active {
     border-bottom: 2px solid #6C63FF;
     padding-bottom: 6px;
     margin-bottom: 10px;
+    font-size: 1rem;
 }
 
 .matching-grid .col ul {
@@ -1133,6 +1136,7 @@ nav a.active {
     display: flex;
     align-items: center;
     gap: 8px;
+    font-size: 0.95rem;
 }
 
 .matching-grid .col ul li:last-child {
