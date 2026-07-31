@@ -10760,7 +10760,7 @@
         "year": "2010",
         "exam_type": "NEET",
         "difficulty": "Medium",
-        "question_text": "The electric field of an electromagnetic wave in free space is given by: \n $$\\vec{E} = 10 \\cos(10^7 t + kx) \\, \\hat{j} \\, \\text{V/m}$$ \n where t and x are in seconds and metres respectively. It can be inferred that: \n\n (1) the wavelength is 188.4 m \n\n (2) the wave number k is 0.033 rad/m \n\n (3) the wave amplitude is 10 V/m \n\n (4) the wave is propagating along +x direction. \n\n Which one of the following pairs of statements is correct?",
+        "question_text": "The electric field of an electromagnetic wave in free space is given by: $$\\vec{E} = 10 \\cos(10^7 t + kx) \\, \\hat{j} \\, \\text{V/m}$$ where t and x are in seconds and metres respectively. It can be inferred that: <br> (1) the wavelength is 188.4 m <br> (2) the wave number k is 0.033 rad/m \n\n (3) the wave amplitude is 10 V/m <br> (4) the wave is propagating along +x direction. <br> Which one of the following pairs of statements is correct?",
         "question_image": "",
         "option_a": "(3) and (4)",
         "option_b": "(1) and (2)",
