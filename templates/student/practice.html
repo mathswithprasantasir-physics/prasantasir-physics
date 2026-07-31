@@ -721,7 +721,7 @@
                 </div>
                 
                 <div class="q-text math-content">
-                    {{ q.question_text|escape }}
+                    {{ q.question_text|escape |safe }}
                 </div>
                 
                 {% if q.question_image %}
