@@ -10785,7 +10785,7 @@
         "year": "2009",
         "exam_type": "NEET",
         "difficulty": "Medium",
-        "question_text": "The electric field part of an electromagnetic wave in a medium is represented by<br><br>$$E_y=2.5\\,\\frac{\\text{N}}{\\text{C}}\\left[\\left(2\\pi\\times10^6\\,\\text{rad s}^{-1}\\right)t-\\left(\\pi\\times10^{-2}\\,\\text{rad m}^{-1}\\right)x\\right],$$<br><br>$$E_z=0.$$<br><br>The wave is:",
+        "question_text": "The electric field part of an electromagnetic wave in a medium is represented by\n$$E_y=2.5\\,\\frac{\\text{N}}{\\text{C}}\\left[\\left(2\\pi\\times10^6\\,\\text{rad s}^{-1}\\right)t-\\left(\\pi\\times10^{-2}\\,\\text{rad m}^{-1}\\right)x\\right],$$\n$$E_z=0.$$\nThe wave is:",
         "question_image": "",
         "option_a": "moving along $x$ direction with frequency $10^6\\,\\text{Hz}$ and wavelength $100\\,\\text{m}$",
         "option_b": "moving along $x$ direction with frequency $10^6\\,\\text{Hz}$ and wavelength $200\\,\\text{m}$",
