@@ -11171,7 +11171,7 @@
         "option_c_image": "",
         "option_d_image": "",
         "correct_answer": "A",
-        "solution": "The electromagnetic spectrum arranged in decreasing order of frequency is<br><br>$$\\gamma\\text{-rays} > \\text{X-rays} > \\text{Ultraviolet} > \\text{Visible} > \\text{Infrared} > \\text{Microwaves} > \\text{Radio waves}.$$<br><br>Therefore, among the given radiations,<br><br>$$\\nu_{\\gamma}>\\nu_{X}>\\nu_{UV}.$$<br><br>Hence, the correct frequency order is<br><br>$$\\boxed{B>A>C}.$$ <br><br>Therefore, option <b>(a)</b> is correct.",
+        "solution": "The electromagnetic spectrum arranged in decreasing order of frequency is<br><br>$$\\gamma\\text{-rays} > \\text{X-rays} > \\text{Ultraviolet} > \\text{Visible} > \\text{Infrared} > \\text{Microwaves} > \\text{Radio waves}.$$<br><br>Therefore, among the given radiations,<br><br>$$\\nu_{\\gamma}>\\nu_{X}>\\nu_{UV}.$$<br><br>Hence, the correct frequency order is<br><br>$$\\boxed{B&gt;A&gt;C}.$$ <br><br>Therefore, option <b>(a)</b> is correct.",
         "solution_image": "",
         "explanation": "Gamma rays possess the highest frequency, followed by X-rays and then ultraviolet rays.",
         "marks": 4,
