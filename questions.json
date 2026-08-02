@@ -14598,7 +14598,7 @@
         "correct_answer": "D",
         "solution": "Let the pole strength of the magnet be $$m.$$<br><br>The initial magnetic dipole moment is<br><br>$$M=ml.$$<br><br>After bending the magnet at its middle, the two equal arms each have length $$\\dfrac{l}{2}$$ and make an angle of $$60^\\circ.$$<br><br>The effective magnetic length becomes the straight-line distance between the poles:<br><br>$$l_{\\text{eff}}=2\\times\\frac{l}{2}\\sin30^\\circ=\\frac{l}{2}.$$<br><br>Hence, the new magnetic dipole moment is<br><br>$$M'=m\\,l_{\\text{eff}}=m\\times\\frac{l}{2}=\\frac{M}{2}.$$<br><br>Therefore, option <b>(d)</b> is correct.",
         "solution_image": "/static/images/neet/magnetism_and_matter/solution/solution_q38.png",
-        "explanation": "The effective magnetic length after bending is $$l/2$$. Since $$M=ml$$, the new magnetic dipole moment becomes $$M/2$$.",
+        "explanation": "The effective magnetic length after bending is $l/2$. Since $M=ml$, the new magnetic dipole moment becomes $M/2$.",
         "marks": 4,
         "negative_marks": 1
       }
