@@ -6,18 +6,28 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 
-const __filename_polyfill = typeof __filename !== 'undefined'
-  ? __filename
-  : (typeof import.meta !== 'undefined' && import.meta.url ? fileURLToPath(import.meta.url) : path.join(process.cwd(), 'server.ts'));
+// =====================================================
+// ES Module-এ __dirname এবং __filename ডিফাইন করা
+// =====================================================
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const __dirname_polyfill = typeof __dirname !== 'undefined'
-  ? __dirname
-  : path.dirname(__filename_polyfill);
-
+// =====================================================
+// কনফিগারেশন
+// =====================================================
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const ADMIN_PASSWORD = 'admin123';
 
+// JSON ফাইলের পাথ
+const QUESTIONS_FILE = path.join(__dirname, 'questions.json');
+console.log('📁 Questions file path:', QUESTIONS_FILE);
+console.log('📁 Static files path:', path.join(__dirname, 'static'));
+console.log('📁 Templates path:', path.join(__dirname, 'templates'));
+
+// =====================================================
+// টাইপ ডেফিনিশন
+// =====================================================
 interface Question {
   id: number;
   chapter?: string;
@@ -45,27 +55,38 @@ interface Question {
   [key: string]: any;
 }
 
+// =====================================================
+// ডেটা লোড ও সেভ ফাংশন
+// =====================================================
 function loadQuestions(): Question[] {
-  const jsonPath = path.join(__dirname_polyfill, 'questions.json');
   try {
-    if (!fs.existsSync(jsonPath)) {
+    if (!fs.existsSync(QUESTIONS_FILE)) {
+      console.error('❌ questions.json not found at:', QUESTIONS_FILE);
       return [];
     }
-    const data = JSON.parse(fs.readFileSync(jsonPath, 'utf-8'));
-    return data.questions || [];
+    const data = fs.readFileSync(QUESTIONS_FILE, 'utf-8');
+    const parsed = JSON.parse(data);
+    
+    if (!parsed.questions || !Array.isArray(parsed.questions)) {
+      console.error('❌ Invalid questions.json format');
+      return [];
+    }
+    
+    console.log(`✅ Loaded ${parsed.questions.length} questions`);
+    return parsed.questions;
   } catch (err) {
-    console.error('Error loading questions:', err);
+    console.error('❌ Error loading questions:', err);
     return [];
   }
 }
 
 function saveQuestions(questions: Question[]): boolean {
-  const jsonPath = path.join(__dirname_polyfill, 'questions.json');
   try {
-    fs.writeFileSync(jsonPath, JSON.stringify({ questions }, null, 2), 'utf-8');
+    fs.writeFileSync(QUESTIONS_FILE, JSON.stringify({ questions }, null, 2), 'utf-8');
+    console.log(`✅ Saved ${questions.length} questions`);
     return true;
   } catch (err) {
-    console.error('Error saving questions:', err);
+    console.error('❌ Error saving questions:', err);
     return false;
   }
 }
@@ -76,6 +97,9 @@ function getTopics(): string[] {
   return topics.sort();
 }
 
+// =====================================================
+// মিডলওয়্যার
+// =====================================================
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
@@ -86,8 +110,10 @@ app.use(session({
   cookie: { secure: false }
 }));
 
-app.use('/static', express.static(path.join(__dirname_polyfill, 'static')));
+// স্ট্যাটিক ফাইল
+app.use('/static', express.static(path.join(__dirname, 'static')));
 
+// লোকাল ভেরিয়েবল মিডলওয়্যার
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.locals.req = req;
   const sessionData = req.session as any;
@@ -104,12 +130,16 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-const nunjucksEnv = nunjucks.configure('templates', {
+// =====================================================
+// Nunjucks কনফিগারেশন
+// =====================================================
+const nunjucksEnv = nunjucks.configure(path.join(__dirname, 'templates'), {
   autoescape: true,
   express: app,
   noCache: true
 });
 
+// ফিল্টার
 nunjucksEnv.addFilter('is_bookmarked', (id: number, bookmarksArray: any) => {
   return Array.isArray(bookmarksArray) && bookmarksArray.includes(Number(id));
 });
@@ -118,6 +148,17 @@ nunjucksEnv.addFilter('tojson', (val: any) => {
   return JSON.stringify(val);
 });
 
+nunjucksEnv.addFilter('min', (val: any) => Array.isArray(val) ? Math.min(...val) : val);
+nunjucksEnv.addFilter('max', (val: any) => Array.isArray(val) ? Math.max(...val) : val);
+nunjucksEnv.addFilter('lower', (val: any) => typeof val === 'string' ? val.toLowerCase() : val);
+nunjucksEnv.addFilter('upper', (val: any) => typeof val === 'string' ? val.toUpperCase() : val);
+nunjucksEnv.addFilter('round', (val: number, precision: number = 0) => {
+  if (typeof val !== 'number' || isNaN(val)) return 0;
+  const factor = Math.pow(10, precision);
+  return Math.round(val * factor) / factor;
+});
+
+// গ্লোবাল ফাংশন
 nunjucksEnv.addGlobal('url_for', (name: string, ...args: any[]) => {
   let kwargs: any = {};
   if (args.length > 0) {
@@ -200,19 +241,9 @@ nunjucksEnv.addGlobal('range', (start: number, stop?: number, step: number = 1) 
   return result;
 });
 
-nunjucksEnv.addFilter('min', (val: any) => Array.isArray(val) ? Math.min(...val) : val);
-nunjucksEnv.addFilter('max', (val: any) => Array.isArray(val) ? Math.max(...val) : val);
-nunjucksEnv.addFilter('lower', (val: any) => typeof val === 'string' ? val.toLowerCase() : val);
-nunjucksEnv.addFilter('upper', (val: any) => typeof val === 'string' ? val.toUpperCase() : val);
-nunjucksEnv.addFilter('tojson', (val: any) => JSON.stringify(val));
-
-nunjucksEnv.addFilter('round', (val: number, precision: number = 0) => {
-  if (typeof val !== 'number' || isNaN(val)) return 0;
-  const factor = Math.pow(10, precision);
-  return Math.round(val * factor) / factor;
-});
-
-// Admin routes
+// =====================================================
+// অ্যাডমিন রাউটস
+// =====================================================
 app.get('/admin/login', (req: Request, res: Response) => {
   res.render('admin/login.html');
 });
@@ -448,7 +479,9 @@ app.get('/admin/delete-question/:id', (req: Request, res: Response) => {
   return res.redirect('/admin/questions');
 });
 
-// Student routes
+// =====================================================
+// স্টুডেন্ট রাউটস
+// =====================================================
 app.get('/', (req: Request, res: Response) => {
   const questions = loadQuestions();
   const total_questions = questions.length;
@@ -634,6 +667,9 @@ app.get('/bookmarks', (req: Request, res: Response) => {
   });
 });
 
+// =====================================================
+// API রাউটস
+// =====================================================
 app.post('/api/bookmark/:id', (req: Request, res: Response) => {
   const id = parseInt(req.params.id, 10);
   if (isNaN(id)) {
@@ -690,15 +726,27 @@ app.get('/api/questions', (req: Request, res: Response) => {
   res.json(loadQuestions());
 });
 
+// =====================================================
+// Error হ্যান্ডলার
+// =====================================================
 app.use((req: Request, res: Response) => {
   res.status(404).render('404.html');
 });
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.error(err);
+  console.error('❌ Server Error:', err);
   res.status(500).render('500.html');
 });
 
+// =====================================================
+// সার্ভার স্টার্ট
+// =====================================================
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on http://0.0.0.0:${PORT}`);
+  console.log(`🚀 Server running on http://0.0.0.0:${PORT}`);
+  console.log(`📁 Current directory: ${__dirname}`);
+  console.log(`📄 Questions file: ${QUESTIONS_FILE}`);
+  
+  // JSON ফাইল লোড চেক
+  const testLoad = loadQuestions();
+  console.log(`📊 Total questions loaded: ${testLoad.length}`);
 });
