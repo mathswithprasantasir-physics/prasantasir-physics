@@ -118,33 +118,59 @@ nunjucksEnv.addFilter('tojson', (val: any) => {
   return JSON.stringify(val);
 });
 
-nunjucksEnv.addGlobal('url_for', (name: string, kwargs?: any) => {
+nunjucksEnv.addGlobal('url_for', (name: string, ...args: any[]) => {
+  let kwargs: any = {};
+  if (args.length > 0) {
+    if (typeof args[0] === 'object' && args[0] !== null) {
+      kwargs = args[0];
+    } else if (typeof args[0] !== 'undefined') {
+      kwargs = { id: args[0], filename: args[0] };
+    }
+  }
+
   if (name === 'static') {
-    const filename = typeof kwargs === 'object' && kwargs !== null ? kwargs.filename : kwargs;
+    const filename = kwargs.filename || (typeof args[0] === 'string' ? args[0] : '');
     return `/static/${filename}`;
   }
+
   let pathStr = '#';
-  if (name === 'student_home') pathStr = '/';
-  else if (name === 'student_practice') pathStr = '/practice';
-  else if (name === 'student_bookmarks') pathStr = '/bookmarks';
-  else if (name === 'student_question_detail') pathStr = `/question/${kwargs?.id}`;
-  else if (name === 'admin_dashboard') pathStr = '/admin';
-  else if (name === 'admin_login') pathStr = '/admin/login';
-  else if (name === 'admin_logout') pathStr = '/admin/logout';
-  else if (name === 'admin_questions') pathStr = '/admin/questions';
-  else if (name === 'admin_add_question') pathStr = '/admin/add-question';
-  else if (name === 'admin_edit_question') pathStr = `/admin/edit-question/${kwargs?.id}`;
-  else if (name === 'admin_delete_question') pathStr = `/admin/delete-question/${kwargs?.id}`;
+  const id = kwargs.id ?? kwargs.question_id ?? (typeof args[0] === 'number' || typeof args[0] === 'string' ? args[0] : '');
+
+  if (name === 'student_home' || name === 'index' || name === 'home' || name === 'student.index') {
+    pathStr = '/';
+  } else if (name === 'student_practice' || name === 'practice' || name === 'student.practice') {
+    pathStr = '/practice';
+  } else if (name === 'student_bookmarks' || name === 'bookmarks' || name === 'student.bookmarks') {
+    pathStr = '/bookmarks';
+  } else if (name === 'student_question_detail' || name === 'question_detail' || name === 'student.question_detail' || name === 'question') {
+    pathStr = id ? `/question/${id}` : '/practice';
+  } else if (name === 'admin_dashboard' || name === 'admin' || name === 'admin.dashboard' || name === 'admin_index') {
+    pathStr = '/admin';
+  } else if (name === 'admin_login' || name === 'login' || name === 'admin.login') {
+    pathStr = '/admin/login';
+  } else if (name === 'admin_logout' || name === 'logout' || name === 'admin.logout') {
+    pathStr = '/admin/logout';
+  } else if (name === 'admin_questions' || name === 'questions' || name === 'admin.questions') {
+    pathStr = '/admin/questions';
+  } else if (name === 'admin_add_question' || name === 'add_question' || name === 'admin.add_question') {
+    pathStr = '/admin/add-question';
+  } else if (name === 'admin_edit_question' || name === 'edit_question' || name === 'admin.edit_question') {
+    pathStr = id ? `/admin/edit-question/${id}` : '/admin/questions';
+  } else if (name === 'admin_delete_question' || name === 'delete_question' || name === 'admin.delete_question') {
+    pathStr = id ? `/admin/delete-question/${id}` : '/admin/questions';
+  }
 
   if (kwargs && typeof kwargs === 'object') {
     const params = new URLSearchParams();
     for (const k of Object.keys(kwargs)) {
-      if (k !== '__keywords' && k !== 'filename' && k !== 'id' && kwargs[k] !== undefined && kwargs[k] !== null && kwargs[k] !== '') {
+      if (k !== '__keywords' && k !== 'filename' && k !== 'id' && k !== 'question_id' && kwargs[k] !== undefined && kwargs[k] !== null && kwargs[k] !== '') {
         params.append(k, kwargs[k]);
       }
     }
     const q = params.toString();
-    if (q) pathStr += '?' + q;
+    if (q) {
+      pathStr += (pathStr.includes('?') ? '&' : '?') + q;
+    }
   }
   return pathStr;
 });
