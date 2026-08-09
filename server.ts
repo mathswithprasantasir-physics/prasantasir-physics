@@ -6,8 +6,13 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename_polyfill = typeof __filename !== 'undefined'
+  ? __filename
+  : (typeof import.meta !== 'undefined' && import.meta.url ? fileURLToPath(import.meta.url) : path.join(process.cwd(), 'server.ts'));
+
+const __dirname_polyfill = typeof __dirname !== 'undefined'
+  ? __dirname
+  : path.dirname(__filename_polyfill);
 
 const app = express();
 const PORT = 3000;
@@ -41,7 +46,7 @@ interface Question {
 }
 
 function loadQuestions(): Question[] {
-  const jsonPath = path.join(__dirname, 'questions.json');
+  const jsonPath = path.join(__dirname_polyfill, 'questions.json');
   try {
     if (!fs.existsSync(jsonPath)) {
       return [];
@@ -55,7 +60,7 @@ function loadQuestions(): Question[] {
 }
 
 function saveQuestions(questions: Question[]): boolean {
-  const jsonPath = path.join(__dirname, 'questions.json');
+  const jsonPath = path.join(__dirname_polyfill, 'questions.json');
   try {
     fs.writeFileSync(jsonPath, JSON.stringify({ questions }, null, 2), 'utf-8');
     return true;
@@ -81,7 +86,7 @@ app.use(session({
   cookie: { secure: false }
 }));
 
-app.use('/static', express.static(path.join(__dirname, 'static')));
+app.use('/static', express.static(path.join(__dirname_polyfill, 'static')));
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.locals.req = req;
