@@ -1,0 +1,8 @@
+*.py
+*.pyc
+__pycache__
+venv/
+.venv/
+*.flask
+app.py
+app.py.bak
