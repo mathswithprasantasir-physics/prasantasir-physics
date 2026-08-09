@@ -7,10 +7,14 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 // =====================================================
-// ES Module-এ __dirname এবং __filename ডিফাইন করা
+// ES Module-এ __dirname এবং PROJECT_ROOT ডিফাইন করা
 // =====================================================
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const PROJECT_ROOT = process.cwd(); // প্রোজেক্টের রুট ডিরেক্টরি
+
+console.log('🔍 Project Root:', PROJECT_ROOT);
+console.log('🔍 __dirname:', __dirname);
 
 // =====================================================
 // কনফিগারেশন
@@ -19,11 +23,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const ADMIN_PASSWORD = 'admin123';
 
-// JSON ফাইলের পাথ
-const QUESTIONS_FILE = path.join(__dirname, 'questions.json');
+// JSON ফাইলের পাথ (রুট ডিরেক্টরিতে)
+const QUESTIONS_FILE = path.join(PROJECT_ROOT, 'questions.json');
 console.log('📁 Questions file path:', QUESTIONS_FILE);
-console.log('📁 Static files path:', path.join(__dirname, 'static'));
-console.log('📁 Templates path:', path.join(__dirname, 'templates'));
+console.log('📁 Static files path:', path.join(PROJECT_ROOT, 'static'));
+console.log('📁 Templates path:', path.join(PROJECT_ROOT, 'templates'));
 
 // =====================================================
 // টাইপ ডেফিনিশন
@@ -62,6 +66,13 @@ function loadQuestions(): Question[] {
   try {
     if (!fs.existsSync(QUESTIONS_FILE)) {
       console.error('❌ questions.json not found at:', QUESTIONS_FILE);
+      // বর্তমান ডিরেক্টরির সব ফাইল দেখান
+      try {
+        const files = fs.readdirSync(PROJECT_ROOT);
+        console.log('📁 Files in project root:', files);
+      } catch (err) {
+        console.error('Could not read directory:', err);
+      }
       return [];
     }
     const data = fs.readFileSync(QUESTIONS_FILE, 'utf-8');
@@ -110,8 +121,8 @@ app.use(session({
   cookie: { secure: false }
 }));
 
-// স্ট্যাটিক ফাইল
-app.use('/static', express.static(path.join(__dirname, 'static')));
+// স্ট্যাটিক ফাইল (রুট ডিরেক্টরি থেকে)
+app.use('/static', express.static(path.join(PROJECT_ROOT, 'static')));
 
 // লোকাল ভেরিয়েবল মিডলওয়্যার
 app.use((req: Request, res: Response, next: NextFunction) => {
@@ -131,9 +142,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // =====================================================
-// Nunjucks কনফিগারেশন
+// Nunjucks কনফিগারেশন (রুট ডিরেক্টরি থেকে)
 // =====================================================
-const nunjucksEnv = nunjucks.configure(path.join(__dirname, 'templates'), {
+const nunjucksEnv = nunjucks.configure(path.join(PROJECT_ROOT, 'templates'), {
   autoescape: true,
   express: app,
   noCache: true
@@ -743,7 +754,8 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 // =====================================================
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on http://0.0.0.0:${PORT}`);
-  console.log(`📁 Current directory: ${__dirname}`);
+  console.log(`📁 Project Root: ${PROJECT_ROOT}`);
+  console.log(`📁 __dirname: ${__dirname}`);
   console.log(`📄 Questions file: ${QUESTIONS_FILE}`);
   
   // JSON ফাইল লোড চেক
