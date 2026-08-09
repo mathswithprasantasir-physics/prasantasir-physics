@@ -216,3 +216,18 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Node.js / Express.js
+node_modules/
+dist/
+.env
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Python Flask (সাবধান! যদি Express ব্যবহার করেন)
+app.py.bak
+*.pyc
+
+# Render specific
+render-build.sh
