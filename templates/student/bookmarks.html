@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}Bookmarked Questions - NEET Physics{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 15px !important;
+        margin-bottom: 25px !important;
+        background: white !important;
+        padding: 20px 25px !important;
+        border-radius: 16px !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+        border: 1px solid #e2e8f0 !important;
+    }
+
+    body.dark-mode .page-header {
+        background: #1a1a2e !important;
+        border-color: #2d2d4a !important;
+    }
+
+    .page-title h2 {
+        margin: 0 0 5px 0 !important;
+        font-size: 1.5rem !important;
+        color: #1a3a55 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+    }
+
+    body.dark-mode .page-title h2 {
+        color: #ffffff !important;
+    }
+
+    .page-title p {
+        margin: 0 !important;
+        color: #64748b !important;
+        font-size: 0.95rem !important;
+    }
+
+    body.dark-mode .page-title p {
+        color: #8888aa !important;
+    }
+
+    .bm-count-badge {
+        background: #6C63FF !important;
+        color: white !important;
+        padding: 4px 12px !important;
+        border-radius: 20px !important;
+        font-size: 0.85rem !important;
+        font-weight: 700 !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header>
+        <div class="logo">
+            <h1><i class="fas fa-atom"></i> NEET Physics Practice</h1>
+            <span>2027</span>
+        </div>
+        <nav>
+            <a href="{{ url_for('student_home') }}"><i class="fas fa-home"></i> Home</a>
+            <a href="{{ url_for('student_practice') }}"><i class="fas fa-book-open"></i> Practice</a>
+            <a href="{{ url_for('student_bookmarks') }}" class="active"><i class="fas fa-bookmark"></i> Bookmarks (<span class="nav-bookmark-count">{{ bookmark_count }}</span>)</a>
+            <button onclick="toggleDarkMode()" class="dark-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <div class="page-title">
+            <h2><i class="fas fa-bookmark" style="color:#6C63FF;"></i> Saved Bookmarks</h2>
+            <p>Review and solve all your bookmarked questions saved during practice sessions.</p>
+        </div>
+        <div>
+            <span class="bm-count-badge"><i class="fas fa-save"></i> {{ bookmark_count }} Questions Saved</span>
+        </div>
+    </div>
+
+    {% if questions %}
+    <div class="question-list">
+        {% for q in questions %}
+        <a href="{{ url_for('student_question_detail', id=q.id) }}" class="question-link">
+            <div class="question-card" data-question-id="{{ q.id }}">
+                <div class="q-meta" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                    <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
+                        <span class="q-chapter"><i class="fas fa-book"></i> {{ q.chapter }}</span>
+                        <span class="q-topic"><i class="fas fa-tag"></i> {{ q.topic }}</span>
+                        <span class="q-year">{{ q.year }}</span>
+                        <span class="q-exam">{{ q.exam_type }}</span>
+                        <span class="q-difficulty {{ q.difficulty | lower }}">{{ q.difficulty }}</span>
+                        <span class="q-marks"><i class="fas fa-star"></i> +{{ q.marks }}/-{{ q.negative_marks }}</span>
+                    </div>
+                    <button 
+                        type="button" 
+                        class="bookmark-btn bookmarked" 
+                        data-id="{{ q.id }}"
+                        onclick="toggleBookmark({{ q.id }}, this, event)"
+                        title="Remove Bookmark"
+                    >
+                        <i class="fas fa-bookmark"></i>
+                        <span class="bm-text">Bookmarked</span>
+                    </button>
+                </div>
+                <div class="q-text math-content">
+                    {{ q.question_text|safe }}
+                </div>
+                {% if q.option_a or q.option_b or q.option_c or q.option_d %}
+                <div class="q-options">
+                    {% if q.option_a %}<div><strong>A.</strong> <span class="math-content">{{ q.option_a|safe }}</span></div>{% endif %}
+                    {% if q.option_b %}<div><strong>B.</strong> <span class="math-content">{{ q.option_b|safe }}</span></div>{% endif %}
+                    {% if q.option_c %}<div><strong>C.</strong> <span class="math-content">{{ q.option_c|safe }}</span></div>{% endif %}
+                    {% if q.option_d %}<div><strong>D.</strong> <span class="math-content">{{ q.option_d|safe }}</span></div>{% endif %}
+                </div>
+                {% endif %}
+                <div class="q-view-hint" style="margin-top:12px; color:#6C63FF; font-weight:600;">
+                    <i class="fas fa-chevron-right"></i> Solve & View Solution
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state" style="background:white; border-radius:16px; padding:50px 20px; border:1px solid #e2e8f0; margin-bottom:30px;">
+        <i class="fas fa-bookmark" style="font-size:3.5rem; color:#cbd5e1; margin-bottom:15px;"></i>
+        <h3>No bookmarked questions yet</h3>
+        <p>Click the <strong>Bookmark</strong> button on any question card while browsing or practicing to save questions here for later review.</p>
+        <div style="margin-top:20px;">
+            <a href="{{ url_for('student_home') }}" class="btn-primary" style="margin-right:10px;"><i class="fas fa-home"></i> Go to Home</a>
+            <a href="{{ url_for('student_practice') }}" class="btn-primary"><i class="fas fa-book-open"></i> Practice Questions</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

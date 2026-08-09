@@ -93,6 +93,70 @@
     <!-- ===== SCRIPTS ===== -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 
+    <!-- ===== BOOKMARK SCRIPT ===== -->
+    <script>
+        async function toggleBookmark(questionId, btnElement, event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            try {
+                const response = await fetch('/api/bookmark/' + questionId, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    const btns = document.querySelectorAll('.bookmark-btn[data-id="' + questionId + '"]');
+                    btns.forEach(btn => {
+                        const icon = btn.querySelector('i');
+                        const label = btn.querySelector('.bm-text');
+                        if (data.isBookmarked) {
+                            btn.classList.add('bookmarked');
+                            if (icon) icon.className = 'fas fa-bookmark';
+                            if (label) label.textContent = 'Bookmarked';
+                            btn.setAttribute('title', 'Remove Bookmark');
+                        } else {
+                            btn.classList.remove('bookmarked');
+                            if (icon) icon.className = 'far fa-bookmark';
+                            if (label) label.textContent = 'Bookmark';
+                            btn.setAttribute('title', 'Save Bookmark');
+                        }
+                    });
+                    
+                    const navCounts = document.querySelectorAll('.nav-bookmark-count');
+                    navCounts.forEach(el => el.textContent = data.count);
+
+                    showBookmarkToast(data.isBookmarked ? '🔖 Question bookmarked!' : 'Bookmark removed');
+                }
+            } catch (err) {
+                console.error('Bookmark toggle failed:', err);
+            }
+        }
+
+        function showBookmarkToast(message) {
+            let toast = document.getElementById('bm-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'bm-toast';
+                toast.style.cssText = 'position:fixed; bottom:25px; right:25px; background:#1e293b; color:#fff; padding:12px 22px; border-radius:12px; font-weight:600; font-size:0.9rem; box-shadow:0 10px 25px rgba(0,0,0,0.3); z-index:9999; transition:all 0.3s ease; opacity:0; transform:translateY(10px); pointer-events:none; border:1px solid #334155;';
+                document.body.appendChild(toast);
+            }
+            toast.textContent = message;
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(10px)';
+            }, 2000);
+        }
+    </script>
+
     <!-- ===== DARK MODE SCRIPT ===== -->
     <script>
         function toggleDarkMode() {

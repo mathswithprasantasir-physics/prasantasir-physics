@@ -495,6 +495,16 @@
         border-color: #3d3d6b !important;
         color: #e0e0e0 !important;
     }
+
+    body.dark-mode .filter-group input[name="q"] {
+        background: #252547 !important;
+        border-color: #3d3d6b !important;
+        color: #e0e0e0 !important;
+    }
+
+    body.dark-mode .filter-group input[name="q"]::placeholder {
+        color: #8888aa !important;
+    }
     
     body.dark-mode .filter-group select option {
         background: #1a1a2e !important;
@@ -649,6 +659,7 @@
         <nav>
             <a href="{{ url_for('student_home') }}"><i class="fas fa-home"></i> Home</a>
             <a href="{{ url_for('student_practice') }}" class="active"><i class="fas fa-book-open"></i> Practice</a>
+            <a href="{{ url_for('student_bookmarks') }}"><i class="fas fa-bookmark"></i> Bookmarks (<span class="nav-bookmark-count">{{ bookmarks|length if bookmarks else 0 }}</span>)</a>
             <button onclick="toggleDarkMode()" class="dark-toggle">
                 <i class="fas fa-moon"></i>
             </button>
@@ -657,22 +668,16 @@
 
     <h2 class="page-title"><i class="fas fa-search"></i> Practice Questions</h2>
 
-    <!-- ===== PROGRESS BAR ===== -->
-    <div class="progress-container">
-        <div class="progress-header">
-            <span class="progress-label"><i class="fas fa-chart-line" style="color:#6C63FF;"></i> Progress</span>
-            <span class="progress-count">
-                <span id="answeredCount">0</span> / <span id="totalCount">{{ questions|length }}</span> answered
-            </span>
-        </div>
-        <div class="progress-bar-track">
-            <div class="progress-bar-fill" id="progressBar"></div>
-        </div>
-    </div>
-
     <div class="filter-bar">
         <form method="GET" action="{{ url_for('student_practice') }}" id="filterForm">
             <div class="filter-group">
+                <input 
+                    type="text" 
+                    name="q" 
+                    placeholder="Search keywords..." 
+                    value="{{ search_query }}"
+                    style="padding: 10px 14px; border: 1px solid #DFE6E9; border-radius: 8px; font-size: 0.9rem; flex: 1; min-width: 180px;"
+                >
                 <select name="chapter" id="chapterSelect">
                     <option value="">All Chapters</option>
                     {% for chapter in chapters %}
@@ -708,16 +713,28 @@
         {% if questions %}
         <div class="question-list" id="allQuestionsList">
             {% for q in questions %}
-            <div class="question-card" data-question-id="{{ q.id }}">
-                <div class="q-meta">
-                    <span class="q-topic">{{ q.topic }}</span>
-                    <span class="q-year">{{ q.year }}</span>
-                    <span class="q-exam">{{ q.exam_type }}</span>
-                    <span class="q-difficulty {{ q.difficulty.lower() }}">{{ q.difficulty }}</span>
-                    <span class="q-marks"><i class="fas fa-star"></i> +{{ q.marks }}/-{{ q.negative_marks }}</span>
-                    <span class="q-status not-answered" id="status-{{ q.id }}">
-                        <i class="fas fa-circle"></i> Not Answered
-                    </span>
+            <div class="question-card" data-question-id="{{ q.id }}" data-chapter="{{ q.chapter }}">
+                <div class="q-meta" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                    <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
+                        <span class="q-topic">{{ q.topic }}</span>
+                        <span class="q-year">{{ q.year }}</span>
+                        <span class="q-exam">{{ q.exam_type }}</span>
+                        <span class="q-difficulty {{ q.difficulty | lower }}">{{ q.difficulty }}</span>
+                        <span class="q-marks"><i class="fas fa-star"></i> +{{ q.marks }}/-{{ q.negative_marks }}</span>
+                        <span class="q-status not-answered" id="status-{{ q.id }}">
+                            <i class="fas fa-circle"></i> Not Answered
+                        </span>
+                    </div>
+                    <button 
+                        type="button" 
+                        class="bookmark-btn {% if q.id | is_bookmarked(bookmarks) %}bookmarked{% endif %}" 
+                        data-id="{{ q.id }}"
+                        onclick="toggleBookmark({{ q.id }}, this, event)"
+                        title="{% if q.id | is_bookmarked(bookmarks) %}Remove Bookmark{% else %}Save Bookmark{% endif %}"
+                    >
+                        <i class="{% if q.id | is_bookmarked(bookmarks) %}fas{% else %}far{% endif %} fa-bookmark"></i>
+                        <span class="bm-text">{% if q.id | is_bookmarked(bookmarks) %}Bookmarked{% else %}Bookmark{% endif %}</span>
+                    </button>
                 </div>
                 
                 <div class="q-text math-content">
@@ -862,17 +879,15 @@
     // =============================================
     // Chapter-wise topics data from backend
     // =============================================
-    var chapterTopics = {{ chapter_topics|tojson }};
+    var chapterTopics = {{ chapter_topics|tojson|safe }};
     
     // Get DOM elements
     var chapterSelect = document.getElementById('chapterSelect');
     var topicSelect = document.getElementById('topicSelect');
     
     // Store all topics for fallback
-    var allTopics = [];
-    {% for topic in topics %}
-    allTopics.push('{{ topic }}');
-    {% endfor %}
+    var allTopics = {{ topics|tojson|safe }};
+    var currentTopic = {{ current_topic|tojson|safe }};
     
     // =============================================
     // Function to update topic options
@@ -894,7 +909,7 @@
             var opt = document.createElement('option');
             opt.value = topicsToShow[i];
             opt.textContent = topicsToShow[i];
-            if (topicsToShow[i] === '{{ current_topic }}') {
+            if (topicsToShow[i] === currentTopic) {
                 opt.selected = true;
             }
             topicSelect.appendChild(opt);
@@ -966,6 +981,14 @@
         
         // Mark as answered
         optionsContainer.dataset.answered = 'true';
+        
+        try {
+            var answeredMap = JSON.parse(localStorage.getItem('answeredQuestions') || '{}');
+            var qCard = document.querySelector('.question-card[data-question-id="' + questionId + '"]');
+            var qChapter = qCard ? (qCard.dataset.chapter || '') : '';
+            answeredMap[questionId] = { chapter: qChapter, correct: isCorrect };
+            localStorage.setItem('answeredQuestions', JSON.stringify(answeredMap));
+        } catch(e) {}
         
         // Update progress
         updateProgress();

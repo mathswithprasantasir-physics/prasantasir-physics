@@ -16,13 +16,12 @@
                 <p>Enter your password to access admin panel</p>
             </div>
             
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
+            {% set messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="alert alert-{{ msg[0] }}">{{ msg[1] }}</div>
+                {% endfor %}
+            {% endif %}
             
             <form method="POST" class="login-form">
                 <div class="form-group">

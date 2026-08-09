@@ -1,0 +1,6 @@
+{
+  "name": "NEET Physics Practice",
+  "description": "NEET Physics PYQ practice platform with student and admin portals",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

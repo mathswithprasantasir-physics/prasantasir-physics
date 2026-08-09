@@ -60,7 +60,7 @@
                     <span class="q-topic">{{ q.topic }}</span>
                     <span class="q-year">{{ q.year }}</span>
                     <span class="q-exam">{{ q.exam_type }}</span>
-                    <span class="q-difficulty {{ q.difficulty.lower() }}">{{ q.difficulty }}</span>
+                    <span class="q-difficulty {{ q.difficulty | lower }}">{{ q.difficulty }}</span>
                     <span class="q-marks"><i class="fas fa-star"></i> +{{ q.marks }}/-{{ q.negative_marks }}</span>
                 </div>
                 <div class="q-text math-content">
@@ -78,7 +78,7 @@
                 <div class="q-answer"><i class="fas fa-check-circle"></i> Answer: <strong>{{ q.correct_answer }}</strong></div>
                 {% endif %}
                 {% if q.solution %}
-                <div class="q-solution"><i class="fas fa-lightbulb"></i> <strong>Solution:</strong> {{ q.solution[:100] }}{% if q.solution|length > 100 %}...{% endif %}</div>
+                <div class="q-solution"><i class="fas fa-lightbulb"></i> <strong>Solution:</strong> {{ q.solution | truncate(100) }}</div>
                 {% endif %}
                 <div class="q-actions">
                     <a href="{{ url_for('admin_edit_question', id=q.id) }}" class="btn-edit"><i class="fas fa-edit"></i></a>

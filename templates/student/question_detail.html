@@ -149,7 +149,7 @@
             <span class="q-topic">{{ question.topic }}</span>
             <span class="q-year">{{ question.year }}</span>
             <span class="q-exam">{{ question.exam_type }}</span>
-            <span class="q-difficulty {{ question.difficulty.lower() }}">{{ question.difficulty }}</span>
+            <span class="q-difficulty {{ question.difficulty | lower }}">{{ question.difficulty }}</span>
             <span class="q-marks"><i class="fas fa-star"></i> +{{ question.marks }}/-{{ question.negative_marks }}</span>
         </div>
         

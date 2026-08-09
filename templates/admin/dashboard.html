@@ -22,13 +22,12 @@
             </nav>
         </header>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+        {% set messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-{{ msg[0] }}">{{ msg[1] }}</div>
+            {% endfor %}
+        {% endif %}
 
         <div class="stats-grid">
             <div class="stat-card">
@@ -93,7 +92,7 @@
                         <span class="q-year">{{ q.year }}</span>
                         <span class="q-difficulty">{{ q.difficulty }}</span>
                     </div>
-                    <p class="q-text">{{ q.question_text[:100] }}{% if q.question_text|length > 100 %}...{% endif %}</p>
+                    <p class="q-text">{{ q.question_text | truncate(100) }}</p>
                     <div class="q-actions">
                         <a href="{{ url_for('admin_edit_question', id=q.id) }}" class="btn-edit"><i class="fas fa-edit"></i></a>
                         <a href="{{ url_for('admin_delete_question', id=q.id) }}" class="btn-delete" onclick="return confirm('Are you sure?')"><i class="fas fa-trash"></i></a>

@@ -37,7 +37,209 @@
     .welcome-section p {
         color: #636E72 !important;
         font-size: 1.05rem !important;
+        margin: 0 0 15px 0 !important;
+    }
+    
+    /* ===== SEARCH BOX STYLES ===== */
+    .search-box-wrapper {
+        margin-top: 15px !important;
+        width: 100% !important;
+    }
+
+    .home-search-form {
+        width: 100% !important;
+    }
+
+    .search-input-group {
+        display: flex !important;
+        align-items: center !important;
+        background: #f8fafc !important;
+        border: 2px solid #e2e8f0 !important;
+        border-radius: 12px !important;
+        padding: 6px 6px 6px 18px !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+    }
+
+    .search-input-group:focus-within {
+        border-color: #6C63FF !important;
+        background: white !important;
+        box-shadow: 0 4px 20px rgba(108, 99, 255, 0.15) !important;
+    }
+
+    .search-icon {
+        color: #94a3b8 !important;
+        font-size: 1.2rem !important;
+        margin-right: 12px !important;
+    }
+
+    .search-input {
+        flex: 1 !important;
+        border: none !important;
+        outline: none !important;
+        background: transparent !important;
+        font-size: 1rem !important;
+        color: #1e293b !important;
+        padding: 8px 0 !important;
+    }
+
+    .search-clear-btn {
+        color: #94a3b8 !important;
+        padding: 8px 12px !important;
+        text-decoration: none !important;
+        font-size: 1.1rem !important;
+        transition: color 0.2s ease !important;
+    }
+
+    .search-clear-btn:hover {
+        color: #ef4444 !important;
+    }
+
+    .search-btn {
+        background: linear-gradient(135deg, #6C63FF, #5A52D5) !important;
+        color: white !important;
+        border: none !important;
+        padding: 12px 24px !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        transition: all 0.3s ease !important;
+    }
+
+    .search-btn:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3) !important;
+    }
+
+    .search-tags {
+        display: flex !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        margin-top: 14px !important;
+        font-size: 0.85rem !important;
+    }
+
+    .tag-label {
+        color: #64748b !important;
+        font-weight: 600 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+    }
+
+    .search-tag {
+        background: #f1f5f9 !important;
+        color: #475569 !important;
+        padding: 4px 12px !important;
+        border-radius: 20px !important;
+        text-decoration: none !important;
+        font-size: 0.82rem !important;
+        font-weight: 500 !important;
+        transition: all 0.2s ease !important;
+        border: 1px solid #e2e8f0 !important;
+    }
+
+    .search-tag:hover {
+        background: #6C63FF !important;
+        color: white !important;
+        border-color: #6C63FF !important;
+    }
+
+    /* ===== SEARCH RESULTS CONTAINER ===== */
+    .search-results-container {
+        background: white !important;
+        border-radius: 16px !important;
+        padding: 25px 30px !important;
+        margin-bottom: 30px !important;
+        border: 1px solid #e2e8f0 !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    .search-results-header {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 15px !important;
+        margin-bottom: 25px !important;
+        padding-bottom: 15px !important;
+        border-bottom: 1px solid #f1f5f9 !important;
+    }
+
+    .search-results-header h3 {
+        margin: 0 0 5px 0 !important;
+        font-size: 1.4rem !important;
+        color: #1a3a55 !important;
+    }
+
+    .search-results-header p {
         margin: 0 !important;
+        color: #64748b !important;
+        font-size: 0.95rem !important;
+    }
+
+    .highlight-query {
+        color: #6C63FF !important;
+    }
+
+    .search-actions {
+        display: flex !important;
+        gap: 10px !important;
+        flex-wrap: wrap !important;
+    }
+
+    .btn-practice-all {
+        background: linear-gradient(135deg, #00D2A0, #00B894) !important;
+        color: white !important;
+        padding: 10px 18px !important;
+        border-radius: 8px !important;
+        text-decoration: none !important;
+        font-weight: 600 !important;
+        font-size: 0.9rem !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+    }
+
+    .btn-reset-search {
+        background: #f1f5f9 !important;
+        color: #64748b !important;
+        padding: 10px 16px !important;
+        border-radius: 8px !important;
+        text-decoration: none !important;
+        font-weight: 600 !important;
+        font-size: 0.9rem !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+    }
+
+    .btn-reset-search:hover {
+        background: #e2e8f0 !important;
+        color: #1e293b !important;
+    }
+
+    .no-results-card {
+        text-align: center !important;
+        padding: 40px 20px !important;
+        color: #64748b !important;
+    }
+
+    .no-results-card i {
+        font-size: 3rem !important;
+        color: #cbd5e1 !important;
+        margin-bottom: 15px !important;
+    }
+
+    .no-results-card h4 {
+        font-size: 1.2rem !important;
+        color: #334155 !important;
+        margin-bottom: 8px !important;
     }
     
     .stats-grid {
@@ -510,6 +712,95 @@
     body.dark-mode .empty-state p {
         color: #8888aa !important;
     }
+
+    /* ===== SEARCH FACILITY DARK MODE STYLES ===== */
+    body.dark-mode .search-input-group {
+        background: #252547 !important;
+        border-color: #3d3d6b !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    body.dark-mode .search-input-group:focus-within {
+        background: #2d2d5a !important;
+        border-color: #8B83FF !important;
+        box-shadow: 0 4px 20px rgba(139, 131, 255, 0.25) !important;
+    }
+
+    body.dark-mode .search-icon {
+        color: #8888aa !important;
+    }
+
+    body.dark-mode .search-input {
+        color: #ffffff !important;
+    }
+
+    body.dark-mode .search-input::placeholder {
+        color: #8888aa !important;
+    }
+
+    body.dark-mode .search-clear-btn {
+        color: #8888aa !important;
+    }
+
+    body.dark-mode .search-clear-btn:hover {
+        color: #ff6b6b !important;
+    }
+
+    body.dark-mode .tag-label {
+        color: #8888aa !important;
+    }
+
+    body.dark-mode .search-tag {
+        background: #252547 !important;
+        color: #e0e0e0 !important;
+        border-color: #3d3d6b !important;
+    }
+
+    body.dark-mode .search-tag:hover {
+        background: #6C63FF !important;
+        color: #ffffff !important;
+        border-color: #6C63FF !important;
+    }
+
+    body.dark-mode .search-results-container {
+        background: #1a1a2e !important;
+        border-color: #2d2d4a !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    body.dark-mode .search-results-header {
+        border-bottom-color: #2d2d4a !important;
+    }
+
+    body.dark-mode .search-results-header h3 {
+        color: #ffffff !important;
+    }
+
+    body.dark-mode .search-results-header p {
+        color: #8888aa !important;
+    }
+
+    body.dark-mode .highlight-query {
+        color: #8B83FF !important;
+    }
+
+    body.dark-mode .btn-reset-search {
+        background: #252547 !important;
+        color: #e0e0e0 !important;
+    }
+
+    body.dark-mode .btn-reset-search:hover {
+        background: #3d3d7a !important;
+        color: #ffffff !important;
+    }
+
+    body.dark-mode .no-results-card {
+        color: #8888aa !important;
+    }
+
+    body.dark-mode .no-results-card h4 {
+        color: #e0e0e0 !important;
+    }
     
     @media (max-width: 768px) {
         .q-options {
@@ -569,25 +860,139 @@
         <nav>
             <a href="{{ url_for('student_home') }}" class="active"><i class="fas fa-home"></i> Home</a>
             <a href="{{ url_for('student_practice') }}"><i class="fas fa-book-open"></i> Practice</a>
+            <a href="{{ url_for('student_bookmarks') }}"><i class="fas fa-bookmark"></i> Bookmarks (<span class="nav-bookmark-count">{{ bookmarks|length if bookmarks else 0 }}</span>)</a>
             <button onclick="toggleDarkMode()" class="dark-toggle">
                 <i class="fas fa-moon"></i>
             </button>
         </nav>
     </header>
 
-    <!-- ===== WELCOME SECTION ===== -->
+    <!-- ===== WELCOME SECTION & SEARCH BAR ===== -->
     <div class="welcome-section">
         <h2><i class="fas fa-rocket"></i> Welcome to NEET Physics Practice!</h2>
-        <p>Master your Physics concepts with thousands of NEET-level questions. Practice, learn, and track your progress.</p>
+        <p>Master your Physics concepts with thousands of NEET-level questions. Practice, learn, and bookmark questions for review.</p>
+        
+        <!-- SEARCH BAR -->
+        <div class="search-box-wrapper">
+            <form action="{{ url_for('student_home') }}" method="GET" class="home-search-form">
+                <div class="search-input-group">
+                    <i class="fas fa-search search-icon"></i>
+                    <input 
+                        type="text" 
+                        name="q" 
+                        class="search-input" 
+                        placeholder="Search questions by keywords, topics, or chapters (e.g., Electric charges, Ohm's law, Current electricity)..." 
+                        value="{{ search_query }}"
+                        list="search-suggestions"
+                        autocomplete="off"
+                    >
+                    {% if search_query %}
+                    <a href="{{ url_for('student_home') }}" class="search-clear-btn" title="Clear Search">
+                        <i class="fas fa-times"></i>
+                    </a>
+                    {% endif %}
+                    <button type="submit" class="search-btn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+                <datalist id="search-suggestions">
+                    {% for chapter in chapters %}
+                    <option value="{{ chapter }}">Chapter</option>
+                    {% endfor %}
+                    {% for topic in topics %}
+                    <option value="{{ topic }}">Topic</option>
+                    {% endfor %}
+                </datalist>
+            </form>
+            
+            <div class="search-tags">
+                <span class="tag-label"><i class="fas fa-bolt"></i> Popular Topics:</span>
+                <a href="{{ url_for('student_home') }}?q=Electric+charges" class="search-tag">Electric Charges</a>
+                <a href="{{ url_for('student_home') }}?q=Current+Electricity" class="search-tag">Current Electricity</a>
+                <a href="{{ url_for('student_home') }}?q=Resistor" class="search-tag">Resistor</a>
+                <a href="{{ url_for('student_home') }}?q=Laws+of+Motion" class="search-tag">Laws of Motion</a>
+                <a href="{{ url_for('student_home') }}?q=Capacitance" class="search-tag">Capacitance</a>
+                <a href="{{ url_for('student_home') }}?q=Work+Energy" class="search-tag">Work & Energy</a>
+            </div>
+        </div>
     </div>
+
+    <!-- ===== SEARCH RESULTS SECTION (WHEN ACTIVE) ===== -->
+    {% if search_query %}
+    <div class="search-results-container">
+        <div class="search-results-header">
+            <div>
+                <h3><i class="fas fa-search"></i> Search Results for "<span class="highlight-query">{{ search_query }}</span>"</h3>
+                <p>Found <strong>{{ search_count }}</strong> matching question{% if search_count != 1 %}s{% endif %}</p>
+            </div>
+            <div class="search-actions">
+                {% if search_count > 0 %}
+                <a href="{{ url_for('student_practice') }}?q={{ search_query }}" class="btn-practice-all">
+                    <i class="fas fa-play"></i> Practice All {{ search_count }} Matching Questions
+                </a>
+                {% endif %}
+                <a href="{{ url_for('student_home') }}" class="btn-reset-search">
+                    <i class="fas fa-times"></i> Clear Search
+                </a>
+            </div>
+        </div>
+
+        {% if search_count == 0 %}
+        <div class="no-results-card">
+            <i class="fas fa-search-minus"></i>
+            <h4>No questions found matching "{{ search_query }}"</h4>
+            <p>Try searching for a different keyword, topic name, or chapter (e.g. "Electricity", "Charges", "Motion").</p>
+            <a href="{{ url_for('student_home') }}" class="btn-reset-search" style="display:inline-flex; margin-top:15px;">View All Chapters</a>
+        </div>
+        {% else %}
+        <div class="question-list">
+            {% for q in search_results %}
+            <a href="{{ url_for('student_question_detail', id=q.id) }}" class="question-link">
+                <div class="question-card">
+                    <div class="q-meta" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                        <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
+                            <span class="q-chapter"><i class="fas fa-book"></i> {{ q.chapter }}</span>
+                            <span class="q-topic"><i class="fas fa-tag"></i> {{ q.topic }}</span>
+                            <span class="q-year">{{ q.year }}</span>
+                            <span class="q-exam">{{ q.exam_type }}</span>
+                            <span class="q-difficulty {{ q.difficulty | lower }}">{{ q.difficulty }}</span>
+                            <span class="q-marks"><i class="fas fa-star"></i> +{{ q.marks }}/-{{ q.negative_marks }}</span>
+                        </div>
+                        <button 
+                            type="button" 
+                            class="bookmark-btn {% if q.id | is_bookmarked(bookmarks) %}bookmarked{% endif %}" 
+                            data-id="{{ q.id }}"
+                            onclick="toggleBookmark({{ q.id }}, this, event)"
+                            title="{% if q.id | is_bookmarked(bookmarks) %}Remove Bookmark{% else %}Save Bookmark{% endif %}"
+                        >
+                            <i class="{% if q.id | is_bookmarked(bookmarks) %}fas{% else %}far{% endif %} fa-bookmark"></i>
+                            <span class="bm-text">{% if q.id | is_bookmarked(bookmarks) %}Bookmarked{% else %}Bookmark{% endif %}</span>
+                        </button>
+                    </div>
+                    <div class="q-text math-content">
+                        {{ q.question_text|safe }}
+                    </div>
+                    <div class="q-footer" style="margin-top:12px; font-size:0.88rem; color:#6C63FF; font-weight:600;">
+                        <span>Solve & View Detailed Solution <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
 
     <!-- ===== STATISTICS ===== -->
     <div class="stats-grid">
-        <div class="stat-card">
+        <div class="stat-card" id="totalQuestionsStatCard">
             <div class="stat-icon blue"><i class="fas fa-question-circle"></i></div>
-            <div class="stat-info">
+            <div class="stat-info" style="width: 100%;">
                 <span class="stat-label">Total Questions</span>
                 <span class="stat-value">{{ total_questions }}</span>
+                <div class="chapter-progress-bar" style="height: 6px; margin-top: 8px;">
+                    <div class="chapter-progress-fill overall-progress-fill" style="width: 0%; background: linear-gradient(90deg, #3B82F6, #60A5FA) !important;"></div>
+                </div>
             </div>
         </div>
         <div class="stat-card">
@@ -620,7 +1025,7 @@
     <!-- ===== CHAPTERS ===== -->
     {% if chapter_stats %}
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:20px;">
-        <h3 class="section-title" style="margin-bottom:0;"><i class="fas fa-book"></i> Chapters</h3>
+        <h3 class="section-title" style="margin-bottom:0;"><i class="fas fa-book"></i> Chapters & Progress</h3>
         <a href="{{ url_for('student_practice') }}" class="view-all-link">
             View All <i class="fas fa-arrow-right"></i>
         </a>
@@ -628,7 +1033,7 @@
     
     <div class="chapter-grid">
         {% for chapter in chapter_stats %}
-        <a href="{{ url_for('student_practice') }}?chapter={{ chapter.name }}" class="chapter-card">
+        <a href="{{ url_for('student_practice') }}?chapter={{ chapter.name }}" class="chapter-card" data-chapter="{{ chapter.name }}" data-count="{{ chapter.count }}" data-weightage="{{ chapter.percentage }}">
             <div class="chapter-name">
                 <i class="fas fa-book-open"></i> {{ chapter.name }}
             </div>
@@ -640,30 +1045,56 @@
                 </span>
                 {% endif %}
             </div>
+            <div class="chapter-progress-box">
+                <div class="chapter-progress-info">
+                    <span class="progress-text">Syllabus Share</span>
+                    <span class="progress-pct">{{ chapter.percentage }}%</span>
+                </div>
+                <div class="chapter-progress-bar">
+                    <div class="chapter-progress-fill" style="width: 0%;"></div>
+                </div>
+            </div>
         </a>
         {% endfor %}
     </div>
     {% endif %}
 
     <!-- ===== RANDOM QUESTIONS ===== -->
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:20px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:20px;">
         <h3 class="section-title" style="margin-bottom:0;"><i class="fas fa-random"></i> Random Questions</h3>
-        <a href="{{ url_for('student_practice') }}" class="view-all-link">
-            View All <i class="fas fa-arrow-right"></i>
-        </a>
+        <div style="display:flex; align-items:center; gap:10px;">
+            <button type="button" class="shuffle-btn" id="shuffleBtn" onclick="shuffleRandomQuestions()" title="Fetch a new set of random questions">
+                <i class="fas fa-sync-alt" id="shuffleIcon"></i> <span>Shuffle</span>
+            </button>
+            <a href="{{ url_for('student_practice') }}" class="view-all-link">
+                View All <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
     </div>
 
     {% if random_questions %}
-    <div class="question-list">
+    <div class="question-list" id="randomQuestionsContainer">
         {% for q in random_questions %}
         <a href="{{ url_for('student_question_detail', id=q.id) }}" class="question-link">
             <div class="question-card">
-                <div class="q-meta">
-                    <span class="q-topic">{{ q.topic }}</span>
-                    <span class="q-year">{{ q.year }}</span>
-                    <span class="q-exam">{{ q.exam_type }}</span>
-                    <span class="q-difficulty {{ q.difficulty.lower() }}">{{ q.difficulty }}</span>
-                    <span class="q-marks"><i class="fas fa-star"></i> +{{ q.marks }}/-{{ q.negative_marks }}</span>
+                <div class="q-meta" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                    <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
+                        <span class="q-topic">{{ q.topic }}</span>
+                        <span class="q-year">{{ q.year }}</span>
+                        <span class="q-exam">{{ q.exam_type }}</span>
+                        <span class="q-difficulty {{ q.difficulty | lower }}">{{ q.difficulty }}</span>
+                        <span class="q-marks"><i class="fas fa-star"></i> +{{ q.marks }}/-{{ q.negative_marks }}</span>
+                    </div>
+                    <button 
+                        type="button" 
+                        class="bookmark-btn {% if q.id | is_bookmarked(bookmarks) %}bookmarked{% endif %}" 
+                        data-id="{{ q.id }}"
+                        onclick="toggleBookmark({{ q.id }}, this, event)"
+                        title="{% if q.id | is_bookmarked(bookmarks) %}Remove Bookmark{% else %}Save Bookmark{% endif %}"
+                    >
+                        <i class="{% if q.id | is_bookmarked(bookmarks) %}fas{% else %}far{% endif %} fa-bookmark"></i>
+                        <span class="bm-text">{% if q.id | is_bookmarked(bookmarks) %}Bookmarked{% else %}Bookmark{% endif %}</span>
+                    </button>
                 </div>
                 <div class="q-text math-content">
                     {{ q.question_text|safe }}
@@ -684,7 +1115,7 @@
         {% endfor %}
     </div>
     {% else %}
-    <div class="empty-state">
+    <div class="empty-state" id="randomQuestionsContainer">
         <i class="fas fa-inbox"></i>
         <h3>No questions available</h3>
         <p>Please check back later or add some questions from the admin panel.</p>
@@ -692,4 +1123,177 @@
     </div>
     {% endif %}
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var answered = {};
+        try {
+            answered = JSON.parse(localStorage.getItem('answeredQuestions') || '{}');
+        } catch(e) {}
+
+        var totalAnsweredCount = Object.keys(answered).length;
+        var totalQuestions = {{ total_questions }};
+
+        // Animate Overall Progress Bar in Stat Card
+        var overallFill = document.querySelector('.overall-progress-fill');
+        if (overallFill) {
+            var overallPct = totalQuestions > 0 ? Math.round((totalAnsweredCount / totalQuestions) * 100) : 0;
+            setTimeout(function() {
+                overallFill.style.width = Math.max(overallPct > 0 ? 5 : 2, Math.min(100, overallPct)) + '%';
+            }, 200);
+        }
+
+        // Animate Chapter Progress Bars with Staggered Delay
+        var chapterCards = document.querySelectorAll('.chapter-card');
+        chapterCards.forEach(function(card, idx) {
+            var chapterName = card.dataset.chapter;
+            var chapterTotal = parseInt(card.dataset.count, 10) || 0;
+            var weightagePct = parseFloat(card.dataset.weightage) || 0;
+
+            var fill = card.querySelector('.chapter-progress-fill');
+            var pctSpan = card.querySelector('.progress-pct');
+            var textSpan = card.querySelector('.progress-text');
+
+            // Count answered questions for this chapter
+            var answeredInChapter = 0;
+            Object.keys(answered).forEach(function(qId) {
+                if (answered[qId] && answered[qId].chapter === chapterName) {
+                    answeredInChapter++;
+                }
+            });
+
+            var targetPct = weightagePct;
+            if (answeredInChapter > 0 && chapterTotal > 0) {
+                targetPct = Math.round((answeredInChapter / chapterTotal) * 100);
+                if (pctSpan) pctSpan.textContent = targetPct + '% (' + answeredInChapter + '/' + chapterTotal + ')';
+                if (textSpan) textSpan.textContent = 'Completed';
+            } else {
+                if (pctSpan) pctSpan.textContent = weightagePct + '% share';
+                if (textSpan) textSpan.textContent = 'Syllabus Share';
+            }
+
+            setTimeout(function() {
+                if (fill) {
+                    fill.style.width = Math.max(4, Math.min(100, targetPct)) + '%';
+                }
+            }, 150 + idx * 60);
+        });
+    });
+
+    async function shuffleRandomQuestions() {
+        var btn = document.getElementById('shuffleBtn');
+        var icon = document.getElementById('shuffleIcon');
+        var container = document.getElementById('randomQuestionsContainer');
+        if (!container) return;
+
+        if (btn) btn.disabled = true;
+        if (icon) icon.classList.add('spinning');
+
+        try {
+            var response = await fetch('/api/random-questions?count=5');
+            var data = await response.json();
+
+            if (data.success && Array.isArray(data.questions)) {
+                var bookmarks = data.bookmarks || [];
+                
+                container.style.opacity = '0.3';
+                container.style.transition = 'opacity 0.2s ease';
+
+                setTimeout(function() {
+                    if (data.questions.length === 0) {
+                        container.innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                <h3>No questions available</h3>
+                            </div>`;
+                    } else {
+                        var html = '';
+                        data.questions.forEach(function(q) {
+                            var isBookmarked = bookmarks.includes(q.id);
+                            var bmClass = isBookmarked ? 'bookmarked' : '';
+                            var bmIcon = isBookmarked ? 'fas' : 'far';
+                            var bmText = isBookmarked ? 'Bookmarked' : 'Bookmark';
+                            var bmTitle = isBookmarked ? 'Remove Bookmark' : 'Save Bookmark';
+
+                            var optionsHtml = '';
+                            if (q.option_a || q.option_b || q.option_c || q.option_d) {
+                                optionsHtml += '<div class="q-options">';
+                                if (q.option_a) optionsHtml += '<div><strong>A.</strong> <span class="math-content">' + q.option_a + '</span></div>';
+                                if (q.option_b) optionsHtml += '<div><strong>B.</strong> <span class="math-content">' + q.option_b + '</span></div>';
+                                if (q.option_c) optionsHtml += '<div><strong>C.</strong> <span class="math-content">' + q.option_c + '</span></div>';
+                                if (q.option_d) optionsHtml += '<div><strong>D.</strong> <span class="math-content">' + q.option_d + '</span></div>';
+                                optionsHtml += '</div>';
+                            }
+
+                            var topicStr = escapeHtml(q.topic || '');
+                            var yearStr = escapeHtml(q.year || '');
+                            var examStr = escapeHtml(q.exam_type || '');
+                            var diffStr = escapeHtml(q.difficulty || '');
+                            var diffLower = diffStr.toLowerCase();
+
+                            html += `
+                            <a href="/question/${q.id}" class="question-link">
+                                <div class="question-card">
+                                    <div class="q-meta" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                                        <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
+                                            <span class="q-topic">${topicStr}</span>
+                                            <span class="q-year">${yearStr}</span>
+                                            <span class="q-exam">${examStr}</span>
+                                            <span class="q-difficulty ${diffLower}">${diffStr}</span>
+                                            <span class="q-marks"><i class="fas fa-star"></i> +${q.marks || 4}/-${q.negative_marks || 1}</span>
+                                        </div>
+                                        <button 
+                                            type="button" 
+                                            class="bookmark-btn ${bmClass}" 
+                                            data-id="${q.id}"
+                                            onclick="toggleBookmark(${q.id}, this, event)"
+                                            title="${bmTitle}"
+                                        >
+                                            <i class="${bmIcon} fa-bookmark"></i>
+                                            <span class="bm-text">${bmText}</span>
+                                        </button>
+                                    </div>
+                                    <div class="q-text math-content">
+                                        ${q.question_text || ''}
+                                    </div>
+                                    ${optionsHtml}
+                                    <div class="q-view-hint">
+                                        <i class="fas fa-chevron-right"></i> Click to view solution
+                                    </div>
+                                </div>
+                            </a>`;
+                        });
+                        container.innerHTML = html;
+                    }
+
+                    container.style.opacity = '1';
+
+                    // Re-render MathJax
+                    if (window.MathJax && MathJax.typesetPromise) {
+                        MathJax.typesetPromise([container]).catch(function(err) {
+                            console.log('MathJax error:', err);
+                        });
+                    }
+                }, 200);
+            }
+        } catch (err) {
+            console.error('Failed to shuffle questions:', err);
+        } finally {
+            setTimeout(function() {
+                if (btn) btn.disabled = false;
+                if (icon) icon.classList.remove('spinning');
+            }, 350);
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+</script>
 {% endblock %}

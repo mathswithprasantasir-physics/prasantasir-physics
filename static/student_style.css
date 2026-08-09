@@ -1180,6 +1180,179 @@ body.dark-mode .dark-toggle {
     color: white !important;
 }
 
+/* ===== BOOKMARK BUTTON STYLES ===== */
+.bookmark-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 6px 14px !important;
+    border-radius: 20px !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    border: 1px solid #cbd5e1 !important;
+    background: #f8fafc !important;
+    color: #475569 !important;
+    transition: all 0.2s ease !important;
+    outline: none !important;
+    user-select: none !important;
+    text-decoration: none !important;
+}
+
+.bookmark-btn:hover {
+    border-color: #6C63FF !important;
+    color: #6C63FF !important;
+    background: #f1f0ff !important;
+    transform: translateY(-1px) !important;
+}
+
+.bookmark-btn.bookmarked {
+    background: rgba(108, 99, 255, 0.12) !important;
+    border-color: #6C63FF !important;
+    color: #6C63FF !important;
+}
+
+.bookmark-btn.bookmarked i {
+    color: #6C63FF !important;
+}
+
+/* Dark mode bookmark button */
+body.dark-mode .bookmark-btn {
+    background: #252547 !important;
+    border-color: #3d3d6b !important;
+    color: #94a3b8 !important;
+}
+
+body.dark-mode .bookmark-btn:hover {
+    border-color: #8B83FF !important;
+    color: #8B83FF !important;
+    background: #2e2e58 !important;
+}
+
+body.dark-mode .bookmark-btn.bookmarked {
+    background: rgba(139, 131, 255, 0.22) !important;
+    border-color: #8B83FF !important;
+    color: #8B83FF !important;
+}
+
+body.dark-mode .bookmark-btn.bookmarked i {
+    color: #8B83FF !important;
+}
+
+/* ===== SHUFFLE BUTTON STYLES ===== */
+.shuffle-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 7px 16px !important;
+    border-radius: 20px !important;
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    border: 1px solid #6C63FF !important;
+    background: #ffffff !important;
+    color: #6C63FF !important;
+    transition: all 0.25s ease !important;
+    outline: none !important;
+    box-shadow: 0 2px 8px rgba(108, 99, 255, 0.12) !important;
+}
+
+.shuffle-btn:hover {
+    background: #6C63FF !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(108, 99, 255, 0.25) !important;
+    transform: translateY(-1px) !important;
+}
+
+.shuffle-btn:active {
+    transform: translateY(0) !important;
+}
+
+.shuffle-btn .fa-sync-alt.spinning {
+    animation: spinIcon 0.8s linear infinite !important;
+}
+
+@keyframes spinIcon {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+body.dark-mode .shuffle-btn {
+    background: #1a1a2e !important;
+    border-color: #8B83FF !important;
+    color: #8B83FF !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.dark-mode .shuffle-btn:hover {
+    background: #8B83FF !important;
+    color: #101026 !important;
+    box-shadow: 0 4px 12px rgba(139, 131, 255, 0.4) !important;
+}
+
+/* ===== CHAPTER ANIMATED PROGRESS BARS ===== */
+.chapter-progress-box {
+    margin-top: 14px !important;
+    padding-top: 12px !important;
+    border-top: 1px solid rgba(108, 99, 255, 0.15) !important;
+}
+
+body.dark-mode .chapter-progress-box {
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.chapter-progress-info {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 6px !important;
+    color: #475569 !important;
+}
+
+body.dark-mode .chapter-progress-info {
+    color: #94a3b8 !important;
+}
+
+.progress-pct {
+    color: #6C63FF !important;
+    font-weight: 700 !important;
+}
+
+body.dark-mode .progress-pct {
+    color: #8B83FF !important;
+}
+
+.chapter-progress-bar {
+    width: 100% !important;
+    height: 8px !important;
+    background: #e2e8f0 !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+body.dark-mode .chapter-progress-bar {
+    background: #252547 !important;
+}
+
+.chapter-progress-fill {
+    height: 100% !important;
+    background: linear-gradient(90deg, #6C63FF, #8B83FF, #00D2A0) !important;
+    background-size: 200% 100% !important;
+    border-radius: 10px !important;
+    width: 0%;
+    transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    animation: gradientShift 3s ease infinite !important;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 body.dark-mode .dark-toggle:hover {
     background: rgba(255,255,255,0.25) !important;
 }
