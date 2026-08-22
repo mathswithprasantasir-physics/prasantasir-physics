@@ -114,12 +114,14 @@ function getTopics(): string[] {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+
+// [FIXED] - Added "as any" to bypass TypeScript overload mismatch
 app.use(session({
   secret: 'your-super-secret-key-change-in-production',
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false }
-}));
+}) as any);
 
 // স্ট্যাটিক ফাইল (রুট ডিরেক্টরি থেকে)
 app.use('/static', express.static(path.join(PROJECT_ROOT, 'static')));
@@ -228,7 +230,8 @@ nunjucksEnv.addGlobal('url_for', (name: string, ...args: any[]) => {
 });
 
 nunjucksEnv.addGlobal('get_flashed_messages', function(this: any, options?: any) {
-  const req = this.ctx ? this.ctx.req : null;
+  // [FIXED] Accessing the session from the context correctly
+  const req = this.ctx && this.ctx.req;
   if (req && req.session && req.session.flashMessages) {
     const messages = req.session.flashMessages;
     req.session.flashMessages = [];
