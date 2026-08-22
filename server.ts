@@ -20,7 +20,7 @@ console.log('🔍 __dirname:', __dirname);
 // কনফিগারেশন
 // =====================================================
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = Number(process.env.PORT) || 3000;
 const ADMIN_PASSWORD = 'admin123';
 
 // JSON ফাইলের পাথ (রুট ডিরেক্টরিতে)
@@ -125,7 +125,7 @@ app.use(session({
 app.use('/static', express.static(path.join(PROJECT_ROOT, 'static')));
 
 // লোকাল ভেরিয়েবল মিডলওয়্যার
-app.use((req: Request, res: Response, next: NextFunction) => {
+app.use((req: Request, res: Response, next: NextFunction): void => {
   res.locals.req = req;
   const sessionData = req.session as any;
   if (!sessionData.flashMessages) {
